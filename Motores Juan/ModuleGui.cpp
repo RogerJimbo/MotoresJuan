@@ -12,7 +12,6 @@
 
 #include "MathGeoLib/Math/myassert.h"
 
-
 #include "ModuleWindow.h"
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -44,8 +43,9 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	ImVec2 win_1_pos = ImVec2(50.0f, 50.0f);	
-	ImGui::SetWindowPos(win_1_pos,0);
+	ImGui::SetNextWindowPos({ 0,0 });
+	ImGui::SetNextWindowSize({ (float)App->window->width, (float)App->window->height });
+	//ImGui::SetNextWindowBgAlpha(0.0f);
 
 	return UPDATE_CONTINUE;
 }
@@ -53,8 +53,24 @@ update_status ModuleGui::PreUpdate(float dt)
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	/*if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);*/
+
+
+	// MENU
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("Menu 1")) { ImGui::EndMenu(); }
+
+		if (ImGui::BeginMenu("Menu 2")) { ImGui::EndMenu(); }
+
+		if (ImGui::BeginMenu("Menu 3")) { ImGui::EndMenu(); }
+
+		if (ImGui::BeginMenu("Menu 4")) { ImGui::EndMenu(); }
+
+	}
+	ImGui::EndMainMenuBar();
+
 
 
 	return UPDATE_CONTINUE;
@@ -72,12 +88,11 @@ update_status ModuleGui::PostUpdate(float dt)
 
 // Called before quitting
 bool ModuleGui::CleanUp()
-{
+{	
 	ImGui::End();
-	ImGui::EndChild();
 
-	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
+	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
 
 	return true;
