@@ -45,6 +45,9 @@ update_status ModuleGui::Update(float dt)
 {
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
+	ImGui::End();
+
+	ImGui::Text("Hola");
 
 	return UPDATE_CONTINUE;
 }
@@ -55,11 +58,18 @@ update_status ModuleGui::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
+
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
 bool ModuleGui::CleanUp()
 {
+
+
+	ImGui_ImplOpenGL2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	return true;
 }
