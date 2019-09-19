@@ -53,8 +53,8 @@ update_status ModuleGui::PreUpdate(float dt)
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	/*if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);*/
+	if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);
 
 
 	// MENU
@@ -69,8 +69,8 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::BeginMenu("Menu 4")) { ImGui::EndMenu(); }
 
 	}
-	ImGui::EndMainMenuBar();
 
+	ImGui::EndMainMenuBar();
 
 
 	return UPDATE_CONTINUE;
@@ -89,11 +89,17 @@ update_status ModuleGui::PostUpdate(float dt)
 // Called before quitting
 bool ModuleGui::CleanUp()
 {	
-	ImGui::End();
+	
 
 	ImGui_ImplSDL2_Shutdown();
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
+
+	SDL_GL_DeleteContext(App->renderer3D->context);
+	SDL_DestroyWindow(App->window->window);
+	SDL_Quit();
+
+	ImGui::End();
 
 	return true;
 }
