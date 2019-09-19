@@ -26,9 +26,9 @@ bool ModuleGui::Init()
 
 	ImGui_ImplOpenGL2_Init();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window,App->renderer->renderer);
-	ImGui::NewFrame();
 
 	ImGui::StyleColorsDark();
+
 
 	return true;
 }
@@ -40,12 +40,35 @@ update_status ModuleGui::PreUpdate()
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	ImGui::Begin("Test Motores Juan");
+	ImGui::Begin("ImGui Test");
 	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+	
+	static float f = 0.0f;
+	static int counter = 0;
 
+	//Add a menu on top that closes the app
+	ImGui::BeginMenu("Menu", true);
+	ImGui::EndMenu();
+	if(ImGui::MenuItem("Menu")) 	ImGui::CloseCurrentPopup();
+
+	// Shows the demo window
+	ImGui::ShowDemoWindow();
+
+	//Demo Window made manually
+
+	ImGui::Text("ImGui says Hello");
+	ImGui::TreeNode("Help");													//Desplegable?
+	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+	ImGui::ColorEdit3("clear color", (float*)& clear_color);
+
+	ImGui::Checkbox("Window 1", &imgui_window);
+
+	if (ImGui::Button("Button")) counter++;
+	ImGui::SameLine();
+	ImGui::Text("counter = %d", counter);
 
 	return UPDATE_CONTINUE;
 }
@@ -65,6 +88,9 @@ update_status ModuleGui::PostUpdate()
 // Called before quitting
 bool ModuleGui::CleanUp()
 {
+	ImGui_ImplOpenGL2_Shutdown();
+	ImGui::DestroyContext();
+
 
 	return true;
 }

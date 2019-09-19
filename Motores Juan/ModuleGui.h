@@ -2,6 +2,7 @@
 #define __MODULEGUI_H__
 
 #include "Module.h"
+#include "ImGui/imgui.h"
 
 class ModuleGui : public Module
 {
@@ -15,7 +16,9 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	bool imgui_window = true;
 
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 };
 
