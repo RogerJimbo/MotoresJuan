@@ -20,15 +20,15 @@ ModuleGui::~ModuleGui()
 
 bool ModuleGui::Init()
 {
+	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 
-	//ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->renderer);
-	//ImGui_ImplOpenGL2_Init();
+	ImGui_ImplOpenGL2_Init();
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window,App->renderer->renderer);
+	ImGui::NewFrame();
 
 	ImGui::StyleColorsDark();
-
-
 
 	return true;
 }
@@ -36,9 +36,15 @@ bool ModuleGui::Init()
 // PreUpdate: clear buffer
 update_status ModuleGui::PreUpdate()
 {
-	//ImGui_ImplOpenGL2_NewFrame();
-	//ImGui_ImplSDL2_NewFrame(App->window->window);
-	//ImGui::NewFrame();
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(App->window->window);
+	ImGui::NewFrame();
+
+	ImGui::Begin("Test Motores Juan");
+	ImGui::End();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 
 	return UPDATE_CONTINUE;
