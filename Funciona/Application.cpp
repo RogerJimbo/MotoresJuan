@@ -2,13 +2,10 @@
 
 Application::Application()
 {
-	renderer = new ModuleRender(this);
 	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	player = new ModulePlayer(this);
-	scene_intro = new ModuleSceneIntro(this);
-	physics = new ModulePhysics(this);
-	gui = new ModuleGui(this);
+	renderer3D = new ModuleRenderer3D(this);
+	camera = new ModuleCamera3D(this);
+	modulegui = new ModuleGui(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -16,16 +13,11 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
-	AddModule(physics);
-	AddModule(renderer);
-	AddModule(input);
-	AddModule(gui);
-	
-	// Scenes
-	AddModule(scene_intro);
-	
-	// Player
-	AddModule(player);
+	AddModule(camera);
+	AddModule(modulegui);
+
+	// Renderer last!
+	AddModule(renderer3D);
 }
 
 Application::~Application()
@@ -58,24 +50,37 @@ bool Application::Init()
 
 	while(item != NULL && ret == true)
 	{
-		if(item->data->IsEnabled())
-			ret = item->data->Start();
+		ret = item->data->Start();
 		item = item->next;
 	}
 	
+	ms_timer.Start();
 	return ret;
+}
+
+// ---------------------------------------------
+void Application::PrepareUpdate()
+{
+	dt = (float)ms_timer.Read() / 1000.0f;
+	ms_timer.Start();
+}
+
+// ---------------------------------------------
+void Application::FinishUpdate()
+{
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
+	PrepareUpdate();
+	
 	p2List_item<Module*>* item = list_modules.getFirst();
-
+	
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
-		if(item->data->IsEnabled())
-			ret = item->data->PreUpdate();
+		ret = item->data->PreUpdate(dt);
 		item = item->next;
 	}
 
@@ -83,8 +88,7 @@ update_status Application::Update()
 
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
-		if(item->data->IsEnabled())
-  			ret = item->data->Update();
+		ret = item->data->Update(dt);
 		item = item->next;
 	}
 
@@ -92,11 +96,11 @@ update_status Application::Update()
 
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
-		if(item->data->IsEnabled())
-			ret = item->data->PostUpdate();
+		ret = item->data->PostUpdate(dt);
 		item = item->next;
 	}
 
+	FinishUpdate();
 	return ret;
 }
 

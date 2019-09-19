@@ -2,29 +2,25 @@
 
 #include "p2List.h"
 #include "Globals.h"
+#include "Timer.h"
 #include "Module.h"
-#include "Dummy.h"
 #include "ModuleWindow.h"
-#include "ModuleRender.h"
-#include "ModuleInput.h"
-#include "ModulePlayer.h"
-#include "ModulePhysics.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
 #include "ModuleGui.h"
-#include "ModuleSceneIntro.h"
 
 class Application
 {
 public:
-	ModuleRender* renderer;
 	ModuleWindow* window;
-	ModuleInput* input;
-	ModulePlayer* player;
-	ModuleSceneIntro* scene_intro;
-	ModulePhysics* physics;
-	ModuleGui* gui;
+	ModuleRenderer3D* renderer3D;
+	ModuleCamera3D* camera;
+	ModuleGui* modulegui;
 
 private:
 
+	Timer	ms_timer;
+	float	dt;
 	p2List<Module*> list_modules;
 
 public:
@@ -39,4 +35,6 @@ public:
 private:
 
 	void AddModule(Module* mod);
+	void PrepareUpdate();
+	void FinishUpdate();
 };

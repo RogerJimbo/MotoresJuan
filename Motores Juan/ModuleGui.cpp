@@ -8,7 +8,6 @@
 
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleTextures.h"
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -28,7 +27,6 @@ bool ModuleGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window,App->renderer->renderer);
 
 	ImGui::StyleColorsDark();
-
 
 	return true;
 }
