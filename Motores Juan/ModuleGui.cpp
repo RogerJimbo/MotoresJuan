@@ -45,7 +45,6 @@ update_status ModuleGui::PreUpdate(float dt)
 
 	ImGui::SetNextWindowPos({ 0,0 });
 	ImGui::SetNextWindowSize({ (float)App->window->width, (float)App->window->height });
-	//ImGui::SetNextWindowBgAlpha(0.0f);
 
 	return UPDATE_CONTINUE;
 }
@@ -55,6 +54,29 @@ update_status ModuleGui::Update(float dt)
 {
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
+
+	ImGui::GetMouseCursor();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	if (ImGui::IsMouseDown(1))
+	{
+		ImGui::Begin("Test");
+		ImGui::Button("click it");
+		ImGui::End();
+	}
+
+
+	//ImGui::ShowAboutWindow();
+
+	//ImGui::ShowMetricsWindow()
+
+	//ImGui::ShowStyleEditor();
+
+	//ImGui::ShowStyleSelector("Selector");
+
+	//ImGui::ShowFontSelector("Selector");
+
+	//ImGui::ShowUserGuide();
 
 
 	// MENU

@@ -10,6 +10,13 @@ enum KEY_STATE
 	KEY_UP
 };
 
+
+
+enum MOUSE_STATE
+{
+	
+};
+
 class ModuleInput : public Module
 {
 public:
@@ -38,6 +45,9 @@ public:
 
 private:
 	KEY_STATE* keyboard;
+
+
+	
 	int mouse_x;
 	int mouse_y;
 };

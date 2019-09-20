@@ -61,6 +61,8 @@ update_status ModuleInput::PreUpdate()
 		return UPDATE_STOP;
 
 
+	//SDL_MOUSEBUTTONDOWN
+
 	SDL_GetMouseState(&mouse_x, &mouse_y);
 	mouse_x /= SCREEN_SIZE;
 	mouse_y /= SCREEN_SIZE;
@@ -75,3 +77,4 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
+
