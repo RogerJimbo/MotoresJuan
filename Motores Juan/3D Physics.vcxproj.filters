@@ -37,6 +37,9 @@
     <Filter Include="Sources\Tools\MathGeoLib\Math">
       <UniqueIdentifier>{e6af45f8-4b06-46b2-89fc-30090703e9fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\MathGeoLib\Random\RNG">
+      <UniqueIdentifier>{3c6bd932-52c5-4f17-9ced-18c5c1d12a79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -290,6 +293,15 @@
     </ClInclude>
     <ClInclude Include="MathGeoLib\Time\Clock.h">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\Algorithm\Random\pcg_random.hpp">
+      <Filter>Sources\Tools\MathGeoLib\Random\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\Algorithm\Random\pcg_extras.hpp">
+      <Filter>Sources\Tools\MathGeoLib\Random\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\Algorithm\Random\pcg_uint128.hpp">
+      <Filter>Sources\Tools\MathGeoLib\Random\RNG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
