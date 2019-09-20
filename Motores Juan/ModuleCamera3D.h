@@ -2,7 +2,9 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
-class btVector3;
+
+#define CAMERA_SPEED 10.0f
+
 class ModuleCamera3D : public Module
 {
 public:
@@ -17,18 +19,19 @@ public:
 	void LookAt(const vec3 &Spot);
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
+	void setFreeCam(bool freeCam);
 
 private:
 
 	void CalculateViewMatrix();
+	bool freeCam = false;
 
 public:
 	
 	vec3 X, Y, Z, Position, Reference;
-	mat4x4 Camera_view;
-	vec3 Last_position;
+
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
-
+	vec3 offset_to_player;
 };

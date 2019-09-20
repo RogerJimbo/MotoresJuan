@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "SDL\include\SDL.h"
 
-class Timer
+class Timer 
 {
 public:
 
@@ -14,7 +14,7 @@ public:
 	void Start();
 	void Stop();
 
-	Uint32 Read();
+	Uint32 ReadTime();
 
 private:
 

@@ -26,9 +26,6 @@ public:
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
-
-	int height = 0;
-	int width = 0;
 };
 
 #endif // __ModuleWindow_H__

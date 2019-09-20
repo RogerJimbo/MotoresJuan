@@ -3,10 +3,9 @@
 Application::Application()
 {
 	window = new ModuleWindow(this);
+	input = new ModuleInput(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	modulegui = new ModuleGui(this);
-	input = new ModuleInput(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -15,7 +14,6 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
-	AddModule(modulegui);
 	AddModule(input);
 
 	// Renderer last!
@@ -63,7 +61,7 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
+	dt = (float)ms_timer.ReadTime() / 1000.0f;
 	ms_timer.Start();
 }
 

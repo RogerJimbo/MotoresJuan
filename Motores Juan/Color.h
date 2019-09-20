@@ -30,3 +30,7 @@ extern Color Green;
 extern Color Blue;
 extern Color Black;
 extern Color White;
+extern Color Gray;
+extern Color lightGray;
+extern Color Yellow;
+extern Color Orange;

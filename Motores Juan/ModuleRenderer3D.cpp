@@ -21,17 +21,9 @@ bool ModuleRenderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
-	Uint32 flags = 0;
-
-	if (VSYNC == true)
-	{
-		flags |= SDL_RENDERER_PRESENTVSYNC;
-	}
-
+	
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
-	render = SDL_CreateRenderer(App->window->window, -1, flags);
-
 	if(context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());

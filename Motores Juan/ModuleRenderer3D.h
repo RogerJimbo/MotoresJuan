@@ -1,4 +1,4 @@
-	#pragma once
+#pragma once
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
@@ -23,7 +23,6 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	SDL_Renderer* render;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 };
