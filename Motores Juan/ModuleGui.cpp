@@ -20,7 +20,6 @@ bool ModuleGui::Init()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
@@ -35,6 +34,15 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+	
+	ImGui::SetNextWindowPos({ 0,20 });
+	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
+
+	//No Windows Menu Flags (8/15)
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
+	window_flags |= ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+	window_flags |= ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoDocking;
 
 	return UPDATE_CONTINUE;
 }
@@ -42,36 +50,19 @@ update_status ModuleGui::PreUpdate(float dt)
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	//if (show_demo_window)
-	//	ImGui::ShowDemoWindow(&show_demo_window);
+	//Default Window
+	ImGui::Begin("Motores Juan Window");
+	ImGui::End();
 
-	ImGui::GetMouseCursor();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-
-	//ImGui::ShowAboutWindow();
-
-	//ImGui::ShowMetricsWindow()
-
-	ImGui::ShowStyleEditor();
-
-	//ImGui::ShowStyleSelector("Selector");
-
-	//ImGui::ShowFontSelector("Selector");
-
-
-	// MENU
+	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("Menu 1")) { ImGui::EndMenu(); }
 		if (ImGui::BeginMenu("Menu 2")) { ImGui::EndMenu(); }
 		if (ImGui::BeginMenu("Menu 3")) { ImGui::EndMenu(); }
 		if (ImGui::BeginMenu("Menu 4")) { ImGui::EndMenu(); }
-
 		ImGui::EndMainMenuBar();
 	}
-
-
 	return UPDATE_CONTINUE;
 }
 
