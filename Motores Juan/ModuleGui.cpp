@@ -5,7 +5,6 @@
 #include "ImGui\imgui.h"
 #include "ImGui\imgui_impl_sdl.h"
 #include "ImGui\imgui_impl_opengl2.h"
-
 #include "ModuleWindow.h"
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -37,49 +36,40 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	//ImGui::SetNextWindowSize({ (float)App->window->width, (float)App->window->height });
-
 	return UPDATE_CONTINUE;
 }
 
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	//if (show_demo_window)
+	//	ImGui::ShowDemoWindow(&show_demo_window);
 
 	ImGui::GetMouseCursor();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
 
 
 	//ImGui::ShowAboutWindow();
 
 	//ImGui::ShowMetricsWindow()
 
-	//ImGui::ShowStyleEditor();
+	ImGui::ShowStyleEditor();
 
 	//ImGui::ShowStyleSelector("Selector");
 
 	//ImGui::ShowFontSelector("Selector");
-
-	//ImGui::ShowUserGuide();
 
 
 	// MENU
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("Menu 1")) { ImGui::EndMenu(); }
-
 		if (ImGui::BeginMenu("Menu 2")) { ImGui::EndMenu(); }
-
 		if (ImGui::BeginMenu("Menu 3")) { ImGui::EndMenu(); }
-
 		if (ImGui::BeginMenu("Menu 4")) { ImGui::EndMenu(); }
 
+		ImGui::EndMainMenuBar();
 	}
-
-	ImGui::EndMainMenuBar();
 
 
 	return UPDATE_CONTINUE;
