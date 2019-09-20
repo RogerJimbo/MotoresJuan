@@ -1,12 +1,14 @@
 # MotoresJuan
 
-This is a 3D Engine created by [Ivan Drofiak](https://github.com/FurryGhoul) and [Roger Sanchez](https://github.com/RogerJimbo) students of the Bachelor’s Degree in Video Games by UPC at CITM.
+This is a 3D Engine created by [Ivan Drofiak](https://github.com/FurryGhoul) and [Roger Sanchez](https://github.com/RogerJimbo) students of the Bachelorâ€™s Degree in Video Games by UPC at CITM.
 
 
 ## Libraries Used
 - SDL.
+- STL.
 - ImGui.
 - OpenGL.
+- MathGeoLib.
 
 ## License
 
