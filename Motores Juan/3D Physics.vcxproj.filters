@@ -31,14 +31,11 @@
     <Filter Include="Sources\Tools\MathGeoLib\Geometry">
       <UniqueIdentifier>{a29e5318-1651-4817-9029-2ecefdf3addb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Tools\MathGeoLib\Random">
-      <UniqueIdentifier>{5998b737-d890-4058-bcc5-64223debc900}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Tools\MathGeoLib\Math">
       <UniqueIdentifier>{e6af45f8-4b06-46b2-89fc-30090703e9fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Tools\MathGeoLib\Random\RNG">
-      <UniqueIdentifier>{3c6bd932-52c5-4f17-9ced-18c5c1d12a79}</UniqueIdentifier>
+    <Filter Include="Sources\Tools\MathGeoLib\LCG">
+      <UniqueIdentifier>{5998b737-d890-4058-bcc5-64223debc900}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -289,19 +286,10 @@
       <Filter>Sources\Tools\MathGeoLib\Math</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\Algorithm\Random\LCG.h">
-      <Filter>Sources\Tools\MathGeoLib\Random</Filter>
+      <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\Time\Clock.h">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="MathGeoLib\Algorithm\Random\pcg_random.hpp">
-      <Filter>Sources\Tools\MathGeoLib\Random\RNG</Filter>
-    </ClInclude>
-    <ClInclude Include="MathGeoLib\Algorithm\Random\pcg_extras.hpp">
-      <Filter>Sources\Tools\MathGeoLib\Random\RNG</Filter>
-    </ClInclude>
-    <ClInclude Include="MathGeoLib\Algorithm\Random\pcg_uint128.hpp">
-      <Filter>Sources\Tools\MathGeoLib\Random\RNG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -450,7 +438,7 @@
       <Filter>Sources\Tools\MathGeoLib\Math</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp">
-      <Filter>Sources\Tools\MathGeoLib\Random</Filter>
+      <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\Time\Clock.cpp">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
