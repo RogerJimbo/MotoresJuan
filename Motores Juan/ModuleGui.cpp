@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleGUI.h"
 
+#include "MathGeoLib/Math/float3.h"
+
 #include "ImGui\imgui.h"
 #include "ImGui\imgui_impl_sdl.h"
 #include "ImGui\imgui_impl_opengl2.h"
@@ -50,14 +52,27 @@ update_status ModuleGui::PreUpdate(float dt)
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
+	float test[4];
 	//Default Window
 	ImGui::Begin("Motores Juan Window");
+	ImGui::Text("Pepe las pelotas gonzalez");
+	ImGui::ColorEdit4("Coloreeee", test);
 	ImGui::End();
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("Menu 1")) { ImGui::EndMenu(); }
+		if (ImGui::BeginMenu("File")) 
+		{ 
+			ImGui::MenuItem("New", "Ctrl+N", false, true);
+			ImGui::MenuItem("Open", "Ctrl+o", false, true);
+			if (ImGui::MenuItem("Close"))
+			{
+				ImGui::EndMenu();
+				return UPDATE_STOP;
+			}
+			ImGui::EndMenu(); 
+		}
 		if (ImGui::BeginMenu("Menu 2")) { ImGui::EndMenu(); }
 		if (ImGui::BeginMenu("Menu 3")) { ImGui::EndMenu(); }
 		if (ImGui::BeginMenu("Menu 4")) { ImGui::EndMenu(); }
