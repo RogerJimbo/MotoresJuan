@@ -33,7 +33,7 @@
 #include "../Math/float3x4.h"
 #include "../Math/float4.h"
 #include "../Math/Quat.h"
-#include "../Algorithm/Random/LCG.h"
+#include "../Algorithm/LCG/LCG.h"
 
 #ifdef MATH_ENABLE_STL_SUPPORT
 #include <iostream>

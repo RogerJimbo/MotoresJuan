@@ -25,7 +25,7 @@
 #include "LineSegment.h"
 #include "Line.h"
 #include "Ray.h"
-#include "../Algorithm/Random/LCG.h"
+#include "../Algorithm/LCG/LCG.h"
 #include "OBB.h"
 #include "Plane.h"
 #include "Polygon.h"

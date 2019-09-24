@@ -32,7 +32,7 @@
 #include "LineSegment.h"
 #include "Triangle.h"
 #include "Sphere.h"
-#include "../Algorithm/Random/LCG.h"
+#include "../Algorithm/LCG/LCG.h"
 #include "../Math/MathFunc.h"
 #include "../Math/float3x3.h"
 #include "../Math/float3x4.h"

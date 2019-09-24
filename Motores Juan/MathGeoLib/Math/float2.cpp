@@ -19,7 +19,7 @@
 #include "float3.h"
 #include "float4.h"
 #include "MathFunc.h"
-#include "../Algorithm/Random/LCG.h"
+#include "../Algorithm/LCG/LCG.h"
 #include "assume.h"
 #include <string.h>
 #include <stdlib.h>

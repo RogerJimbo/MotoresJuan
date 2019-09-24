@@ -20,5 +20,5 @@
 
 #include "Geometry/GeometryAll.h"
 #include "Math/MathAll.h"
-#include "Algorithm/Random/LCG.h"
+#include "Algorithm/LCG/LCG.h"
 #include "Time/Clock.h"

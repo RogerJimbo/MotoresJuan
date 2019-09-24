@@ -27,7 +27,7 @@
 #include "Quat.h"
 #include "TransformOps.h"
 #include "../Geometry/Plane.h"
-#include "../Algorithm/Random/LCG.h"
+#include "../Algorithm/LCG/LCG.h"
 #include "SSEMath.h"
 #include "float4x4_sse.h"
 #include "float4x4_neon.h"

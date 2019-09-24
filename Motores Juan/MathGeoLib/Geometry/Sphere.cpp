@@ -30,7 +30,7 @@
 #include "AABB.h"
 #include "Capsule.h"
 #include "Frustum.h"
-#include "../Algorithm/Random/LCG.h"
+#include "../Algorithm/LCG/LCG.h"
 #include "LineSegment.h"
 #include "Line.h"
 #include "Ray.h"

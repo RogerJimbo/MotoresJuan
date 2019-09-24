@@ -285,11 +285,11 @@
     <ClInclude Include="MathGeoLib\Math\TransformOps.h">
       <Filter>Sources\Tools\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="MathGeoLib\Algorithm\Random\LCG.h">
-      <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
-    </ClInclude>
     <ClInclude Include="MathGeoLib\Time\Clock.h">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="MathGeoLib\Algorithm\LCG\LCG.h">
+      <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -437,11 +437,11 @@
     <ClCompile Include="MathGeoLib\Math\TransformOps.cpp">
       <Filter>Sources\Tools\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp">
-      <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
-    </ClCompile>
     <ClCompile Include="MathGeoLib\Time\Clock.cpp">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="MathGeoLib\Algorithm\LCG\LCG.cpp">
+      <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
