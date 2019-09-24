@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleGUI.h"
-
+#include "ModuleWindow.h"
 #include "MathGeoLib/Math/float3.h"
 
 #include "ImGui\imgui.h"
@@ -52,11 +52,23 @@ update_status ModuleGui::PreUpdate(float dt)
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	float test[4];
-	//Default Window
-	ImGui::Begin("Motores Juan Window");
-	ImGui::Text("Pepe las pelotas gonzalez");
-	ImGui::ColorEdit4("Coloreeee", test);
+	//hardcoded window sizes and positions
+
+	// 1. Hierarchy tab
+	ImGui::SetNextWindowSize(ImVec2(250, 550));
+	ImGui::Begin("Scene Objects Hierarchy", 0);
+	ImGui::End();
+
+	// 2. Default Console
+	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	ImGui::SetNextWindowPos(ImVec2(0, 570));																	
+	ImGui::Begin("Console", 0, window_flags);
+	ImGui::End();
+
+	// 3. Object Inspector 
+	ImGui::SetNextWindowSize(ImVec2(250, 550));
+	ImGui::SetNextWindowPos(ImVec2(800, 20));																
+	ImGui::Begin("Object Inspector", 0, window_flags);
 	ImGui::End();
 
 	// Main Menu Bar
@@ -64,18 +76,35 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::BeginMenu("File")) 
 		{ 
-			ImGui::MenuItem("New", "Ctrl+N", false, true);
-			ImGui::MenuItem("Open", "Ctrl+o", false, true);
-			if (ImGui::MenuItem("Close"))
+			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);		//Create new scene
+			ImGui::MenuItem("Open", "Ctrl+O", false, true);					//Import Files
+			ImGui::MenuItem("Save", "Ctrl+S", false, true);					//Save data
+			ImGui::MenuItem("Load Default Config", false);					//Loads default config
+			if (ImGui::MenuItem("Close", "ESC"))
 			{
 				ImGui::EndMenu();
+				ImGui::EndMainMenuBar();
+				ImGui::EndFrame();
 				return UPDATE_STOP;
 			}
 			ImGui::EndMenu(); 
 		}
-		if (ImGui::BeginMenu("Menu 2")) { ImGui::EndMenu(); }
-		if (ImGui::BeginMenu("Menu 3")) { ImGui::EndMenu(); }
-		if (ImGui::BeginMenu("Menu 4")) { ImGui::EndMenu(); }
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem("About", false, true))
+			{
+				//Display README
+			}
+			if (ImGui::MenuItem("GitHub", false, true))
+			{
+				// Open GitHub page
+			}
+			if (ImGui::MenuItem("Info", false, true))
+			{
+				//general engine info
+			}
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
 	return UPDATE_CONTINUE;
@@ -96,7 +125,6 @@ bool ModuleGui::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
-
 	SDL_GL_DeleteContext(App->renderer3D->context);
 	SDL_DestroyWindow(App->window->window);
 	SDL_Quit();
