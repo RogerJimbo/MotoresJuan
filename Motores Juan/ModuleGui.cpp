@@ -2,9 +2,12 @@
 #include "Application.h"
 #include "ModuleGUI.h"
 #include "ModuleWindow.h"
+
 #include "MathGeoLib/Math/float3.h"
+#include "MathGeoLib/MathGeoLib.h"
 
 #include "ImGui\imgui.h"
+#include "ImGui/imgui_internal.h"
 #include "ImGui\imgui_impl_sdl.h"
 #include "ImGui\imgui_impl_opengl2.h"
 #include "ModuleWindow.h"
@@ -27,6 +30,8 @@ bool ModuleGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 
+
+
 	return true;
 }
 
@@ -40,11 +45,7 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
-	//No Windows Menu Flags (8/15)
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
-	window_flags |= ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
-	window_flags |= ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoDocking;
+
 
 	return UPDATE_CONTINUE;
 }
@@ -52,24 +53,11 @@ update_status ModuleGui::PreUpdate(float dt)
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	//hardcoded window sizes and positions
+	//Engine Windows
 
-	// 1. Hierarchy tab
-	ImGui::SetNextWindowSize(ImVec2(250, 550));
-	ImGui::Begin("Scene Objects Hierarchy", 0);
-	ImGui::End();
+	if(!active_engine_windows[ABOUT]){ CreateAboutWindow(); }
 
-	// 2. Default Console
-	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
-	ImGui::SetNextWindowPos(ImVec2(0, 570));																	
-	ImGui::Begin("Console", 0, window_flags);
-	ImGui::End();
 
-	// 3. Object Inspector 
-	ImGui::SetNextWindowSize(ImVec2(250, 550));
-	ImGui::SetNextWindowPos(ImVec2(800, 20));																
-	ImGui::Begin("Object Inspector", 0, window_flags);
-	ImGui::End();
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -91,10 +79,8 @@ update_status ModuleGui::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("About", false, true))
-			{
-				//Display README
-			}
+			ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT]);
+
 			if (ImGui::MenuItem("GitHub", false, true))
 			{
 				// Open GitHub page
@@ -130,4 +116,18 @@ bool ModuleGui::CleanUp()
 	SDL_Quit();
 
 	return true;
+}
+
+void ModuleGui::CreateAboutWindow() 		
+{
+	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
+	ImGui::Begin("About");
+	ImGui::Text("Motores Juan"), ImGui::Separator();
+	ImGui::Text("This is a video game engine with academic purposes.");
+	ImGui::Text("By Roger Sanchez and Ivan Drofiak.");
+	ImGui::Text("Licensed under the MIT License."), ImGui::Separator();
+
+
+	ImGui::End();
 }

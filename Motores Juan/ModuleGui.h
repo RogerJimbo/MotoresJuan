@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "ImGui/imgui.h"
 
+enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, NUM_ACT_WIN};
+
 class ModuleGui : public Module
 {
 public:
@@ -20,9 +22,14 @@ public:
 	bool show_demo_window = true;
 
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-
-
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+	void CreateAboutWindow();
+
+private:
+
+	bool active_engine_windows[NUM_ACT_WIN];
+
 
 };
 
