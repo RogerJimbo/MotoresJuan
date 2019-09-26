@@ -18,8 +18,6 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	bool imgui_window = true;
-	bool show_demo_window = true;
 
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -29,8 +27,8 @@ public:
 private:
 
 	bool active_engine_windows[NUM_ACT_WIN];
-
-
+	bool close_tab = true;
+	
 };
 
 #endif // !__MODULEGUI_H__

@@ -111,7 +111,7 @@ bool Application::CleanUp()
 	bool ret = true;
 	p2List_item<Module*>* item = list_modules.getLast();
 
-	while(item != NULL && ret == true)
+	while(item && ret == true)
 	{
 		ret = item->data->CleanUp();
 		item = item->prev;
@@ -122,4 +122,10 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.add(mod);
+}
+
+void Application::RequestBrowser()
+{
+	//ShellExecuteA();
+
 }

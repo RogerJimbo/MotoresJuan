@@ -30,8 +30,6 @@ bool ModuleGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 
-
-
 	return true;
 }
 
@@ -55,8 +53,7 @@ update_status ModuleGui::Update(float dt)
 {
 	//Engine Windows
 
-	if(!active_engine_windows[ABOUT]){ CreateAboutWindow(); }
-
+	if (!active_engine_windows[ABOUT]) { CreateAboutWindow();}
 
 
 	// Main Menu Bar
@@ -79,11 +76,14 @@ update_status ModuleGui::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT]);
+			if (ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT]))
+			{
+				
+			}
 
 			if (ImGui::MenuItem("GitHub", false, true))
 			{
-				// Open GitHub page
+				
 			}
 			if (ImGui::MenuItem("Info", false, true))
 			{
@@ -118,16 +118,20 @@ bool ModuleGui::CleanUp()
 	return true;
 }
 
-void ModuleGui::CreateAboutWindow() 		
+void ModuleGui::CreateAboutWindow()
 {
 	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	ImGui::SetNextWindowPos(ImVec2(0, 20));
-	ImGui::Begin("About");
-	ImGui::Text("Motores Juan"), ImGui::Separator();
-	ImGui::Text("This is a video game engine with academic purposes.");
-	ImGui::Text("By Roger Sanchez and Ivan Drofiak.");
-	ImGui::Text("Licensed under the MIT License."), ImGui::Separator();
 
-
-	ImGui::End();
+	if (close_tab && ImGui::Begin("About", &close_tab))
+	{
+		ImGui::Text("Motores Juan"), ImGui::Separator();
+		ImGui::Text("This is a video game engine with academic purposes.");
+		ImGui::Text("By Roger Sanchez and Ivan Drofiak.");
+		ImGui::Text("Licensed under the MIT License."), ImGui::Separator();
+		ImGui::End();
+	}
+	
 }
+
+
