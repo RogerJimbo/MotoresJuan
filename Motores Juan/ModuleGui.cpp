@@ -183,12 +183,20 @@ void ModuleGui::CreateConfigWindow()
 
 	if (ImGui::TreeNode("Application"))		// FPS Histograms 
 	{
-		std::string title;
+		//Calculate FPS
+		std::string title_fps;
+		std::string title_ms;
 		ImGui::Text("Limit Framerate: ");
 		for (int i = 99; i >= 0; --i)
 		{
 			if (i != 0) { fps[i] = fps[i - 1]; }
 			else { fps[i] = ImGui::GetIO().Framerate; }
+		}
+
+		for (int i = 99; i >= 0; --i)
+		{
+			if (i != 0) { ms[i] = ms[i - 1]; }
+			else { ms[i] = SDL_GetTicks(); }
 		}
 		//App Name and Organitzation
 		static char app_name[30] = "Motores Juan";	
@@ -202,9 +210,10 @@ void ModuleGui::CreateConfigWindow()
 		ImGui::SliderFloat("Max FPS", &sf1, 0.0f, 100.0f, "%.f FPS");
 
 		//Histograms
-		title = "Framerate " + std::to_string(fps[0]);
-		ImGui::PlotHistogram("", fps, 100, 0, title.c_str(), 0.f, 50.f, ImVec2(0,80));
-		ImGui::PlotHistogram("", fps, 100, 0, "Miliseconds", 0.f, 300.f, ImVec2(0, 80));
+		title_fps = "Framerate " + std::to_string(fps[0]);
+		title_ms = "Milliseconds " + std::to_string(ms[0]);
+		ImGui::PlotHistogram("", fps, 100, 0, title_fps.c_str(), 0.f, 50.f, ImVec2(0 ,80));
+		ImGui::PlotHistogram("", ms, 100, 0, title_ms.c_str(), 0.f, 50.f, ImVec2(0, 80));
 
 		ImGui::TreePop();
 	}

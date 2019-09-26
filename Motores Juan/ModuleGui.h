@@ -44,6 +44,7 @@ private:
 	char* SSE42;
 
 	float fps[100];
+	float ms[100];
 	
 };
 
