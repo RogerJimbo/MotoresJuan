@@ -144,32 +144,29 @@ void ModuleGui::CreateConfigWindow()
 
 	ImGui::Begin("Configuration");
 
-	// TEST CODE
-
-	if (ImGui::TreeNode("Borders"))
+	if (ImGui::TreeNode("Application"))		// FPS Histograms 
 	{
+		
+		ImGui::Text("Limit Framerate: ");
 		static float TestData[6] = { 0.f,-4.f,3.f,-2.f,0.f,4.f };
-		ImGui::PlotHistogram("Limit Framerate: ", TestData, 6, 0, "Framerate", 0.f, 100.f, ImVec2(0,80));
+		ImGui::PlotHistogram("", TestData, 6, 0, "Framerate", 0.f, 100.f, ImVec2(0,80));
+		ImGui::PlotHistogram("", TestData, 6, 0, "Miliseconds", 0.f, 100.f, ImVec2(0, 80));
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Window"))	//Window Configuration
+	{
+		static bool active, fullscreen,resizable,borderless,checkbox = false;
+		ImGui::Checkbox("Active", &active);
+		static int bright_slider_scroll, width_slider_scroll, height_slider_scroll = 0;
+		ImGui::SliderInt("Brightness", &bright_slider_scroll, 0, 1000 );
+		ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048);
+		ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536);
 
-	
+		ImGui::Checkbox("FullScreen", &fullscreen); ImGui::SameLine();	ImGui::Checkbox("Resizable", &resizable);
+		ImGui::Checkbox("Borderless", &borderless); ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
 
-		static bool h_borders = true;
-		static bool v_borders = true;
-		ImGui::Checkbox("horizontal", &h_borders);
-		ImGui::SameLine();
-		ImGui::Checkbox("vertical", &v_borders);
-		ImGui::Columns(4, NULL, v_borders);
-		for (int i = 0; i < 4 * 3; i++)
-		{
-			if (h_borders && ImGui::GetColumnIndex() == 0)
-				ImGui::Separator();
-			ImGui::Text("%c%c%c", 'a' + i, 'a' + i, 'a' + i);
-			ImGui::Text("Width %.2f\nOffset %.2f", ImGui::GetColumnWidth(), ImGui::GetColumnOffset());
-			ImGui::NextColumn();
-		}
-		ImGui::Columns(1);
-		if (h_borders)
-			ImGui::Separator();
+
+
 		ImGui::TreePop();
 	}
 
