@@ -134,11 +134,17 @@ void ModuleGui::CreateAboutWindow()
 
 void ModuleGui::CreateHardwareWindow()
 {
+	//CPU Caché
 	int cpu_cache = SDL_GetCPUCacheLineSize();
 	ImGui::SetNextWindowSize(ImVec2(300, 300));
 	ImGui::SetNextWindowPos(ImVec2(100, 100));
 	ImGui::Begin("Hardware Info");
 	ImGui::Text("CPU's: %i", cpu_cache);
+	//SDL Version
+	SDL_version ver;
+	SDL_GetVersion(&ver);
+	ImGui::Text("SDL Version: %d", ver);
+
 
 	ImGui::End();
 }
