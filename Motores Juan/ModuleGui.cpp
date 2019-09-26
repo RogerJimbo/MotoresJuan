@@ -61,6 +61,8 @@ update_status ModuleGui::Update(float dt)
 
 	if (!active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
 
+	//ImGui::ShowDemoWindow();
+
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -128,13 +130,11 @@ void ModuleGui::CreateAboutWindow()
 		ImGui::Text("By Roger Sanchez and Ivan Drofiak.");
 		ImGui::Text("Licensed under the MIT License."), ImGui::Separator();
 		ImGui::End();
-	}
-	
+	}	
 }
 
 void ModuleGui::CreateHardwareWindow()
 {
-
 	ImGui::SetNextWindowSize(ImVec2(300, 300));
 	ImGui::SetNextWindowPos(ImVec2(100, 100));
 	ImGui::Begin("Hardware Info");
@@ -157,23 +157,14 @@ void ModuleGui::CreateHardwareWindow()
 	ImGui::Text("System RAM: %f Gb", ram / 1000);
 
 	//Caps
-	SDL_bool SDL_HasRDTSC();
-	SDL_bool SDL_HasMMX();
-	SDL_bool SDL_HasAVX();
-	SDL_bool SDL_HasSSE();
-	SDL_bool SDL_HasSSE2();
-	SDL_bool SDL_HasSSE3();
-	SDL_bool SDL_HasSSE41();
-	SDL_bool SDL_HasSSE42();
-
-	if (SDL_HasRDTSC) { RDTSC = "RDTSC"; }
-	if (SDL_HasMMX) { MMX = "MMX"; }
-	if (SDL_HasAVX) { AVX = "AVX"; }
-	if (SDL_HasSSE) { SSE = "SSE"; }
-	if (SDL_HasSSE2) { SSE2 = "SSE2"; }
-	if (SDL_HasSSE3) { SSE3 = "SSE3"; }
-	if (SDL_HasSSE41) { SSE41 = "SSE41"; }
-	if (SDL_HasSSE42) { SSE42 = "SSE42"; }
+	SDL_bool SDL_HasRDTSC();	 if (SDL_HasRDTSC) { RDTSC = "RDTSC"; }
+	SDL_bool SDL_HasMMX();		 if (SDL_HasMMX) { MMX = "MMX"; }
+	SDL_bool SDL_HasAVX();		 if (SDL_HasAVX) { AVX = "AVX"; }
+	SDL_bool SDL_HasSSE();	     if (SDL_HasSSE) { SSE = "SSE"; }
+	SDL_bool SDL_HasSSE2();		 if (SDL_HasSSE2) { SSE2 = "SSE2"; }
+	SDL_bool SDL_HasSSE3();		 if (SDL_HasSSE3) { SSE3 = "SSE3"; }
+	SDL_bool SDL_HasSSE41();	 if (SDL_HasSSE41) { SSE41 = "SSE41"; }
+	SDL_bool SDL_HasSSE42();	 if (SDL_HasSSE42) { SSE42 = "SSE42"; }
 
 	ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
 	
@@ -192,24 +183,29 @@ void ModuleGui::CreateConfigWindow()
 
 	if (ImGui::TreeNode("Application"))		// FPS Histograms 
 	{
-		std::string titulo;
+		std::string title;
 		ImGui::Text("Limit Framerate: ");
 		for (int i = 99; i >= 0; --i)
 		{
-			if (i != 0)
-			{
-				fps[i] = fps[i - 1];
-			}
-
-			else
-			{
-				fps[i] = ImGui::GetIO().Framerate;
-			}
+			if (i != 0) { fps[i] = fps[i - 1]; }
+			else { fps[i] = ImGui::GetIO().Framerate; }
 		}
+		//App Name and Organitzation
+		static char app_name[30] = "Motores Juan";	
+		static char org[30] = "UPC CITM";
 
-		titulo = "Framerate " + std::to_string(fps[0]);
-		ImGui::PlotHistogram("", fps, 100, 0, titulo.c_str(), 0.f, 50.f, ImVec2(0,80));
-		ImGui::PlotHistogram("", fps, 6, 0, "Miliseconds", 0.f, 300.f, ImVec2(0, 80));
+		ImGui::InputText("App Name", app_name, sizeof(app_name));
+		ImGui::InputText("Organitzation", org, sizeof(org));
+
+		//Max FPS
+		static float sf1 = 60.0f;
+		ImGui::SliderFloat("Max FPS", &sf1, 0.0f, 100.0f, "%.f FPS");
+
+		//Histograms
+		title = "Framerate " + std::to_string(fps[0]);
+		ImGui::PlotHistogram("", fps, 100, 0, title.c_str(), 0.f, 50.f, ImVec2(0,80));
+		ImGui::PlotHistogram("", fps, 100, 0, "Miliseconds", 0.f, 300.f, ImVec2(0, 80));
+
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Window"))	//Window Configuration
