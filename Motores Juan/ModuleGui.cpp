@@ -59,6 +59,8 @@ update_status ModuleGui::Update(float dt)
 
 	if (active_engine_windows[CONFIG]) { CreateConfigWindow(); }
 
+	if (!active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
+
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -79,19 +81,12 @@ update_status ModuleGui::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT]))
-			{
-				CreateAboutWindow();
-			}
+			if (ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT])) {}
 
-			if (ImGui::MenuItem("GitHub", false, true))
-			{
-				App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan");
-			}
-			if (ImGui::MenuItem("Info", false, true))
-			{
-				//general engine info
-			}
+			if (ImGui::MenuItem("GitHub", false, true)) { App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan"); }
+
+			if (ImGui::MenuItem("Hardware Info", NULL, &active_engine_windows[HARDWARE])) {}
+
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -126,7 +121,7 @@ void ModuleGui::CreateAboutWindow()
 	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	ImGui::SetNextWindowPos(ImVec2(0, 20));
 
-	if (close_tab && ImGui::Begin("About", &close_tab))
+	if (close_tab && ImGui::Begin("About"))
 	{
 		ImGui::Text("Motores Juan"), ImGui::Separator();
 		ImGui::Text("This is a video game engine with academic purposes.");
@@ -135,6 +130,17 @@ void ModuleGui::CreateAboutWindow()
 		ImGui::End();
 	}
 	
+}
+
+void ModuleGui::CreateHardwareWindow()
+{
+	int cpu_cache = SDL_GetCPUCacheLineSize();
+	ImGui::SetNextWindowSize(ImVec2(300, 300));
+	ImGui::SetNextWindowPos(ImVec2(100, 100));
+	ImGui::Begin("Hardware Info");
+	ImGui::Text("CPU's: %i", cpu_cache);
+
+	ImGui::End();
 }
 
 void ModuleGui::CreateConfigWindow()

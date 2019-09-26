@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "ImGui/imgui.h"
 
-enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, NUM_ACT_WIN};
+enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
 
 class ModuleGui : public Module
 {
@@ -24,6 +24,7 @@ public:
 
 	void CreateAboutWindow();
 	void CreateConfigWindow();
+	void CreateHardwareWindow();
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;
