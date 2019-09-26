@@ -32,10 +32,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void RequestBrowser(char* url);
+
 private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+	
 
-	void RequestBrowser();
 };

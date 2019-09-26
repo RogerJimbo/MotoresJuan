@@ -52,7 +52,6 @@ update_status ModuleGui::PreUpdate(float dt)
 update_status ModuleGui::Update(float dt)
 {
 	//Engine Windows
-
 	if (!active_engine_windows[ABOUT]) { CreateAboutWindow();}
 
 
@@ -83,7 +82,7 @@ update_status ModuleGui::Update(float dt)
 
 			if (ImGui::MenuItem("GitHub", false, true))
 			{
-				
+				App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan");
 			}
 			if (ImGui::MenuItem("Info", false, true))
 			{
