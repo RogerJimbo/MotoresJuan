@@ -174,6 +174,8 @@ void ModuleGui::CreateConfigWindow()
 		ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048);
 		ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536);
 
+		ImGui::Text("Refresh Rate: %.3f ms/frame", ImGui::GetIO().Framerate);
+
 		ImGui::Checkbox("FullScreen", &fullscreen); ImGui::SameLine();	ImGui::Checkbox("Resizable", &resizable);
 		ImGui::Checkbox("Borderless", &borderless); ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
 
