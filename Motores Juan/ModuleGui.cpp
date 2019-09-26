@@ -143,7 +143,7 @@ void ModuleGui::CreateHardwareWindow()
 	//SDL Version
 	SDL_version ver;
 	SDL_GetVersion(&ver);
-	ImGui::Text("SDL Version: %d", ver);
+	ImGui::Text("SDL Version: %d.%d.%d", ver.major,ver.minor,ver.patch);
 
 
 	ImGui::End();
