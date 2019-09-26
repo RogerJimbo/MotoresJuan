@@ -12,6 +12,9 @@
 #include "ImGui\imgui_impl_opengl2.h"
 #include "ModuleWindow.h"
 
+
+#include <array>
+
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -54,6 +57,7 @@ update_status ModuleGui::Update(float dt)
 	//Engine Windows
 	if (!active_engine_windows[ABOUT]) { CreateAboutWindow();}
 
+	if (active_engine_windows[CONFIG]) { CreateConfigWindow(); }
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -77,7 +81,7 @@ update_status ModuleGui::Update(float dt)
 		{
 			if (ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT]))
 			{
-				
+				CreateAboutWindow();
 			}
 
 			if (ImGui::MenuItem("GitHub", false, true))
@@ -133,4 +137,42 @@ void ModuleGui::CreateAboutWindow()
 	
 }
 
+void ModuleGui::CreateConfigWindow()
+{
+	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	ImGui::SetNextWindowPos(ImVec2(0, 20));
+
+	ImGui::Begin("Configuration");
+
+	// TEST CODE
+
+	if (ImGui::TreeNode("Borders"))
+	{
+		static float TestData[6] = { 0.f,-4.f,3.f,-2.f,0.f,4.f };
+		ImGui::PlotHistogram("Limit Framerate: ", TestData, 6, 0, "Framerate", 0.f, 100.f, ImVec2(0,80));
+
+	
+
+		static bool h_borders = true;
+		static bool v_borders = true;
+		ImGui::Checkbox("horizontal", &h_borders);
+		ImGui::SameLine();
+		ImGui::Checkbox("vertical", &v_borders);
+		ImGui::Columns(4, NULL, v_borders);
+		for (int i = 0; i < 4 * 3; i++)
+		{
+			if (h_borders && ImGui::GetColumnIndex() == 0)
+				ImGui::Separator();
+			ImGui::Text("%c%c%c", 'a' + i, 'a' + i, 'a' + i);
+			ImGui::Text("Width %.2f\nOffset %.2f", ImGui::GetColumnWidth(), ImGui::GetColumnOffset());
+			ImGui::NextColumn();
+		}
+		ImGui::Columns(1);
+		if (h_borders)
+			ImGui::Separator();
+		ImGui::TreePop();
+	}
+
+	ImGui::End();
+}
 
