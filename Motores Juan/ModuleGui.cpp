@@ -134,17 +134,51 @@ void ModuleGui::CreateAboutWindow()
 
 void ModuleGui::CreateHardwareWindow()
 {
-	//CPU Caché
-	int cpu_cache = SDL_GetCPUCacheLineSize();
+
 	ImGui::SetNextWindowSize(ImVec2(300, 300));
 	ImGui::SetNextWindowPos(ImVec2(100, 100));
 	ImGui::Begin("Hardware Info");
-	ImGui::Text("CPU's: %i", cpu_cache);
+
+	static bool active = false;
+	ImGui::Checkbox("Active", &active);
+
 	//SDL Version
 	SDL_version ver;
 	SDL_GetVersion(&ver);
-	ImGui::Text("SDL Version: %d.%d.%d", ver.major,ver.minor,ver.patch);
+	ImGui::Text("SDL Version: %d.%d.%d", ver.major, ver.minor, ver.patch);
+	ImGui::Separator();
 
+	//CPU Caché
+	int cpu_cache = SDL_GetCPUCount();
+	ImGui::Text("CPU's: %i", cpu_cache);
+
+	//RAM 
+	float ram = SDL_GetSystemRAM();
+	ImGui::Text("System RAM: %f Gb", ram / 1000);
+
+	//Caps
+	SDL_bool SDL_HasRDTSC();
+	SDL_bool SDL_HasMMX();
+	SDL_bool SDL_HasAVX();
+	SDL_bool SDL_HasSSE();
+	SDL_bool SDL_HasSSE2();
+	SDL_bool SDL_HasSSE3();
+	SDL_bool SDL_HasSSE41();
+	SDL_bool SDL_HasSSE42();
+
+	if (SDL_HasRDTSC) { RDTSC = "RDTSC"; }
+	if (SDL_HasMMX) { MMX = "MMX"; }
+	if (SDL_HasAVX) { AVX = "AVX"; }
+	if (SDL_HasSSE) { SSE = "SSE"; }
+	if (SDL_HasSSE2) { SSE2 = "SSE2"; }
+	if (SDL_HasSSE3) { SSE3 = "SSE3"; }
+	if (SDL_HasSSE41) { SSE41 = "SSE41"; }
+	if (SDL_HasSSE42) { SSE42 = "SSE42"; }
+
+	ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
+	
+	//GPU
+	IDirect3DDevice9* glGetString();
 
 	ImGui::End();
 }
@@ -158,11 +192,24 @@ void ModuleGui::CreateConfigWindow()
 
 	if (ImGui::TreeNode("Application"))		// FPS Histograms 
 	{
-		
+		std::string titulo;
 		ImGui::Text("Limit Framerate: ");
-		static float TestData[6] = { 0.f,-4.f,3.f,-2.f,0.f,4.f };
-		ImGui::PlotHistogram("", TestData, 6, 0, "Framerate", 0.f, 100.f, ImVec2(0,80));
-		ImGui::PlotHistogram("", TestData, 6, 0, "Miliseconds", 0.f, 100.f, ImVec2(0, 80));
+		for (int i = 99; i >= 0; --i)
+		{
+			if (i != 0)
+			{
+				fps[i] = fps[i - 1];
+			}
+
+			else
+			{
+				fps[i] = ImGui::GetIO().Framerate;
+			}
+		}
+
+		titulo = "Framerate " + std::to_string(fps[0]);
+		ImGui::PlotHistogram("", fps, 100, 0, titulo.c_str(), 0.f, 50.f, ImVec2(0,80));
+		ImGui::PlotHistogram("", fps, 6, 0, "Miliseconds", 0.f, 300.f, ImVec2(0, 80));
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Window"))	//Window Configuration

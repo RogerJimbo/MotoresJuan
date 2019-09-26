@@ -33,6 +33,17 @@ private:
 
 	bool active_engine_windows[NUM_ACT_WIN];
 	bool close_tab = true;
+
+	char* RDTSC;
+	char* MMX;
+	char* AVX;
+	char* SSE;
+	char* SSE2;
+	char* SSE3;
+	char* SSE41;
+	char* SSE42;
+
+	float fps[100];
 	
 };
 
