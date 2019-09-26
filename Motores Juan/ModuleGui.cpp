@@ -219,7 +219,9 @@ void ModuleGui::CreateConfigWindow()
 
 		ImGui::Text("Refresh Rate: %.3f ms/frame", ImGui::GetIO().Framerate);
 
-		ImGui::Checkbox("FullScreen", &fullscreen); ImGui::SameLine();	ImGui::Checkbox("Resizable", &resizable);
+		if (ImGui::Checkbox("FullScreen", &fullscreen)) { App->window->SetFullscreen(true); }
+
+		ImGui::SameLine();	ImGui::Checkbox("Resizable", &resizable);
 		ImGui::Checkbox("Borderless", &borderless); ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
 
 

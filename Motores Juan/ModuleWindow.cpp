@@ -93,3 +93,10 @@ void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
+
+void ModuleWindow::SetFullscreen(bool fullscreen)
+{
+	Uint32 flags = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+
+	SDL_SetWindowFullscreen(this->window,flags);
+}
