@@ -180,7 +180,7 @@ void ModuleGui::CreateConfigWindow()
 
 	ImGui::Begin("Configuration", 0, ImGuiWindowFlags_NoDocking);
 
-	if (ImGui::TreeNode("Application"))		// FPS Histograms 
+	if (ImGui::CollapsingHeader("Application"))		// FPS Histograms 
 	{
 		//Calculate FPS
 		std::string title_fps;
@@ -208,15 +208,15 @@ void ModuleGui::CreateConfigWindow()
 		static float sf1 = 60.0f;
 		ImGui::SliderFloat("Max FPS", &sf1, 0.0f, 100.0f, "%.f FPS");
 
+		//Memory
+		
 		//Histograms
 		title_fps = "Framerate " + std::to_string(fps[0]);
 		title_ms = "Milliseconds " + std::to_string(ms[0]);
 		ImGui::PlotHistogram("", fps, 100, 0, title_fps.c_str(), 0.f, 50.f, ImVec2(0 ,80));
 		ImGui::PlotHistogram("", ms, 100, 0, title_ms.c_str(), 0.f, 50.f, ImVec2(0, 80));
-
-		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Window"))	//Window Configuration
+	if (ImGui::CollapsingHeader("Window"))	//Window Configuration
 	{
 		static bool active = false;
 		static int width_slider_scroll, height_slider_scroll = 0;
@@ -257,10 +257,12 @@ void ModuleGui::CreateConfigWindow()
 			if (fulldesktop) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 			else	SDL_SetWindowFullscreen(App->window->window, 0);
 		}
-
-		ImGui::TreePop();
 	}
 
+	if (ImGui::CollapsingHeader("Input Info"))
+	{
+		ImGui::Text("Mouse Position: X:%d , Y:%d ",App->input->GetMouseX(), App->input->GetMouseY());
+	}
 	ImGui::End();
 }
 
