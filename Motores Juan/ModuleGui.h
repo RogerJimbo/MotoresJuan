@@ -53,8 +53,8 @@ private:
 
 	float bright_slider_scroll = 1;
 
-	SDL_bool resize_true = SDL_TRUE;
-	SDL_bool resize_false = SDL_FALSE;
+	SDL_bool sdl_true = SDL_TRUE;
+	SDL_bool sdl_false = SDL_FALSE;
 	
 };
 

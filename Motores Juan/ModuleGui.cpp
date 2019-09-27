@@ -242,11 +242,17 @@ void ModuleGui::CreateConfigWindow()
 
 		if(	ImGui::Checkbox("Resizable", &resizable)) 
 		{ 
-			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (resize_true)); }
-			else { !resizable; SDL_SetWindowResizable(App->window->window, (resize_false)); }
+			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (sdl_true)); }
+			else { !resizable; SDL_SetWindowResizable(App->window->window, (sdl_false)); }
 		}
 
-		ImGui::Checkbox("Borderless", &borderless); ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
+		if (ImGui::Checkbox("Borderless", &borderless))
+		{
+			if (borderless) { SDL_SetWindowBordered(App->window->window, sdl_false); !borderless; }
+			else { SDL_SetWindowBordered(App->window->window, sdl_true); }
+		}
+			
+			ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
 
 
 
