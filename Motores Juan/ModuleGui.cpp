@@ -219,7 +219,7 @@ void ModuleGui::CreateConfigWindow()
 	}
 	if (ImGui::TreeNode("Window"))	//Window Configuration
 	{
-		static bool active, checkbox = false;
+		static bool active = false;
 		static int width_slider_scroll, height_slider_scroll = 0;
 
 		ImGui::Checkbox("Active", &active);
@@ -250,11 +250,14 @@ void ModuleGui::CreateConfigWindow()
 		{
 			if (borderless) { SDL_SetWindowBordered(App->window->window, sdl_false); !borderless; }
 			else { SDL_SetWindowBordered(App->window->window, sdl_true); }
+		}	
+		ImGui::SameLine();	
+		
+		if (ImGui::Checkbox("Full Desktop", &fulldesktop))
+		{
+			if (fulldesktop) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			else	SDL_SetWindowFullscreen(App->window->window, 0);
 		}
-			
-			ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
-
-
 
 		ImGui::TreePop();
 	}

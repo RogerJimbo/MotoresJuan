@@ -37,7 +37,7 @@ private:
 	bool fullscreen = false;
 	bool resizable = false;
 	bool borderless = false;
-	bool full_desktop = false;
+	bool fulldesktop = false;
 
 	char* RDTSC;
 	char* MMX;
