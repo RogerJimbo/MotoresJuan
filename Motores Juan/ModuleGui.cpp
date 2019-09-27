@@ -219,20 +219,33 @@ void ModuleGui::CreateConfigWindow()
 	}
 	if (ImGui::TreeNode("Window"))	//Window Configuration
 	{
-		static bool active, fullscreen,resizable,borderless,checkbox = false;
+		static bool active, checkbox = false;
 		static int width_slider_scroll, height_slider_scroll = 0;
 
 		ImGui::Checkbox("Active", &active);
 		if (ImGui::SliderFloat("Brightness", &bright_slider_scroll, 0.0f, 1.0f)) { SDL_SetWindowBrightness(App->window->window, bright_slider_scroll); }
 
-		ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048);
-		ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536);
+		if(ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048) && resizable) 
+			SDL_SetWindowSize(App->window->window, width_slider_scroll, height_slider_scroll);
+
+		if(ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536) && resizable)
+			SDL_SetWindowSize(App->window->window, width_slider_scroll, height_slider_scroll);
 
 		ImGui::Text("Refresh Rate: %.3f ms/frame", ImGui::GetIO().Framerate);
 
-		if (ImGui::Checkbox("FullScreen", &fullscreen)) { App->window->SetFullscreen(true); }
+		if (ImGui::Checkbox("FullScreen", &fullscreen)) 
+		{
+			if (fullscreen) { App->window->SetFullscreen(true); }
+			else { App->window->SetFullscreen(false); }
+		}
+		ImGui::SameLine();
 
-		ImGui::SameLine();	ImGui::Checkbox("Resizable", &resizable);
+		if(	ImGui::Checkbox("Resizable", &resizable)) 
+		{ 
+			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (resize_true)); }
+			else { !resizable; SDL_SetWindowResizable(App->window->window, (resize_false)); }
+		}
+
 		ImGui::Checkbox("Borderless", &borderless); ImGui::SameLine();	ImGui::Checkbox("Full Desktop", &checkbox);
 
 

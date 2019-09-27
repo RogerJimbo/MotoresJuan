@@ -750,6 +750,16 @@ extern DECLSPEC int SDLCALL SDL_UpdateWindowSurfaceRects(SDL_Window * window,
                                                          const SDL_Rect * rects,
                                                          int numrects);
 
+
+extern DECLSPEC void SDLCALL SDL_SetWindowResizable(SDL_Window* window,
+	SDL_bool resizable);
+
+/**
+ *  \brief Show a window.
+ *
+ *  \sa SDL_HideWindow()
+ */
+
 /**
  *  \brief Set a window's input grab mode.
  *

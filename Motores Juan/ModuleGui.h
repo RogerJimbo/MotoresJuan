@@ -34,6 +34,11 @@ private:
 	bool active_engine_windows[NUM_ACT_WIN];
 	bool close_tab = true;
 
+	bool fullscreen = false;
+	bool resizable = false;
+	bool borderless = false;
+	bool full_desktop = false;
+
 	char* RDTSC;
 	char* MMX;
 	char* AVX;
@@ -47,6 +52,9 @@ private:
 	float ms[100];
 
 	float bright_slider_scroll = 1;
+
+	SDL_bool resize_true = SDL_TRUE;
+	SDL_bool resize_false = SDL_FALSE;
 	
 };
 
