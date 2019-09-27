@@ -176,10 +176,9 @@ void ModuleGui::CreateHardwareWindow()
 
 void ModuleGui::CreateConfigWindow()
 {
-	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
-	ImGui::SetNextWindowPos(ImVec2(0, 20));
+	ImGui::SetNextWindowSize(ImVec2(400, 400));
 
-	ImGui::Begin("Configuration");
+	ImGui::Begin("Configuration", 0, ImGuiWindowFlags_NoDocking);
 
 	if (ImGui::TreeNode("Application"))		// FPS Histograms 
 	{
