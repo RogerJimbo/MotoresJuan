@@ -220,9 +220,11 @@ void ModuleGui::CreateConfigWindow()
 	if (ImGui::TreeNode("Window"))	//Window Configuration
 	{
 		static bool active, fullscreen,resizable,borderless,checkbox = false;
+		static int width_slider_scroll, height_slider_scroll = 0;
+
 		ImGui::Checkbox("Active", &active);
-		static int bright_slider_scroll, width_slider_scroll, height_slider_scroll = 0;
-		ImGui::SliderInt("Brightness", &bright_slider_scroll, 0, 1000 );
+		if (ImGui::SliderFloat("Brightness", &bright_slider_scroll, 0.0f, 1.0f)) { SDL_SetWindowBrightness(App->window->window, bright_slider_scroll); }
+
 		ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048);
 		ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536);
 

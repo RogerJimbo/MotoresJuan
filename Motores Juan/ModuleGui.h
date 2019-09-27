@@ -28,7 +28,7 @@ public:
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;
-
+	
 private:
 
 	bool active_engine_windows[NUM_ACT_WIN];
@@ -45,6 +45,8 @@ private:
 
 	float fps[100];
 	float ms[100];
+
+	float bright_slider_scroll = 1;
 	
 };
 
