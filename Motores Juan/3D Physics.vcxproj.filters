@@ -37,6 +37,9 @@
     <Filter Include="Sources\Tools\MathGeoLib\LCG">
       <UniqueIdentifier>{5998b737-d890-4058-bcc5-64223debc900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Parson">
+      <UniqueIdentifier>{9b8f586a-d4fd-4f33-afb7-211a7b62004b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -291,6 +294,9 @@
     <ClInclude Include="MathGeoLib\Algorithm\LCG\LCG.h">
       <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
     </ClInclude>
+    <ClInclude Include="Parson\parson.h">
+      <Filter>Sources\Tools\Parson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -442,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="MathGeoLib\Algorithm\LCG\LCG.cpp">
       <Filter>Sources\Tools\MathGeoLib\LCG</Filter>
+    </ClCompile>
+    <ClCompile Include="Parson\parson.c">
+      <Filter>Sources\Tools\Parson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
