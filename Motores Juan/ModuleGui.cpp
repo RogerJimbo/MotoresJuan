@@ -102,7 +102,6 @@ update_status ModuleGui::PostUpdate(float dt)
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-	write_config();
 
 	return UPDATE_CONTINUE;
 }
@@ -125,12 +124,19 @@ void ModuleGui::CreateAboutWindow()
 	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	ImGui::SetNextWindowPos(ImVec2(0, 20));
 
-	if (close_tab && ImGui::Begin("About"))
+	if (ImGui::Begin("About"), 0, window_flags)
 	{
 		ImGui::Text("Motores Juan"), ImGui::Separator();
 		ImGui::Text("This is a video game engine with academic purposes.");
 		ImGui::Text("By Roger Sanchez and Ivan Drofiak.");
 		ImGui::Text("Licensed under the MIT License."), ImGui::Separator();
+
+		ImGui::Text("External Libraries We Used:");
+		if (ImGui::Button("MathGeoLib")) App->RequestBrowser("http://clb.demon.fi/MathGeoLib/"); ImGui::SameLine();
+		if (ImGui::Button("SDL")) App->RequestBrowser("https://wiki.libsdl.org/FrontPage"); ImGui::SameLine();
+		if (ImGui::Button("Open GL")) App->RequestBrowser("https://www.opengl.org/"); ImGui::SameLine();
+		if (ImGui::Button("Parson")) App->RequestBrowser("https://github.com/kgabis/parson");
+			
 		ImGui::End();
 	}	
 }
@@ -244,7 +250,8 @@ void ModuleGui::CreateConfigWindow()
 		if(	ImGui::Checkbox("Resizable", &resizable)) 
 		{ 
 			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (sdl_true)); }
-			else { !resizable; SDL_SetWindowResizable(App->window->window, (sdl_false)); }
+			else { !resizable; SDL_SetWindowResizable(App->window->window, (sdl_false)); 
+			}
 		}
 
 		if (ImGui::Checkbox("Borderless", &borderless))
@@ -268,18 +275,19 @@ void ModuleGui::CreateConfigWindow()
 	ImGui::End();
 }
 
-void ModuleGui::write_config()
+void ModuleGui::Save_Config(const char* name, const char* string, bool state)
 {
 	JSON_Value *schema = json_parse_string("{\"name\":\"\"}");
-	JSON_Value *user_data = json_parse_file("config.json");
-	char buf[256];
-	const char *name = NULL;
-	if (user_data == NULL || json_validate(schema, user_data) != JSONSuccess) {
-		puts("Enter your name:");
-		scanf("%s", buf);
+	JSON_Value *user_data = json_parse_file("JSON\config.json");
+
+
+	if (user_data == NULL || json_validate(schema, user_data) != JSONSuccess) 
+	{
+
 		user_data = json_value_init_object();
-		json_object_set_string(json_object(user_data), "name", buf);
+		json_object_set_string(json_object(user_data), name, string);
 		json_serialize_to_file(user_data, "config.json");
+
 	}
 	name = json_object_get_string(json_object(user_data), "name");
 	printf("Hello, %s.", name);
@@ -287,4 +295,11 @@ void ModuleGui::write_config()
 	json_value_free(user_data);
 	return;
 }
+
+void ModuleGui::Load_Config(const char* name, const char* string, bool state)
+{
+	
+	
+}
+
 
