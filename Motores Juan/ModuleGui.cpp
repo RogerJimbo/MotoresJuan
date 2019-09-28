@@ -12,6 +12,7 @@
 #include "ImGui\imgui_impl_opengl2.h"
 #include "ModuleWindow.h"
 
+#include "Parson/parson.h"
 
 #include <array>
 
@@ -101,6 +102,7 @@ update_status ModuleGui::PostUpdate(float dt)
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+	write_config();
 
 	return UPDATE_CONTINUE;
 }
@@ -264,5 +266,25 @@ void ModuleGui::CreateConfigWindow()
 		ImGui::Text("Mouse Position: X:%d , Y:%d ",App->input->GetMouseX(), App->input->GetMouseY());
 	}
 	ImGui::End();
+}
+
+void ModuleGui::write_config()
+{
+	JSON_Value *schema = json_parse_string("{\"name\":\"\"}");
+	JSON_Value *user_data = json_parse_file("config.json");
+	char buf[256];
+	const char *name = NULL;
+	if (user_data == NULL || json_validate(schema, user_data) != JSONSuccess) {
+		puts("Enter your name:");
+		scanf("%s", buf);
+		user_data = json_value_init_object();
+		json_object_set_string(json_object(user_data), "name", buf);
+		json_serialize_to_file(user_data, "config.json");
+	}
+	name = json_object_get_string(json_object(user_data), "name");
+	printf("Hello, %s.", name);
+	json_value_free(schema);
+	json_value_free(user_data);
+	return;
 }
 
