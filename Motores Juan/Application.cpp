@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <Windows.h>
 
 Application::Application()
 {
@@ -37,11 +38,17 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	// Call Init() in all modules
+	JSON_Object* config;
+	JSON_Value* config_value;
+
 	p2List_item<Module*>* item = list_modules.getFirst();
 
+	config_value = json_parse_file(config_name.c_str());
+	config = json_value_get_object(config_value);
+
+	 
 	while(item != NULL && ret == true)
-	{
+	{	
 		ret = item->data->Init();
 		item = item->next;
 	}
@@ -60,16 +67,15 @@ bool Application::Init()
 	return ret;
 }
 
-// ---------------------------------------------
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.ReadTime() / 1000.0f;
 	ms_timer.Start();
 }
 
-// ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (saveconfig) { SaveConfigToFile();  !saveconfig; }
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -127,5 +133,29 @@ void Application::AddModule(Module* mod)
 void Application::RequestBrowser(char* url)
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
 
+void Application::SaveConfigToFile()
+{
+	JSON_Value *schema = json_parse_string("{\"name\":\"\"}");
+	JSON_Value *user_data = json_parse_file("config.json");
+	JSON_Value* config = json_value_init_object();
+
+	const char* name = "roger";			
+	const char* string = "my string";	
+
+	if (user_data == NULL || json_validate(schema, user_data) != JSONSuccess)
+	{
+
+		user_data = json_value_init_object();
+		json_object_set_string(json_object(user_data), name, string);			
+		json_serialize_to_file(user_data, "config.json");
+
+		modulegui->Save_Config(json_object(config));
+	}
+	name = json_object_get_string(json_object(user_data), "name");
+
+	json_value_free(schema);
+	json_value_free(user_data);
+	json_value_free(config);
 }

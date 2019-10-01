@@ -9,6 +9,13 @@
 #include "ModuleCamera3D.h"
 #include "ModuleGui.h"
 
+#include "Parson\parson.h"
+
+#include <list>
+#include <vector>
+
+using namespace std;
+
 class Application
 {
 public:
@@ -21,6 +28,7 @@ public:
 private:
 	Timer	ms_timer;
 	float	dt;
+
 	p2List<Module*> list_modules;
 
 public:
@@ -34,10 +42,16 @@ public:
 
 	void RequestBrowser(char* url);
 
+	void Save_Config() { saveconfig = true; }
+
+	string config_name;
+
 private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+	void SaveConfigToFile();
 	
+	bool saveconfig = false;
 
 };

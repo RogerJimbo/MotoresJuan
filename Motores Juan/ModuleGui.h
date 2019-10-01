@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "ImGui/imgui.h"
+#include "Parson\parson.h"
 
 enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
 
@@ -29,7 +30,7 @@ public:
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;
 
-	void Save_Config(const char* name, const char* string, bool state);
+	void Save_Config(JSON_Object* config) const;
 	void Load_Config(const char* name, const char* string, bool state);
 	
 private:

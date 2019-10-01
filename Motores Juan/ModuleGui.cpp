@@ -69,9 +69,11 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::BeginMenu("File")) 
 		{ 
-			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);		//Create new scene
+			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);			//Create new scene
 			ImGui::MenuItem("Open", "Ctrl+O", false, true);					//Import Files
-			ImGui::MenuItem("Save", "Ctrl+S", false, true);					//Save data
+
+			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }	//Save data
+
 			ImGui::MenuItem("Load Default Config", false);					//Loads default config
 			if (ImGui::MenuItem("Close", "ESC"))
 			{
@@ -275,31 +277,14 @@ void ModuleGui::CreateConfigWindow()
 	ImGui::End();
 }
 
-void ModuleGui::Save_Config(const char* name, const char* string, bool state)
+void ModuleGui::Save_Config(JSON_Object* config) const
 {
-	JSON_Value *schema = json_parse_string("{\"name\":\"\"}");
-	JSON_Value *user_data = json_parse_file("JSON\config.json");
-
-
-	if (user_data == NULL || json_validate(schema, user_data) != JSONSuccess) 
-	{
-
-		user_data = json_value_init_object();
-		json_object_set_string(json_object(user_data), name, string);
-		json_serialize_to_file(user_data, "config.json");
-
-	}
-	name = json_object_get_string(json_object(user_data), "name");
-	printf("Hello, %s.", name);
-	json_value_free(schema);
-	json_value_free(user_data);
-	return;
+	json_object_set_boolean(config, "configuration", active_engine_windows[CONFIG]);
 }
 
 void ModuleGui::Load_Config(const char* name, const char* string, bool state)
 {
-	
-	
+		
 }
 
 
