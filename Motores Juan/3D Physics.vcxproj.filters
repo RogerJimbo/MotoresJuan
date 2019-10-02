@@ -40,6 +40,9 @@
     <Filter Include="Sources\Tools\Parson">
       <UniqueIdentifier>{9b8f586a-d4fd-4f33-afb7-211a7b62004b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Glew">
+      <UniqueIdentifier>{41bbdbf5-c63b-472b-9c52-c8f59814a63e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -296,6 +299,18 @@
     </ClInclude>
     <ClInclude Include="Parson\parson.h">
       <Filter>Sources\Tools\Parson</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\eglew.h">
+      <Filter>Sources\Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\glew.h">
+      <Filter>Sources\Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\glxew.h">
+      <Filter>Sources\Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\wglew.h">
+      <Filter>Sources\Tools\Glew</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

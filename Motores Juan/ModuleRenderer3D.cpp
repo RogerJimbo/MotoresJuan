@@ -7,6 +7,7 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+#pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -22,7 +23,7 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
-	//Create context
+	//Creates SDL OpenGL context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
 	{
@@ -114,9 +115,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
-	for(uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-
+	for(uint i = 0; i < MAX_LIGHTS; ++i) lights[i].Render();
+		
 	return UPDATE_CONTINUE;
 }
 
@@ -131,9 +131,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
-
 	SDL_GL_DeleteContext(context);
-
 	return true;
 }
 

@@ -69,12 +69,13 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::BeginMenu("File")) 
 		{ 
-			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);			//Create new scene
-			ImGui::MenuItem("Open", "Ctrl+O", false, true);					//Import Files
+			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);												//Create new scene
+			ImGui::MenuItem("Open", "Ctrl+O", false, true);															//Import Files
 
-			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }	//Save data
+			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }		//Save data
 
-			ImGui::MenuItem("Load Default Config", false);					//Loads default config
+			ImGui::MenuItem("Load Default Config", false);															//Loads default config
+
 			if (ImGui::MenuItem("Close", "ESC"))
 			{
 				ImGui::EndMenu();
