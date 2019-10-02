@@ -14,6 +14,8 @@
 
 #include "Parson/parson.h"
 
+#include "GUI_Config.h"
+
 #include <array>
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -34,6 +36,10 @@ bool ModuleGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 
+	configuration = new GUI_Config(App);
+
+	GUI.push_back((GUI_Config*)configuration);
+
 	return true;
 }
 
@@ -46,6 +52,12 @@ update_status ModuleGui::PreUpdate(float dt)
 	
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
+
+	for (auto item = GUI.begin(); item != GUI.end(); item++)
+	{
+		if ((*item)->show)
+			(*item)->Draw();
+	}
 
 
 

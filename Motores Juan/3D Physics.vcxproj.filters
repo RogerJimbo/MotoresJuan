@@ -43,6 +43,9 @@
     <Filter Include="Sources\Tools\Glew">
       <UniqueIdentifier>{41bbdbf5-c63b-472b-9c52-c8f59814a63e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ImGui Elements">
+      <UniqueIdentifier>{08b5844a-11a7-4aa3-a193-59d8ad3febae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -312,6 +315,12 @@
     <ClInclude Include="Glew\include\wglew.h">
       <Filter>Sources\Tools\Glew</Filter>
     </ClInclude>
+    <ClInclude Include="GUI_Element.h">
+      <Filter>Sources\ImGui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_Config.h">
+      <Filter>Sources\ImGui Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -466,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="Parson\parson.c">
       <Filter>Sources\Tools\Parson</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Config.cpp">
+      <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

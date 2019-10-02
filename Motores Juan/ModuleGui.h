@@ -5,7 +5,11 @@
 #include "ImGui/imgui.h"
 #include "Parson\parson.h"
 
+#include "GUI_Element.h"
+
 enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
+
+class GUI_Config;
 
 class ModuleGui : public Module
 {
@@ -60,6 +64,10 @@ private:
 	SDL_bool sdl_true = SDL_TRUE;
 	SDL_bool sdl_false = SDL_FALSE;
 	
+public:
+	GUI_Config* configuration = nullptr;
+
+	std::vector<GUI_Element*> GUI;
 };
 
-#endif // !__MODULEGUI_H__
+#endif 
