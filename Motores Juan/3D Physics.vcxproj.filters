@@ -321,12 +321,6 @@
     <ClInclude Include="GUI_Config.h">
       <Filter>Sources\ImGui Elements</Filter>
     </ClInclude>
-    <ClInclude Include="GUI_Hierarchy.h">
-      <Filter>Sources\ImGui Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_Scene.h">
-      <Filter>Sources\ImGui Elements</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -483,12 +477,6 @@
       <Filter>Sources\Tools\Parson</Filter>
     </ClCompile>
     <ClCompile Include="GUI_Config.cpp">
-      <Filter>Sources\ImGui Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Hierarchy.cpp">
-      <Filter>Sources\ImGui Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Scene.cpp">
       <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
   </ItemGroup>
