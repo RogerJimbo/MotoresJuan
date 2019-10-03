@@ -59,8 +59,6 @@ update_status ModuleGui::PreUpdate(float dt)
 			(*item)->Draw();
 	}
 
-
-
 	return UPDATE_CONTINUE;
 }
 

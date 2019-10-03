@@ -5,11 +5,12 @@
 #include "ImGui/imgui.h"
 #include "Parson\parson.h"
 
-#include "GUI_Element.h"
+#include <vector>
 
 enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
 
 class GUI_Config;
+class GUI_Element;
 
 class ModuleGui : public Module
 {
