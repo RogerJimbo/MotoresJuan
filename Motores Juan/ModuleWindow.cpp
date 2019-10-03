@@ -46,7 +46,7 @@ bool ModuleWindow::Init()
 		if (WIN_BORDERLESS == true) { flags |= SDL_WINDOW_BORDERLESS; }
 		if(WIN_FULLSCREEN_DESKTOP == true) { flags |= SDL_WINDOW_FULLSCREEN_DESKTOP; }
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
 
 		if(window == NULL)
 		{

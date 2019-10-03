@@ -12,6 +12,7 @@ enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM
 class GUI_Element;
 class GUI_Config;
 class GUI_Hierarchy;
+class GUI_Scene;
 
 class ModuleGui : public Module
 {
@@ -69,6 +70,7 @@ private:
 public:
 	GUI_Config* configuration = nullptr;
 	GUI_Hierarchy* hierarchy = nullptr;
+	GUI_Scene* scene = nullptr;
 
 	std::vector<GUI_Element*> GUI;
 };

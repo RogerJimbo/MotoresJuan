@@ -16,6 +16,7 @@
 
 #include "GUI_Config.h"
 #include "GUI_Hierarchy.h"
+#include "GUI_Scene.h"
 
 #include <array>
 
@@ -37,11 +38,15 @@ bool ModuleGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 
+	SDL_GL_CreateContext(App->window->window);
+
 	configuration = new GUI_Config(App);
 	hierarchy = new GUI_Hierarchy(App);
+	scene = new GUI_Scene(App);
 
 	GUI.push_back((GUI_Config*)configuration);
 	GUI.push_back((GUI_Hierarchy*)hierarchy);
+	GUI.push_back((GUI_Scene*)scene);
 
 	return true;
 }
@@ -119,6 +124,8 @@ update_status ModuleGui::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
+	//SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -129,6 +136,7 @@ bool ModuleGui::CleanUp()
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
 	SDL_GL_DeleteContext(App->renderer3D->context);
+	//SDL_GL_DeleteContext(App->window->window);
 	SDL_DestroyWindow(App->window->window);
 	SDL_Quit();
 
