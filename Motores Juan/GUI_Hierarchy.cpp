@@ -26,7 +26,8 @@ GUI_Hierarchy::~GUI_Hierarchy()
 
 void GUI_Hierarchy::Draw()
 {
-	ImGui::SetNextWindowSize(ImVec2(400, 400));
+	ImGui::SetNextWindowPos(ImVec2(0, 400), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin(name.c_str(), &show);
 
