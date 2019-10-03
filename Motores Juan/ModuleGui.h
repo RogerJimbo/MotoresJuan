@@ -9,8 +9,9 @@
 
 enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
 
-class GUI_Config;
 class GUI_Element;
+class GUI_Config;
+class GUI_Hierarchy;
 
 class ModuleGui : public Module
 {
@@ -29,7 +30,7 @@ public:
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	void CreateAboutWindow();
-	void CreateConfigWindow();
+	//void CreateConfigWindow();
 	void CreateHardwareWindow();
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
@@ -67,6 +68,7 @@ private:
 	
 public:
 	GUI_Config* configuration = nullptr;
+	GUI_Hierarchy* hierarchy = nullptr;
 
 	std::vector<GUI_Element*> GUI;
 };
