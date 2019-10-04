@@ -5,7 +5,7 @@
 class GUI_Config : public GUI_Element
 {
 public:
-	GUI_Config(Application* app);
+	GUI_Config(Application* app, bool start_enabled = true);
 	~GUI_Config();
 
 	void Draw();
@@ -33,7 +33,5 @@ private:
 
 	float bright_slider_scroll = 1;
 
-	SDL_bool sdl_true = SDL_TRUE;
-	SDL_bool sdl_false = SDL_FALSE;
 };
 

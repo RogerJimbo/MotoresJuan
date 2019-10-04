@@ -1,6 +1,7 @@
+#include "ModuleGUI.h"
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleGUI.h"
+
 #include "ModuleWindow.h"
 
 #include "MathGeoLib/Math/float3.h"
@@ -10,29 +11,21 @@
 #include "ImGui/imgui_internal.h"
 #include "ImGui\imgui_impl_sdl.h"
 #include "ImGui\imgui_impl_opengl2.h"
-#include "ModuleWindow.h"
 
 #include "Parson/parson.h"
 
 #include "GUI_Config.h"
-#include "GUI_Hierarchy.h"
-#include "GUI_Scene.h"
-
 #include <array>
 
-ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
-{
-}
+ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Gui"; }
 
-ModuleGui::~ModuleGui()
-{
-}
+ModuleGui::~ModuleGui() {}
 
-bool ModuleGui::Init()
+bool ModuleGui::Init(const JSON_Object& config)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
@@ -41,13 +34,15 @@ bool ModuleGui::Init()
 	SDL_GL_CreateContext(App->window->window);
 
 	configuration = new GUI_Config(App);
-	hierarchy = new GUI_Hierarchy(App);
-	scene = new GUI_Scene(App);
 
-	GUI.push_back((GUI_Config*)configuration);
-	GUI.push_back((GUI_Hierarchy*)hierarchy);
-	GUI.push_back((GUI_Scene*)scene);
+	Gui.push_back((GUI_Config*)configuration);
 
+	return true;
+}
+
+bool ModuleGui::Start()
+{
+	io = &ImGui::GetIO();
 	return true;
 }
 
@@ -61,11 +56,7 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
-	for (auto item = GUI.begin(); item != GUI.end(); item++)
-	{
-		if ((*item)->show)
-			(*item)->Draw();
-	}
+	for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
 
 	return UPDATE_CONTINUE;
 }
@@ -76,11 +67,7 @@ update_status ModuleGui::Update(float dt)
 	//Engine Windows
 	if (!active_engine_windows[ABOUT]) { CreateAboutWindow();}
 
-	//if (active_engine_windows[CONFIG]) { CreateConfigWindow(); }
-
 	if (!active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
-
-	//ImGui::ShowDemoWindow();
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -206,14 +193,15 @@ void ModuleGui::CreateHardwareWindow()
 	ImGui::End();
 }
 
-void ModuleGui::Save_Config(JSON_Object* config) const
+void ModuleGui::Save_Config(JSON_Object& config) const
 {
-	json_object_set_boolean(config, "configuration", active_engine_windows[CONFIG]);
+	json_object_set_boolean(&config, "configuration", active_engine_windows[CONFIG]);
+	json_object_set_boolean(&config, "hierarchy", active_engine_windows[HIERARCHY]);
+	json_object_set_boolean(&config, "about", active_engine_windows[ABOUT]);
 }
 
 void ModuleGui::Load_Config(const char* name, const char* string, bool state)
 {
-		
 }
 
 

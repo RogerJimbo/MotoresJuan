@@ -1,6 +1,7 @@
 #include "GUI_Config.h"
 
 #include "Application.h"
+#include "ModuleGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
@@ -13,27 +14,21 @@
 #include "MathGeoLib/MathGeoLib.h"
 
 
-GUI_Config::GUI_Config(Application* app) : GUI_Element(app)
-{
-	name = "Configuration";
-}
+GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,start_enabled) { config_name = "Configuration"; }
 
-
-GUI_Config::~GUI_Config()
-{
-}
+GUI_Config::~GUI_Config() {}
 
 void GUI_Config::Draw()
 {
 	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
-
-	ImGui::Begin(name.c_str(), &show);
+	ImGui::Begin(config_name.c_str(), &show);
 
 	if (ImGui::CollapsingHeader("Application"))		// FPS Histograms 
 	{
 		//Calculate FPS
-		std::string title_fps;
-		std::string title_ms;
+		string title_fps;
+		string title_ms;
+
 		ImGui::Text("Limit Framerate: ");
 		for (int i = 99; i >= 0; --i)
 		{
@@ -90,16 +85,16 @@ void GUI_Config::Draw()
 
 		if (ImGui::Checkbox("Resizable", &resizable))
 		{
-			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (sdl_true)); }
+			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (SDL_TRUE)); }
 			else {
-				!resizable; SDL_SetWindowResizable(App->window->window, (sdl_false));
+				!resizable; SDL_SetWindowResizable(App->window->window, (SDL_FALSE));
 			}
 		}
 
 		if (ImGui::Checkbox("Borderless", &borderless))
 		{
-			if (borderless) { SDL_SetWindowBordered(App->window->window, sdl_false); !borderless; }
-			else { SDL_SetWindowBordered(App->window->window, sdl_true); }
+			if (borderless) { SDL_SetWindowBordered(App->window->window, SDL_FALSE); !borderless; }
+			else { SDL_SetWindowBordered(App->window->window, SDL_TRUE); }
 		}
 		ImGui::SameLine();
 

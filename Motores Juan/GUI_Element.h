@@ -1,24 +1,36 @@
 #ifndef __GUI_ELEMENT_H__
 #define __GUI_ELEMENT_H__
 
-#include <string>
+class Application;
+
 #include "ImGui/imgui.h"
 #include "Application.h"
-
-class Application;
+#include <string>
 
 class GUI_Element
 {
 public:
+	Application* App = nullptr;
+
 	GUI_Element(Application* app, bool active = true):App(app), show(active) {}
 	~GUI_Element(){}
 
-	virtual void Init() {}
+	virtual bool Init(const JSON_Object& config) { return true; }
+
+	virtual bool Start() { return true; }
+
+	virtual update_status PreUpdate(float dt) { return UPDATE_CONTINUE; }
+
+	virtual update_status Update(float dt) { return UPDATE_CONTINUE; }
+
+	virtual update_status PostUpdate(float dt) { return UPDATE_CONTINUE; }
+
 	virtual void Draw() {}
 
+	virtual bool CleanUp() { return true; }
+
 public:
-	std::string name = "No name";
-	Application* App = nullptr;
+	string config_name;
 	bool show = true;
 };
 #endif

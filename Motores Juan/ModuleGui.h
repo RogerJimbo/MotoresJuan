@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "ImGui/imgui.h"
 #include "Parson\parson.h"
-
+#include "Globals.h"
 #include <vector>
 
 enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
@@ -20,7 +20,8 @@ public:
 	ModuleGui(Application* app, bool start_enabled = true);
 	~ModuleGui();
 
-	bool Init();
+	bool Init(const JSON_Object& config);
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
@@ -37,7 +38,7 @@ public:
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;
 
-	void Save_Config(JSON_Object* config) const;
+	void Save_Config(JSON_Object& config) const;
 	void Load_Config(const char* name, const char* string, bool state);
 	
 private:
@@ -64,15 +65,14 @@ private:
 
 	float bright_slider_scroll = 1;
 
-	SDL_bool sdl_true = SDL_TRUE;
-	SDL_bool sdl_false = SDL_FALSE;
-	
+	ImGuiIO* io;
+
 public:
 	GUI_Config* configuration = nullptr;
 	GUI_Hierarchy* hierarchy = nullptr;
 	GUI_Scene* scene = nullptr;
 
-	std::vector<GUI_Element*> GUI;
+	vector<GUI_Element*> Gui;
 };
 
 #endif 
