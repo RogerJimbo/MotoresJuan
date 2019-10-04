@@ -129,7 +129,7 @@ void Application::Save_Config() { saveconfig = true; }
 
 void Application::SaveConfigToFile()
 {
-	JSON_Value* config = json_parse_file(config_name.c_str());
+	JSON_Value* config = json_value_init_object();
 
 	json_object_set_boolean(json_object(config), "SavedInfo", true);
 

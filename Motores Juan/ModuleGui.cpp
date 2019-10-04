@@ -198,12 +198,10 @@ void ModuleGui::Save_Config(JSON_Object& config) const
 	json_object_set_boolean(&config, "configuration", active_engine_windows[CONFIG]);
 	json_object_set_boolean(&config, "hierarchy", active_engine_windows[HIERARCHY]);
 	json_object_set_boolean(&config, "about", active_engine_windows[ABOUT]);
-
 }
 
 void ModuleGui::Load_Config(const char* name, const char* string, bool state)
 {
-		
 }
 
 

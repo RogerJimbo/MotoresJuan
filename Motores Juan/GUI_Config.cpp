@@ -14,7 +14,7 @@
 #include "MathGeoLib/MathGeoLib.h"
 
 
-GUI_Config::GUI_Config(Application* app, bool start_enabled = true) : GUI_Element(app,start_enabled) { config_name = "Configuration"; }
+GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,start_enabled) { config_name = "Configuration"; }
 
 GUI_Config::~GUI_Config() {}
 
