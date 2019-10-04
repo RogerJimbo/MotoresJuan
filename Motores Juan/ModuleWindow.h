@@ -31,6 +31,8 @@ public:
 	SDL_Window* window;
 	SDL_Surface* screen_surface;
 
+	float brightness;
+
 	int window_width = SCREEN_WIDTH;
 	int window_height = SCREEN_HEIGHT;
 
@@ -39,7 +41,7 @@ public:
 	bool borderless = false;
 	bool fulldesktop = false;
 
-	float brightness;
+	const char* window_title;
 };
 
 #endif // __ModuleWindow_H__

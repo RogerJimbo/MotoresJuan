@@ -16,21 +16,18 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	offset_to_player = vec3(0.0f, 14.0f, -12.5f);
 }
 
-ModuleCamera3D::~ModuleCamera3D()
-{}
+ModuleCamera3D::~ModuleCamera3D() {}
 
 bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 	bool ret = true;
-
 	return ret;
 }
 
 bool ModuleCamera3D::CleanUp()
 {
 	LOG("Cleaning camera");
-
 	return true;
 }
 
@@ -40,21 +37,18 @@ update_status ModuleCamera3D::Update(float dt)
 	{
 		vec3 newPos(0, 0, 0);
 		float speed = CAMERA_SPEED * dt;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed *= 4;
-
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) { speed *= 4; }
+			
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
-
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
-		Position += newPos;
-		Reference += newPos;
+		Position, Reference += newPos;
 
 		// Mouse motion 
 
@@ -64,7 +58,6 @@ update_status ModuleCamera3D::Update(float dt)
 			int dy = -App->input->GetMouseYMotion();
 
 			float Sensitivity = 0.25f;
-
 			Position -= Reference;
 
 			if (dx != 0)

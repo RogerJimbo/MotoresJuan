@@ -44,7 +44,6 @@ bool ModuleInput::Init(const JSON_Object& config)
 	if (SDL_NumJoysticks() < 1) { LOG("Warning: No joysticks connected!\n"); }
 	else { controller = SDL_GameControllerOpen(0); }
 
-
 	return ret;
 }
 

@@ -36,7 +36,6 @@ Application::Application()
 
 	//Main Gui Elements
 	AddGuiElement(configuration);
-
 }
 
 Application::~Application()

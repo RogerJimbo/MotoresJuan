@@ -7,8 +7,7 @@
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	window = NULL;
-	screen_surface = NULL;
+	window, screen_surface = NULL;
 	config_name = "Window"; 
 }
 
@@ -67,7 +66,8 @@ bool ModuleWindow::CleanUp()
 
 void ModuleWindow::SetTitle(const char* title)
 {
-	SDL_SetWindowTitle(window, title);
+	SDL_SetWindowTitle(window, title); 
+	window_title = title;
 }
 
 void ModuleWindow::SetLightSlider(float brightness)
@@ -118,4 +118,6 @@ void ModuleWindow::Save_Config(JSON_Object& config) const
 	json_object_set_number(&config, "brightness", brightness);
 	json_object_set_number(&config, "height", window_height);
 	json_object_set_number(&config, "width", window_width);
+
+	//json_object_set_string(&config, "window title", window_title);
 }

@@ -13,22 +13,19 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/MathGeoLib.h"
 
-
 GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,start_enabled) { config_name = "Configuration"; }
 
 GUI_Config::~GUI_Config() {}
-
 
 void GUI_Config::Draw()
 {
 	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
 	ImGui::Begin(config_name.c_str(), &show);
 
-	if (ImGui::CollapsingHeader("Application"))		// FPS Histograms 
+	if (ImGui::CollapsingHeader("Application"))		//Application Configuration
 	{
 		//Calculate FPS
-		string title_fps;
-		string title_ms;
+		string title_fps, title_ms;
 
 		ImGui::Text("Limit Framerate: ");
 		for (int i = 99; i >= 0; --i)
@@ -43,7 +40,7 @@ void GUI_Config::Draw()
 			else { ms[i] = SDL_GetTicks(); }
 		}
 		//App Name and Organitzation
-		static char app_name[30] = "Motores Juan";
+		static char app_name[30]  = "Motores Juan";
 		static char org[30] = "UPC CITM";
 
 		ImGui::InputText("App Name", app_name, sizeof(app_name));
@@ -53,9 +50,7 @@ void GUI_Config::Draw()
 		static float sf1 = 60.0f;
 		ImGui::SliderFloat("Max FPS", &sf1, 0.0f, 100.0f, "%.f FPS");
 
-		//Memory
-
-		//Histograms
+		// Histograms
 		title_fps = "Framerate " + std::to_string(fps[0]);
 		title_ms = "Milliseconds " + std::to_string(ms[0]);
 		ImGui::PlotHistogram("", fps, 100, 0, title_fps.c_str(), 0.f, 50.f, ImVec2(0, 80));

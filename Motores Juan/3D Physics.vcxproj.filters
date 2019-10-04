@@ -16,9 +16,6 @@
     <Filter Include="Sources\Helpers">
       <UniqueIdentifier>{121f8e6b-df36-4ab0-be0d-601ddfc9e503}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Modules\Game">
-      <UniqueIdentifier>{83f46af7-e02f-40c0-9e56-41d76082527b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Tools\ImGui">
       <UniqueIdentifier>{5407bd78-c34b-463f-b888-5bf7e547b8de}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,9 @@
     </Filter>
     <Filter Include="Sources\ImGui Elements">
       <UniqueIdentifier>{08b5844a-11a7-4aa3-a193-59d8ad3febae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Game">
+      <UniqueIdentifier>{431105cb-63ed-4ea8-b61d-e35a0be285ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -322,7 +322,7 @@
       <Filter>Sources\ImGui Elements</Filter>
     </ClInclude>
     <ClInclude Include="ModuleScene.h">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -483,7 +483,7 @@
       <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
     <ClCompile Include="ModuleScene.cpp">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
