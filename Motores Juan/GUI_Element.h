@@ -25,6 +25,8 @@ public:
 
 	virtual update_status PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
+	virtual void Save_Config(JSON_Object& config) const {}
+
 	virtual void Draw() {}
 
 	virtual bool CleanUp() { return true; }

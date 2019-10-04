@@ -42,14 +42,8 @@ public:
 	void Load_Config(const char* name, const char* string, bool state);
 	
 private:
-
 	bool active_engine_windows[NUM_ACT_WIN];
 	bool close_tab = true;
-
-	bool fullscreen = false;
-	bool resizable = false;
-	bool borderless = false;
-	bool fulldesktop = false;
 
 	char* RDTSC;
 	char* MMX;

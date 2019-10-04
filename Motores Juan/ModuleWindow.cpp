@@ -9,12 +9,11 @@ ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, s
 {
 	window = NULL;
 	screen_surface = NULL;
+	config_name = "Window Configuration"; 
 }
 
-// Destructor
 ModuleWindow::~ModuleWindow() {}
 
-// Called before render is available
 bool ModuleWindow::Init(const JSON_Object& config)
 {
 	LOG("Init SDL window & surface");
@@ -55,7 +54,6 @@ bool ModuleWindow::Init(const JSON_Object& config)
 		}
 		else
 		{
-
 			screen_surface = SDL_GetWindowSurface(window);
 		}
 	}
@@ -88,4 +86,10 @@ void ModuleWindow::SetFullscreen(bool fullscreen)
 {
 	Uint32 flags = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
 	SDL_SetWindowFullscreen(this->window,flags);
+	fullscreenconfig = true;
+}
+
+void ModuleWindow::Save_Config(JSON_Object& config) const
+{
+	json_object_set_boolean(&config, "fullscreen", fullscreenconfig);
 }

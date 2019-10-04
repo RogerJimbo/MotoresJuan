@@ -140,6 +140,13 @@ void Application::SaveConfigToFile()
 		json_object_set_value(json_object(config), (*iter)->config_name.c_str(), module_config);
 	}
 
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
+	{
+		JSON_Value* module_config = json_value_init_object();
+		(*iter)->Save_Config(*json_object(module_config));
+		json_object_set_value(json_object(config), (*iter)->config_name.c_str(), module_config);
+	}
+
 	if (config == NULL) { LOG("Error opening config file."); }
 	else { LOG("Sucess opening config file."); }
 

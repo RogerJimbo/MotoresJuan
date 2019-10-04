@@ -9,10 +9,8 @@ class Application;
 class ModuleWindow : public Module
 {
 public:
-
 	ModuleWindow(Application* app, bool start_enabled = true);
 
-	// Destructor
 	virtual ~ModuleWindow();
 
 	bool Init(const JSON_Object& config);
@@ -21,16 +19,16 @@ public:
 	void SetTitle(const char* title);
 	void SetFullscreen(bool fullscreen);
 
-public:
-	//The window we'll be rendering to
-	SDL_Window* window;
+	void Save_Config(JSON_Object& config) const;
 
-	//The surface contained by the window
+public:
+	SDL_Window* window;
 	SDL_Surface* screen_surface;
 
 	int window_width = SCREEN_WIDTH;
 	int window_height = SCREEN_HEIGHT;
 
+	bool fullscreenconfig;
 };
 
 #endif // __ModuleWindow_H__

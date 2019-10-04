@@ -17,7 +17,7 @@
 #include "GUI_Config.h"
 #include <array>
 
-ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Gui"; }
+ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Active Gui Windows"; }
 
 ModuleGui::~ModuleGui() {}
 

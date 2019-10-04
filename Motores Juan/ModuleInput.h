@@ -19,7 +19,6 @@ enum KEY_STATE
 class ModuleInput : public Module
 {
 public:
-
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 
@@ -27,45 +26,16 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
-	KEY_STATE GetKey(int id) const
-	{
-		return keyboard[id];
-	}
+	KEY_STATE GetKey(int id) const { return keyboard[id]; }
+	KEY_STATE GetMouseButton(int id) const { return mouse_buttons[id]; }
+	KEY_STATE GetController(int id) const { return player_controll[id]; }
 
-	KEY_STATE GetMouseButton(int id) const
-	{
-		return mouse_buttons[id];
-	}
+	int GetMouseX() const { return mouse_x; }
+	int GetMouseY() const { return mouse_y; }
+	int GetMouseZ() const { return mouse_z; }
 
-	KEY_STATE GetController(int id) const
-	{
-		return player_controll[id];
-	}
-
-	int GetMouseX() const
-	{
-		return mouse_x;
-	}
-
-	int GetMouseY() const
-	{
-		return mouse_y;
-	}
-
-	int GetMouseZ() const
-	{
-		return mouse_z;
-	}
-
-	int GetMouseXMotion() const
-	{
-		return mouse_x_motion;
-	}
-
-	int GetMouseYMotion() const
-	{
-		return mouse_y_motion;
-	}
+	int GetMouseXMotion() const { return mouse_x_motion; }
+	int GetMouseYMotion() const { return mouse_y_motion; }
 
 public:
 	KEY_STATE* keyboard;
@@ -77,6 +47,7 @@ public:
 	int mouse_x;
 	int mouse_y;
 	int mouse_z;
+
 	int mouse_x_motion;
 	int mouse_y_motion;
 

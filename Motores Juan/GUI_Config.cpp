@@ -18,6 +18,14 @@ GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,s
 
 GUI_Config::~GUI_Config() {}
 
+void GUI_Config::Save_Config(JSON_Object& config) const
+{
+	json_object_set_boolean(&config, "fullscreen", fullscreen);
+	json_object_set_boolean(&config, "resizable", resizable);
+	json_object_set_boolean(&config, "borderless", borderless);
+	json_object_set_boolean(&config, "fulldesktop", fulldesktop);
+}
+
 void GUI_Config::Draw()
 {
 	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
@@ -86,9 +94,7 @@ void GUI_Config::Draw()
 		if (ImGui::Checkbox("Resizable", &resizable))
 		{
 			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (SDL_TRUE)); }
-			else {
-				!resizable; SDL_SetWindowResizable(App->window->window, (SDL_FALSE));
-			}
+			else !resizable; SDL_SetWindowResizable(App->window->window, (SDL_FALSE));
 		}
 
 		if (ImGui::Checkbox("Borderless", &borderless))
