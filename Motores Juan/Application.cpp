@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
+#include "ModuleScene.h"
 
 Application::Application()
 {
@@ -16,6 +17,7 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	modulegui = new ModuleGui(this);
+	modscene = new ModuleScene(this);
 
 	// Gui Elements
 	configuration = new GUI_Config(this);
@@ -29,6 +31,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(modulegui);
+	AddModule(modscene);
 	AddModule(renderer3D); // Renderer last!
 
 	//Main Gui Elements

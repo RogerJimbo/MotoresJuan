@@ -321,6 +321,9 @@
     <ClInclude Include="GUI_Config.h">
       <Filter>Sources\ImGui Elements</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -478,6 +481,9 @@
     </ClCompile>
     <ClCompile Include="GUI_Config.cpp">
       <Filter>Sources\ImGui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleGui.h"
+#include "ModuleScene.h"
 
 #include "GUI_Config.h"
 
@@ -26,6 +27,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleGui* modulegui;
+	ModuleScene* modscene;
 
 	GUI_Config* configuration;
 	GUI_Hierarchy* hierarchy;
