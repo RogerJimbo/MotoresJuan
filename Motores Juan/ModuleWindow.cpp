@@ -57,22 +57,29 @@ bool ModuleWindow::Init(const JSON_Object& config)
 	return ret;
 }
 
-// Called before quitting
 bool ModuleWindow::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
-
-	//Destroy window
 	if(window != NULL) { SDL_DestroyWindow(window); }
-
-	//Quit SDL subsystems
-	SDL_Quit();
+	SDL_Quit();			//Quit SDL subsystems
 	return true;
 }
 
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+void ModuleWindow::SetLightSlider(float brightness)
+{
+	SDL_SetWindowBrightness(window, brightness);
+	this->brightness = brightness;
+}
+
+void ModuleWindow::SetWindowSize(int width, int height)
+{
+	SDL_SetWindowSize(window, width, height);
+	this->window_height = height, this->window_width = width;
 }
 
 void ModuleWindow::SetFullscreen(bool fullscreen)
@@ -107,4 +114,8 @@ void ModuleWindow::Save_Config(JSON_Object& config) const
 	json_object_set_boolean(&config, "resizable", resizable);
 	json_object_set_boolean(&config, "borderless", borderless);
 	json_object_set_boolean(&config, "fulldesktop", fulldesktop);
+
+	json_object_set_number(&config, "brightness", brightness);
+	json_object_set_number(&config, "height", window_height);
+	json_object_set_number(&config, "width", window_width);
 }

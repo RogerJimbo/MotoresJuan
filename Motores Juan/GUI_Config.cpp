@@ -67,15 +67,14 @@ void GUI_Config::Draw()
 		static int width_slider_scroll, height_slider_scroll = 0;
 
 		ImGui::Checkbox("Active", &active);
-		if (ImGui::SliderFloat("Brightness", &bright_slider_scroll, 0.0f, 1.0f)) { SDL_SetWindowBrightness(App->window->window, bright_slider_scroll); }
-
-		if (ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048) && resizable)
-			SDL_SetWindowSize(App->window->window, width_slider_scroll, height_slider_scroll);
-
-		if (ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536) && resizable)
-			SDL_SetWindowSize(App->window->window, width_slider_scroll, height_slider_scroll);
 
 		ImGui::Text("Refresh Rate: %.3f ms/frame", ImGui::GetIO().Framerate);
+
+		if (ImGui::SliderFloat("Brightness", &bright_slider_scroll, 0.0f, 1.0f)) { App->window->SetLightSlider(bright_slider_scroll); }
+
+		if (ImGui::SliderInt("Width", &width_slider_scroll, 640, 2048) && resizable) { App->window->SetWindowSize(width_slider_scroll, height_slider_scroll); }
+
+		if (ImGui::SliderInt("Height", &height_slider_scroll, 480, 1536) && resizable) { App->window->SetWindowSize(width_slider_scroll, height_slider_scroll); }
 
 		if (ImGui::Checkbox("FullScreen", &fullscreen)) { fullscreen ? App->window->SetFullscreen(true) : App->window->SetFullscreen(false); } 	ImGui::SameLine();
 
@@ -86,9 +85,7 @@ void GUI_Config::Draw()
 		if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }
 	}
 
-	if (ImGui::CollapsingHeader("Input Info"))
-	{
-		ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY());
-	}
+	if (ImGui::CollapsingHeader("Input Info")) { ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY()); }
+
 	ImGui::End();
 }

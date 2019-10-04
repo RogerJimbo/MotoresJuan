@@ -22,6 +22,9 @@ public:
 	void SetBorderless(bool borderless);
 	void SetFullDesktop(bool fulldesktop);
 
+	void SetLightSlider(float brightness);
+	void SetWindowSize(int width, int height);
+
 	void Save_Config(JSON_Object& config) const;
 
 public:
@@ -35,6 +38,8 @@ public:
 	bool resizable = false;
 	bool borderless = false;
 	bool fulldesktop = false;
+
+	float brightness;
 };
 
 #endif // __ModuleWindow_H__
