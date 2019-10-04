@@ -18,13 +18,6 @@ GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,s
 
 GUI_Config::~GUI_Config() {}
 
-void GUI_Config::Save_Config(JSON_Object& config) const
-{
-	json_object_set_boolean(&config, "fullscreen", fullscreen);
-	json_object_set_boolean(&config, "resizable", resizable);
-	json_object_set_boolean(&config, "borderless", borderless);
-	json_object_set_boolean(&config, "fulldesktop", fulldesktop);
-}
 
 void GUI_Config::Draw()
 {
@@ -84,31 +77,13 @@ void GUI_Config::Draw()
 
 		ImGui::Text("Refresh Rate: %.3f ms/frame", ImGui::GetIO().Framerate);
 
-		if (ImGui::Checkbox("FullScreen", &fullscreen))
-		{
-			if (fullscreen) { App->window->SetFullscreen(true); }
-			else { App->window->SetFullscreen(false); }
-		}
-		ImGui::SameLine();
+		if (ImGui::Checkbox("FullScreen", &fullscreen)) { fullscreen ? App->window->SetFullscreen(true) : App->window->SetFullscreen(false); } 	ImGui::SameLine();
 
-		if (ImGui::Checkbox("Resizable", &resizable))
-		{
-			if (resizable) { resizable; SDL_SetWindowResizable(App->window->window, (SDL_TRUE)); }
-			else !resizable; SDL_SetWindowResizable(App->window->window, (SDL_FALSE));
-		}
+		if (ImGui::Checkbox("Resizable", &resizable)) { resizable ? App->window->SetResizable(true) : App->window->SetResizable(false); }
 
-		if (ImGui::Checkbox("Borderless", &borderless))
-		{
-			if (borderless) { SDL_SetWindowBordered(App->window->window, SDL_FALSE); !borderless; }
-			else { SDL_SetWindowBordered(App->window->window, SDL_TRUE); }
-		}
-		ImGui::SameLine();
-
-		if (ImGui::Checkbox("Full Desktop", &fulldesktop))
-		{
-			if (fulldesktop) SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-			else	SDL_SetWindowFullscreen(App->window->window, 0);
-		}
+		if (ImGui::Checkbox("Borderless", &borderless)) { borderless ? App->window->SetBorderless(true) : App->window->SetBorderless(false); } ImGui::SameLine();
+		
+		if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }
 	}
 
 	if (ImGui::CollapsingHeader("Input Info"))

@@ -8,7 +8,6 @@ public:
 	GUI_Config(Application* app, bool start_enabled = true);
 	~GUI_Config();
 
-	void Save_Config(JSON_Object& config) const;
 	void Draw();
 
 private:

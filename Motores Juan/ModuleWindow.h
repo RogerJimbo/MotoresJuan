@@ -18,6 +18,9 @@ public:
 
 	void SetTitle(const char* title);
 	void SetFullscreen(bool fullscreen);
+	void SetResizable(bool resizable);
+	void SetBorderless(bool borderless);
+	void SetFullDesktop(bool fulldesktop);
 
 	void Save_Config(JSON_Object& config) const;
 
@@ -28,7 +31,10 @@ public:
 	int window_width = SCREEN_WIDTH;
 	int window_height = SCREEN_HEIGHT;
 
-	bool fullscreenconfig;
+	bool fullscreen = false;
+	bool resizable = false;
+	bool borderless = false;
+	bool fulldesktop = false;
 };
 
 #endif // __ModuleWindow_H__

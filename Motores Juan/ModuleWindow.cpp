@@ -9,7 +9,7 @@ ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, s
 {
 	window = NULL;
 	screen_surface = NULL;
-	config_name = "Window Configuration"; 
+	config_name = "Window"; 
 }
 
 ModuleWindow::~ModuleWindow() {}
@@ -63,10 +63,7 @@ bool ModuleWindow::CleanUp()
 	LOG("Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window
-	if(window != NULL)
-	{
-		SDL_DestroyWindow(window);
-	}
+	if(window != NULL) { SDL_DestroyWindow(window); }
 
 	//Quit SDL subsystems
 	SDL_Quit();
@@ -81,11 +78,33 @@ void ModuleWindow::SetTitle(const char* title)
 void ModuleWindow::SetFullscreen(bool fullscreen)
 {
 	Uint32 flags = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
-	SDL_SetWindowFullscreen(this->window,flags);
-	fullscreenconfig = true;
+	SDL_SetWindowFullscreen(window,flags);
+	this->fullscreen = fullscreen;
+}
+
+void ModuleWindow::SetResizable(bool resizable)
+{
+	resizable ? SDL_WINDOW_RESIZABLE, SDL_SetWindowResizable(window, (SDL_TRUE)) : 0, SDL_SetWindowResizable(window, (SDL_FALSE));
+	this->resizable = resizable;
+}
+
+void ModuleWindow::SetBorderless(bool borderless)
+{
+	borderless ? SDL_WINDOW_RESIZABLE, SDL_SetWindowBordered(window, SDL_FALSE) : 0, SDL_SetWindowBordered(window, (SDL_TRUE));
+	this->borderless = borderless;
+}
+
+void ModuleWindow::SetFullDesktop(bool fulldesktop)
+{
+	Uint32 flags = fulldesktop ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0;
+	SDL_SetWindowFullscreen(window, flags);
+	this->fulldesktop = fulldesktop;
 }
 
 void ModuleWindow::Save_Config(JSON_Object& config) const
 {
-	json_object_set_boolean(&config, "fullscreen", fullscreenconfig);
+	json_object_set_boolean(&config, "fullscreen", fullscreen);
+	json_object_set_boolean(&config, "resizable", resizable);
+	json_object_set_boolean(&config, "borderless", borderless);
+	json_object_set_boolean(&config, "fulldesktop", fulldesktop);
 }
