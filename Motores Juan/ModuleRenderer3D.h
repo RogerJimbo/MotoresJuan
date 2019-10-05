@@ -19,10 +19,20 @@ public:
 
 	void OnResize(int width, int height);
 
+	void BindFramebuffer();
+	void UnbindFramebuffer();
+
+private:
+	void GenerateFramebuffer();
+
 public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	uint framebuffer = 0;
+	uint framebuffer_texture = 0;
+	bool vsync = false;
 };
