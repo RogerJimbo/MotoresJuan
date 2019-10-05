@@ -59,7 +59,7 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
-	for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
+	//for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
 
 	return UPDATE_CONTINUE;
 }
@@ -70,6 +70,9 @@ update_status ModuleGui::Update(float dt)
 	//Engine Windows
 	if (active_engine_windows[ABOUT]) { CreateAboutWindow();}
 	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
+	if (!active_engine_windows[CONFIG]) { CreateConfigWindow(); }
+
+	ImGui::ShowDemoWindow();
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -152,6 +155,32 @@ void ModuleGui::CreateAboutWindow()
 		ImGui::End();
 	}	
 }
+
+void ModuleGui::CreateConfigWindow()
+{
+	ImGui::SetNextWindowPos(ImVec2(0, 400), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
+	ImGui::Begin(" ");
+
+	static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable;
+	const char* names[2] = { "Configuration", "Console" };
+	static bool opened[2] = { true, true };
+
+	if (ImGui::BeginTabBar(" ", tab_bar_flags))
+
+		for (int n = 0; n < IM_ARRAYSIZE(opened); n++)
+			if (opened[n] && ImGui::BeginTabItem(names[n], &opened[n]))
+			{
+				if(n==0) { this->configuration->Draw(); }
+				else if (n == 1) { this->console->Draw(); }
+
+				ImGui::EndTabItem();
+			}
+	ImGui::EndTabBar();
+
+	ImGui::End();
+}
+
 
 void ModuleGui::CreateHardwareWindow()
 {

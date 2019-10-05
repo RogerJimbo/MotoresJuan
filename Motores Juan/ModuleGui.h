@@ -34,6 +34,7 @@ public:
 
 	void CreateAboutWindow();
 	void CreateHardwareWindow();
+	void CreateConfigWindow();
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;

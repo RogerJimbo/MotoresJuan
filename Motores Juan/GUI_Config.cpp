@@ -15,9 +15,6 @@ GUI_Config::~GUI_Config() {}
 
 void GUI_Config::Draw()
 {
-	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
-	ImGui::Begin(elem_name.c_str(), &show);
-
 	if (ImGui::CollapsingHeader("Application"))		//Application Configuration
 	{
 		//Calculate FPS
@@ -52,6 +49,7 @@ void GUI_Config::Draw()
 		ImGui::PlotHistogram("", fps, 100, 0, title_fps.c_str(), 0.f, 50.f, ImVec2(0, 80));
 		ImGui::PlotHistogram("", ms, 100, 0, title_ms.c_str(), 0.f, 50.f, ImVec2(0, 80));
 	}
+
 	if (ImGui::CollapsingHeader("Window"))	//Window Configuration
 	{
 		static bool active = false;
@@ -78,5 +76,4 @@ void GUI_Config::Draw()
 
 	if (ImGui::CollapsingHeader("Input Info")) { ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY()); }
 
-	ImGui::End();
 }

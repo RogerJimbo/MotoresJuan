@@ -39,4 +39,5 @@ public:
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2) {}
 
 	string module_name;
+
 };
