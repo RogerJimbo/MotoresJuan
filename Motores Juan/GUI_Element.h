@@ -32,7 +32,7 @@ public:
 	virtual bool CleanUp() { return true; }
 
 public:
-	string config_name;
+	string name;
 	bool show = true;
 };
 #endif

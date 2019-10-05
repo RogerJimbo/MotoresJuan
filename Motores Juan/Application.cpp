@@ -60,7 +60,7 @@ bool Application::Init()
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	//Modules
 		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->config_name.c_str()));
 	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++)	//Gui Elements
-		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->config_name.c_str()));
+		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->name.c_str()));
 
 	// Start
 	LOG("Application Start"); 	
@@ -146,7 +146,7 @@ void Application::SaveConfigToFile()
 	{
 		JSON_Value* module_config = json_value_init_object();
 		(*iter)->Save_Config(*json_object(module_config));
-		json_object_set_value(json_object(config), (*iter)->config_name.c_str(), module_config);
+		json_object_set_value(json_object(config), (*iter)->name.c_str(), module_config);
 	}
 
 	if (config == NULL) { LOG("Error opening config file."); }
