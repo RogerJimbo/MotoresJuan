@@ -122,12 +122,11 @@ void ModuleWindow::Save_Config(JSON_Object& config) const
 
  void ModuleWindow::Load_Config(const JSON_Object& config)
  {
-	 fullscreen = json_object_get_boolean(&config, "fullscreen");
-	 resizable = json_object_get_boolean(&config, "resizable");
-	 borderless = json_object_get_boolean(&config, "borderless");
-	 fulldesktop = json_object_get_boolean(&config, "fulldesktop");
+	 //SetFullscreen(json_object_get_boolean(&config, "fullscreen"));
+	 SetResizable(json_object_get_boolean(&config, "resizable"));
+	 SetBorderless(json_object_get_boolean(&config, "borderless"));
+	 SetFullDesktop(json_object_get_boolean(&config, "fulldesktop"));
 
-	 brightness = json_object_get_number(&config, "brightness");
-	 window_height = json_object_get_number(&config, "height");
-	 window_width = json_object_get_number(&config, "width");
+	 //SetLightSlider(json_object_get_number(&config, "brightness"));
+	 SetWindowSize(json_object_get_number(&config, "width"), json_object_get_number(&config, "height"));
  }
