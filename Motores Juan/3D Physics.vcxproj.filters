@@ -43,9 +43,6 @@
     <Filter Include="Sources\ImGui Elements">
       <UniqueIdentifier>{08b5844a-11a7-4aa3-a193-59d8ad3febae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Game">
-      <UniqueIdentifier>{431105cb-63ed-4ea8-b61d-e35a0be285ba}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
