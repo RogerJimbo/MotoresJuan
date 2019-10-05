@@ -14,40 +14,6 @@ GUI_Console::GUI_Console(Application* app, bool start_enabled) : GUI_Element(app
 
 GUI_Console::~GUI_Console() {}
 
-
-bool GUI_Console::Init(const JSON_Object& config)
-{
-	return true;
-}
-
-bool GUI_Console::Start()
-{
-	return true;
-}
-
-update_status GUI_Console::PreUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-update_status GUI_Console::Update(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-update_status GUI_Console::PostUpdate(float dt)
-{
-
-	return UPDATE_CONTINUE;
-}
-
-bool GUI_Console::CleanUp()
-{
-	return true;
-}
-
 void GUI_Console::Draw()
 {
 	

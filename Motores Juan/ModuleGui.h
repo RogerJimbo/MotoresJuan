@@ -32,9 +32,11 @@ public:
 
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+	void CreateConfigWindow();
 	void CreateAboutWindow();
 	void CreateHardwareWindow();
-	void CreateConfigWindow();
+
+	void CreatePropertiesWindow();
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;

@@ -74,6 +74,8 @@ void GUI_Config::Draw()
 		if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }
 	}
 
+	if (ImGui::CollapsingHeader("Renderer")) { }
+
 	if (ImGui::CollapsingHeader("Input Info")) { ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY()); }
 
 }

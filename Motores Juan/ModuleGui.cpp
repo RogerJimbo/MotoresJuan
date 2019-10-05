@@ -72,7 +72,7 @@ update_status ModuleGui::Update(float dt)
 	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
 	if (!active_engine_windows[CONFIG]) { CreateConfigWindow(); }
 
-	ImGui::ShowDemoWindow();
+	// ImGui::ShowDemoWindow();
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -163,24 +163,24 @@ void ModuleGui::CreateConfigWindow()
 	ImGui::Begin(" ");
 
 	static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable;
-	const char* names[2] = { "Configuration", "Console" };
-	static bool opened[2] = { true, true };
+	const char* tab_names[2] = { "Configuration", "Other" };
+	static bool opened_tab[2] = { true, true };
 
 	if (ImGui::BeginTabBar(" ", tab_bar_flags))
 
-		for (int n = 0; n < IM_ARRAYSIZE(opened); n++)
-			if (opened[n] && ImGui::BeginTabItem(names[n], &opened[n]))
+		for (int iter = 0; iter < IM_ARRAYSIZE(opened_tab); iter++)
+			if (opened_tab[iter] && ImGui::BeginTabItem(tab_names[iter], &opened_tab[iter]))
 			{
-				if(n==0) { this->configuration->Draw(); }
-				else if (n == 1) { this->console->Draw(); }
-
+				if(iter == 0) { this->configuration->Draw(); }
+				else if (iter == 1) { /*Call other tab function*/}
 				ImGui::EndTabItem();
 			}
-	ImGui::EndTabBar();
 
+	ImGui::EndTabBar();
 	ImGui::End();
 }
 
+void ModuleGui::CreatePropertiesWindow() {}
 
 void ModuleGui::CreateHardwareWindow()
 {

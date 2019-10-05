@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
-
-//#include "GL/glew.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -38,7 +38,7 @@ update_status ModuleScene::PostUpdate(float dt)
 
 void ModuleScene::Draw()
 {
-	
+
 }
 
 bool ModuleScene::CleanUp()
