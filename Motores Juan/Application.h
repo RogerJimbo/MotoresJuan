@@ -52,9 +52,9 @@ public:
 	void RequestBrowser(char* url);
 
 	void Save_Config();
+	void Load_Config();
 
 	string config_name;
-	string config_file_name;
 
 private:
 	void AddModule(Module* mod);
@@ -62,7 +62,8 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 	void SaveConfigToFile();
+	void LoadConfigFromFile();
 	
 	bool saveconfig = false;
-
+	bool loadconfig = false;
 };

@@ -17,7 +17,7 @@
 #include "GUI_Config.h"
 #include <array>
 
-ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Active Gui Windows"; }
+ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Active Gui Windows"; }
 
 ModuleGui::~ModuleGui() {}
 
@@ -25,17 +25,16 @@ bool ModuleGui::Init(const JSON_Object& config)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
-
 	SDL_GL_CreateContext(App->window->window);
 
 	configuration = new GUI_Config(App);
-
 	Gui.push_back((GUI_Config*)configuration);
+
+	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 
 	return true;
 }
@@ -65,9 +64,8 @@ update_status ModuleGui::PreUpdate(float dt)
 update_status ModuleGui::Update(float dt)
 {
 	//Engine Windows
-	if (!active_engine_windows[ABOUT]) { CreateAboutWindow();}
-
-	if (!active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
+	if (active_engine_windows[ABOUT]) { CreateAboutWindow();}
+	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -77,9 +75,8 @@ update_status ModuleGui::Update(float dt)
 			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);												//Create new scene
 			ImGui::MenuItem("Open", "Ctrl+O", false, true);															//Import Files
 
-			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }		//Save data
-
-			ImGui::MenuItem("Load Default Config", false);															//Loads default config
+			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }		//Save data JSON
+			if (ImGui::MenuItem("Load Config", "Ctrl+L", false,true)) { App->Load_Config(); }		//Load data JSON
 
 			if (ImGui::MenuItem("Close", "ESC"))
 			{
@@ -187,8 +184,7 @@ void ModuleGui::CreateHardwareWindow()
 
 	ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
 	
-	//GPU
-	IDirect3DDevice9* glGetString();
+	IDirect3DDevice9* glGetString();	//GPU
 
 	ImGui::End();
 }
@@ -197,11 +193,21 @@ void ModuleGui::Save_Config(JSON_Object& config) const
 {
 	json_object_set_boolean(&config, "configuration", active_engine_windows[CONFIG]);
 	json_object_set_boolean(&config, "hierarchy", active_engine_windows[HIERARCHY]);
-	json_object_set_boolean(&config, "about", active_engine_windows[ABOUT]);
+	json_object_set_boolean(&config, "about", active_engine_windows[ABOUT]); 
+	json_object_set_boolean(&config, "hardware", active_engine_windows[HARDWARE]);
+	json_object_set_boolean(&config, "console", active_engine_windows[CONSOLE]);
+	json_object_set_boolean(&config, "inspector", active_engine_windows[INSPECTOR]);
+
 }
 
-void ModuleGui::Load_Config(const char* name, const char* string, bool state)
+void ModuleGui::Load_Config(JSON_Object& config)
 {
+	active_engine_windows[CONFIG] = json_object_get_boolean(&config, "configuration");
+	active_engine_windows[HIERARCHY] = json_object_get_boolean(&config, "hierarchy");
+	active_engine_windows[ABOUT] = json_object_get_boolean(&config, "about");
+	active_engine_windows[HARDWARE] = json_object_get_boolean(&config, "hardware");
+	active_engine_windows[CONSOLE] = json_object_get_boolean(&config, "console");
+	active_engine_windows[INSPECTOR] = json_object_get_boolean(&config, "inspector");	
 }
 
 

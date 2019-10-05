@@ -13,14 +13,14 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/MathGeoLib.h"
 
-GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,start_enabled) { name = "Configuration"; }
+GUI_Config::GUI_Config(Application* app, bool start_enabled) : GUI_Element(app,start_enabled) { elem_name = "Configuration"; }
 
 GUI_Config::~GUI_Config() {}
 
 void GUI_Config::Draw()
 {
 	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
-	ImGui::Begin(name.c_str(), &show);
+	ImGui::Begin(elem_name.c_str(), &show);
 
 	if (ImGui::CollapsingHeader("Application"))		//Application Configuration
 	{

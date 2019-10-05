@@ -26,13 +26,14 @@ public:
 	virtual update_status PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 	virtual void Save_Config(JSON_Object& config) const {}
+	virtual void Load_Config(const JSON_Object& config) {}
 
 	virtual void Draw() {}
 
 	virtual bool CleanUp() { return true; }
 
 public:
-	string name;
+	string elem_name;
 	bool show = true;
 };
 #endif

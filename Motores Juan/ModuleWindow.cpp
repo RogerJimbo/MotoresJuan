@@ -8,7 +8,7 @@
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window, screen_surface = NULL;
-	config_name = "Window"; 
+	module_name = "Window"; 
 }
 
 ModuleWindow::~ModuleWindow() {}
@@ -97,7 +97,7 @@ void ModuleWindow::SetResizable(bool resizable)
 
 void ModuleWindow::SetBorderless(bool borderless)
 {
-	borderless ? SDL_WINDOW_RESIZABLE, SDL_SetWindowBordered(window, SDL_FALSE) : 0, SDL_SetWindowBordered(window, (SDL_TRUE));
+	borderless ? SDL_SetWindowBordered(window, SDL_FALSE) :  SDL_SetWindowBordered(window, (SDL_TRUE));
 	this->borderless = borderless;
 }
 
@@ -118,6 +118,16 @@ void ModuleWindow::Save_Config(JSON_Object& config) const
 	json_object_set_number(&config, "brightness", brightness);
 	json_object_set_number(&config, "height", window_height);
 	json_object_set_number(&config, "width", window_width);
-
-	//json_object_set_string(&config, "window title", window_title);
 }
+
+ void ModuleWindow::Load_Config(const JSON_Object& config)
+ {
+	 fullscreen = json_object_get_boolean(&config, "fullscreen");
+	 resizable = json_object_get_boolean(&config, "resizable");
+	 borderless = json_object_get_boolean(&config, "borderless");
+	 fulldesktop = json_object_get_boolean(&config, "fulldesktop");
+
+	 brightness = json_object_get_number(&config, "brightness");
+	 window_height = json_object_get_number(&config, "height");
+	 window_width = json_object_get_number(&config, "width");
+ }

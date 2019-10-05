@@ -26,6 +26,7 @@ public:
 	void SetWindowSize(int width, int height);
 
 	void Save_Config(JSON_Object& config) const;
+	void Load_Config(const JSON_Object& config);
 
 public:
 	SDL_Window* window;

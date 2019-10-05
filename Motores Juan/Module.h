@@ -32,8 +32,11 @@ public:
 	virtual update_status PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 	virtual bool CleanUp() { return true; }
+
 	virtual void Save_Config(JSON_Object& config) const {}
+	virtual void Load_Config(const JSON_Object& config) {}
+
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2) {}
 
-	string config_name;
+	string module_name;
 };

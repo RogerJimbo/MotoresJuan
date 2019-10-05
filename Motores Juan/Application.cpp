@@ -45,22 +45,15 @@ bool Application::Init()
 {
 	bool ret = true;
 
-	JSON_Object* config;
-
-	config_file_name = "JSON Files/config2.json";
+	JSON_Object* config = json_value_get_object(json_parse_file(config_name.c_str()));
 	config_name = "JSON Files/config.json";
-
-	if (json_object_get_boolean(json_value_get_object(json_parse_file(config_name.c_str())), "SavedInfo"))
-		config = json_value_get_object(json_parse_file(config_name.c_str()));
-	else
-		config = json_value_get_object(json_parse_file(config_file_name.c_str()));
 
 	// Init
 	LOG("Application Init");
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	//Modules
-		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->config_name.c_str()));
+		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->module_name.c_str()));
 	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++)	//Gui Elements
-		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->name.c_str()));
+		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->elem_name.c_str()));
 
 	// Start
 	LOG("Application Start"); 	
@@ -82,6 +75,7 @@ void Application::PrepareUpdate()
 void Application::FinishUpdate()
 {
 	if (saveconfig) { SaveConfigToFile();  !saveconfig; }
+	if (loadconfig) { LoadConfigFromFile(); !loadconfig; }
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -129,6 +123,8 @@ void Application::RequestBrowser(char* url) { ShellExecuteA(NULL, "open", url, N
 
 void Application::Save_Config() { saveconfig = true; }
 
+void Application::Load_Config() { loadconfig = true; }
+
 void Application::SaveConfigToFile()
 {
 	JSON_Value* config = json_value_init_object();
@@ -139,14 +135,14 @@ void Application::SaveConfigToFile()
 	{
 		JSON_Value* module_config = json_value_init_object();
 		(*iter)->Save_Config(*json_object(module_config));
-		json_object_set_value(json_object(config), (*iter)->config_name.c_str(), module_config);
+		json_object_set_value(json_object(config), (*iter)->module_name.c_str(), module_config);
 	}
 
 	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
 	{
 		JSON_Value* module_config = json_value_init_object();
 		(*iter)->Save_Config(*json_object(module_config));
-		json_object_set_value(json_object(config), (*iter)->name.c_str(), module_config);
+		json_object_set_value(json_object(config), (*iter)->elem_name.c_str(), module_config);
 	}
 
 	if (config == NULL) { LOG("Error opening config file."); }
@@ -154,4 +150,12 @@ void Application::SaveConfigToFile()
 
 	json_serialize_to_file(config, config_name.c_str());
 	json_value_free(config);
+}
+
+void Application::LoadConfigFromFile()
+{
+	JSON_Object* config = json_value_get_object(json_parse_file(config_name.c_str()));
+
+	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end(); iter++)
+		(*iter)->Load_Config(*json_object_get_object(config, config_name.c_str()));
 }

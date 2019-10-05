@@ -38,10 +38,11 @@ public:
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;
 
 	void Save_Config(JSON_Object& config) const;
-	void Load_Config(const char* name, const char* string, bool state);
+	void Load_Config(JSON_Object& config);
 	
 private:
 	bool active_engine_windows[NUM_ACT_WIN];
+		
 	bool close_tab = true;
 
 	char* RDTSC;
