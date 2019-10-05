@@ -1,14 +1,10 @@
 #include "GUI_Config.h"
-
+#include "Globals.h"
 #include "Application.h"
+
 #include "ModuleGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
-
-#include "Globals.h"
-#include "Application.h"
-#include "ModuleGUI.h"
-#include "ModuleWindow.h"
 
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/MathGeoLib.h"

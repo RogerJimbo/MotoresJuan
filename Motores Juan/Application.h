@@ -9,8 +9,9 @@
 #include "ModuleGui.h"
 #include "ModuleScene.h"
 
+#include "GUI_Element.h"
 #include "GUI_Config.h"
-
+#include "GUI_Console.h"
 
 #include "Parson\parson.h"
 
@@ -30,7 +31,7 @@ public:
 	ModuleScene* modscene;
 
 	GUI_Config* configuration;
-	GUI_Hierarchy* hierarchy;
+	GUI_Console* console;
 	GUI_Scene* scene;
 
 private:

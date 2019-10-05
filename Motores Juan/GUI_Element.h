@@ -1,11 +1,13 @@
-#ifndef __GUI_ELEMENT_H__
-#define __GUI_ELEMENT_H__
+#pragma once
 
 class Application;
 
+#include "Globals.h"
 #include "ImGui/imgui.h"
-#include "Application.h"
-#include <string>
+#include "Parson\parson.h"
+#include <list>
+
+using namespace std;
 
 class GUI_Element
 {
@@ -32,8 +34,6 @@ public:
 
 	virtual bool CleanUp() { return true; }
 
-public:
 	string elem_name;
 	bool show = true;
 };
-#endif

@@ -1,13 +1,6 @@
 #include "Application.h"
 #include <Windows.h>
 
-#include "Module.h"
-#include "ModuleCamera3D.h"
-#include "ModuleGui.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleWindow.h"
-#include "ModuleScene.h"
 
 Application::Application()
 {
@@ -21,6 +14,7 @@ Application::Application()
 
 	// Gui Elements
 	configuration = new GUI_Config(this);
+	console = new GUI_Console(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -36,6 +30,7 @@ Application::Application()
 
 	//Main Gui Elements
 	AddGuiElement(configuration);
+	AddGuiElement(console);
 }
 
 Application::~Application()

@@ -11,7 +11,6 @@ public:
 	void Draw();
 
 private:
-	bool active_engine_windows[NUM_ACT_WIN];
 	bool close_tab = true;
 
 	bool fullscreen = false;
