@@ -15,6 +15,7 @@
 #include "Parson/parson.h"
 
 #include "GUI_Config.h"
+#include "GUI_Console.h"
 #include <array>
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Active Gui Windows"; }
@@ -32,7 +33,10 @@ bool ModuleGui::Init(const JSON_Object& config)
 	SDL_GL_CreateContext(App->window->window);
 
 	configuration = new GUI_Config(App);
+	console = new GUI_Console(App);
+
 	Gui.push_back((GUI_Config*)configuration);
+	Gui.push_back((GUI_Console*)console);
 
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 

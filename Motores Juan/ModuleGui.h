@@ -13,6 +13,7 @@ class GUI_Element;
 class GUI_Config;
 class GUI_Hierarchy;
 class GUI_Scene;
+class GUI_Console;
 
 class ModuleGui : public Module
 {
@@ -65,6 +66,7 @@ public:
 	GUI_Config* configuration = nullptr;
 	GUI_Hierarchy* hierarchy = nullptr;
 	GUI_Scene* scene = nullptr;
+	GUI_Console* console = nullptr;
 
 	vector<GUI_Element*> Gui;
 };
