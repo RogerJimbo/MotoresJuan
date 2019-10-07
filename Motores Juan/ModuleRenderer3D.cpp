@@ -98,26 +98,38 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-	}
-
+	}
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	glewInit();
-	GenerateFramebuffer();
+	GLenum err = glewInit();
+
+	glGenFramebuffers(1, &frame_buffer);
+	//glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+
+	glGenTextures(1, &buffer_text);
+	glBindTexture(GL_TEXTURE_2D, buffer_text);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, buffer_text, 0);
+
 	return ret;
 }
 
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	glBindTexture(GL_TEXTURE_2D, framebuffer_texture);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBindTexture(GL_TEXTURE_2D, buffer_text);
+	/*glClearColor(1.f, 1.f, 1.f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
+
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
@@ -135,8 +147,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->modscene->Draw();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	ImGui::Render();
 
@@ -166,31 +176,4 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-}
-
-void ModuleRenderer3D::BindFramebuffer()
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-}
-
-void ModuleRenderer3D::UnbindFramebuffer()
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void ModuleRenderer3D::GenerateFramebuffer()
-{
-	//Create the framebuffer
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glGenTextures(1, &framebuffer_texture);
-	glBindTexture(GL_TEXTURE_2D, framebuffer_texture);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebuffer_texture, 0);
 }

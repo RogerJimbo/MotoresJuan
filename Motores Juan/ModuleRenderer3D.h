@@ -19,12 +19,6 @@ public:
 
 	void OnResize(int width, int height);
 
-	void BindFramebuffer();
-	void UnbindFramebuffer();
-
-private:
-	void GenerateFramebuffer();
-
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -32,7 +26,7 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	uint framebuffer = 0;
-	uint framebuffer_texture = 0;
+	uint frame_buffer = 0;
+	uint buffer_text = 0;
 	bool vsync = false;
 };
