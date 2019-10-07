@@ -11,7 +11,7 @@ public:
 	ModuleCamera3D(Application* app, bool start_enabled = true);
 	~ModuleCamera3D();
 
-	bool Start();
+	bool Init(JSON_Object* config);
 	update_status Update(float dt);
 	bool CleanUp();
 
@@ -19,19 +19,20 @@ public:
 	void LookAt(const vec3 &Spot);
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
-	void setFreeCam(bool freeCam);
+
 
 private:
 
 	void CalculateViewMatrix();
-	bool freeCam = false;
 
 public:
-	
+
 	vec3 X, Y, Z, Position, Reference;
+	mat4x4 Camera_view;
 
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
-	vec3 offset_to_player;
+
+
 };

@@ -106,7 +106,6 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	GLenum err = glewInit();
 
 	glGenFramebuffers(1, &frame_buffer);
-	//glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
 	glGenTextures(1, &buffer_text);
 	glBindTexture(GL_TEXTURE_2D, buffer_text);
@@ -127,8 +126,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindTexture(GL_TEXTURE_2D, buffer_text);
-	/*glClearColor(1.f, 1.f, 1.f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
 
 	glLoadIdentity();
 

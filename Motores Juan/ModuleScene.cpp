@@ -38,13 +38,64 @@ update_status ModuleScene::PostUpdate(float dt)
 
 void ModuleScene::Draw()
 {
+	//Indexes
 	glLineWidth(2.0f);
-	glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
 	glBegin(GL_TRIANGLES);
-	glColor3f(0.0, 0.0, 1.0);
+	glColor3f(1.0, 0.0, 1.0);
+	//Front
 	glVertex3f(1.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 1.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
+
+	glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, 0.0f);
+
+	//Right
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+
+	glVertex3f(1.0f, 1.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+
+	//Left
+	glVertex3f(0.0f, 1.0f, -1.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, 0.0f);
+
+	glVertex3f(0.0f, 1.0f, -1.0f);
+	glVertex3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	
+	//Back
+	glVertex3f(1.0f, 1.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 1.0f, -1.0f);
+
+	glVertex3f(0.0f, 1.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 0.0f, -1.0f);
+
+	//Top
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, -1.0f);
+	glVertex3f(0.0f, 1.0f, 0.0f);
+	
+	glVertex3f(0.0f, 1.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
+	
+	//Bot
+	glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, -1.0f);
+	
+	glVertex3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);
+
 	glEnd();
 }
 

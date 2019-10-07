@@ -17,13 +17,6 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 ModuleCamera3D::~ModuleCamera3D() {}
 
-bool ModuleCamera3D::Start()
-{
-	LOG("Setting up the camera");
-	bool ret = true;
-	return ret;
-}
-
 bool ModuleCamera3D::CleanUp()
 {
 	LOG("Cleaning camera");
@@ -32,61 +25,70 @@ bool ModuleCamera3D::CleanUp()
 
 update_status ModuleCamera3D::Update(float dt)
 {
-	if (freeCam)
+	// Implement a debug camera with keys and mouse
+	// Now we can make this movememnt frame rate independant!
+	vec3 newPos = { 0,0,0 };
+
+	float speed = 3.0f * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed = 8.0f * dt;
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+	Position += Camera_view.translation();
+
+	//Reference += newPos;
+
+	// Mouse motion ----------------
+
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
-		vec3 newPos(0, 0, 0);
-		float speed = CAMERA_SPEED * dt;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) { speed *= 4; }
-			
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+		int mouse_x = -App->input->GetMouseXMotion();
+		int mouse_y = -App->input->GetMouseYMotion();
 
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+		float Sensitivity = 0.4f;
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+		Position -= Reference;
 
-		Position, Reference += newPos;
-
-		// Mouse motion 
-
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+		if (mouse_x != 0)
 		{
-			int dx = -App->input->GetMouseXMotion();
-			int dy = -App->input->GetMouseYMotion();
+			float DeltaX = (float)mouse_x * Sensitivity;
 
-			float Sensitivity = 0.25f;
-			Position -= Reference;
-
-			if (dx != 0)
-			{
-				float DeltaX = (float)dx * Sensitivity;
-
-				X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			}
-
-			if (dy != 0)
-			{
-				float DeltaY = (float)dy * Sensitivity;
-
-				Y = rotate(Y, DeltaY, X);
-				Z = rotate(Z, DeltaY, X);
-
-				if (Y.y < 0.0f)
-				{
-					Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-					Y = cross(Z, X);
-				}
-			}
-
-			Position = Reference + Z * length(Position);
+			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
+
+		if (mouse_y != 0)
+		{
+			float DeltaY = (float)mouse_y * Sensitivity;
+
+			Y = rotate(Y, DeltaY, X);
+			Z = rotate(Z, DeltaY, X);
+
+			if (Y.y < 0.0f)
+			{
+				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = cross(Z, X);
+			}
+		}
+
+		Position = Reference + Z * length(Position);
 	}
-	
+
+	// Recalculate matrix -------------
+
+	Look(Position, Camera_view.translation(), true);
 	CalculateViewMatrix();
+
 
 	return UPDATE_CONTINUE;
 }
@@ -131,11 +133,6 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 float* ModuleCamera3D::GetViewMatrix()
 {
 	return &ViewMatrix;
-}
-
-void ModuleCamera3D::setFreeCam(bool freeCam)
-{
-	this->freeCam = freeCam;
 }
 
 void ModuleCamera3D::CalculateViewMatrix()
