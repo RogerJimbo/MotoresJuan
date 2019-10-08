@@ -3,6 +3,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 
+#include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -119,6 +120,12 @@ void ModuleScene::IndexCube()
 
 	vertexes.push_back((0.0f, 1.0f, -1.0f));
 	vertexes.push_back((0.0f, 0.0f, -1.0f));
+
+	uint index = 0;
+
+	glGenBuffers(1, (GLuint*) &(index));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices, GL_STATIC_DRAW);
 
 }
 
