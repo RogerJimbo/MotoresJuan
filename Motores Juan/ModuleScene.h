@@ -3,6 +3,10 @@
 
 #include <vector>
 #include "Module.h"
+
+#include "SDL\include\SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 using namespace std;
 
 class ModuleScene : public Module
@@ -24,10 +28,12 @@ public:
 	bool CleanUp();
 	void Save_Config(JSON_Object& config) const;
 
-
 	void Draw();
 
+	void IndexCube();
+
 	string config_name;
-	vector<float> vert_array;
+	vector<float> indices;
+	vector<vec3> vertexes;
 };
 #endif

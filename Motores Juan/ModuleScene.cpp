@@ -99,6 +99,29 @@ void ModuleScene::Draw()
 	glEnd();
 }
 
+void ModuleScene::IndexCube()
+{
+	indices = { 0, 1, 2, 0, 3, 2, //FRONT
+		3, 0, 4, 5, 3, 4, //RIGHT
+		6, 2, 1, 6, 7, 2, //LEFT
+		5, 4, 6, 6, 4, 7, //BACk
+		3, 6, 1, 6, 3, 5, //TOP
+		0, 2, 7, 7, 4, 0 //BOT
+	};
+	
+	vertexes.push_back((1.0f, 0.0f, 0.0f));
+	vertexes.push_back((0.0f, 1.0f, 0.0f));
+	vertexes.push_back((0.0f, 0.0f, 0.0f));
+	vertexes.push_back((1.0f, 1.0f, 0.0f));
+
+	vertexes.push_back((1.0f, 0.0f, -1.0f));
+	vertexes.push_back((1.0f, 1.0f, -1.0f));
+
+	vertexes.push_back((0.0f, 1.0f, -1.0f));
+	vertexes.push_back((0.0f, 0.0f, -1.0f));
+
+}
+
 bool ModuleScene::CleanUp()
 {
 	return true;
