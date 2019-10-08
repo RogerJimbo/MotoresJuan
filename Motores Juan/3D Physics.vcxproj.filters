@@ -324,6 +324,9 @@
     <ClInclude Include="GUI_Console.h">
       <Filter>Sources\ImGui Elements</Filter>
     </ClInclude>
+    <ClInclude Include="GUI_Scene.h">
+      <Filter>Sources\ImGui Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -486,6 +489,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="GUI_Console.cpp">
+      <Filter>Sources\ImGui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Scene.cpp">
       <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
   </ItemGroup>

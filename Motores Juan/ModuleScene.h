@@ -31,7 +31,7 @@ public:
 	void ArrayCube();
 
 	string config_name;
-	vector<float> indices;
+	vector<unsigned int> indices;
 	vector<vec3> vertexes;
 };
 #endif
