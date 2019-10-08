@@ -40,7 +40,7 @@ update_status ModuleScene::PostUpdate(float dt)
 void ModuleScene::Draw()
 {
 	//Indices
-	IndexCube();
+	ArrayCube();
 	
 }
 
