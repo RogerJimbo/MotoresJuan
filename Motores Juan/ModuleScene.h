@@ -28,6 +28,7 @@ public:
 	void Draw();
 
 	void IndexCube();
+	void ArrayCube();
 
 	string config_name;
 	vector<float> indices;

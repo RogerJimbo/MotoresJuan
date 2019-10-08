@@ -39,7 +39,49 @@ update_status ModuleScene::PostUpdate(float dt)
 
 void ModuleScene::Draw()
 {
-	//Indexes
+	//Indices
+	IndexCube();
+	
+}
+
+void ModuleScene::IndexCube()
+{
+	GLuint v_array = 0;
+	GLuint ibo = 0;
+	GLuint v_index = 0;
+
+	
+
+	indices = { 0, 1, 2, 0, 3, 2, //FRONT
+		3, 0, 4, 5, 3, 4, //RIGHT
+		6, 2, 1, 6, 7, 2, //LEFT
+		5, 4, 6, 6, 4, 7, //BACk
+		3, 6, 1, 6, 3, 5, //TOP
+		0, 2, 7, 7, 4, 0 //BOT
+	};
+	
+	vertexes.push_back((1.0f, 0.0f, 0.0f));
+	vertexes.push_back((0.0f, 1.0f, 0.0f));
+	vertexes.push_back((0.0f, 0.0f, 0.0f));
+	vertexes.push_back((1.0f, 1.0f, 0.0f));
+
+	vertexes.push_back((1.0f, 0.0f, -1.0f));
+	vertexes.push_back((1.0f, 1.0f, -1.0f));
+
+	vertexes.push_back((0.0f, 1.0f, -1.0f));
+	vertexes.push_back((0.0f, 0.0f, -1.0f));
+
+	glGenBuffers(1, (GLuint*) & (ibo));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), &indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+	glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+
+}
+
+void ModuleScene::ArrayCube()
+{
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	glColor3f(1.0, 0.0, 1.0);
@@ -69,7 +111,7 @@ void ModuleScene::Draw()
 	glVertex3f(0.0f, 1.0f, -1.0f);
 	glVertex3f(0.0f, 0.0f, -1.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
-	
+
 	//Back
 	glVertex3f(1.0f, 1.0f, -1.0f);
 	glVertex3f(1.0f, 0.0f, -1.0f);
@@ -83,50 +125,21 @@ void ModuleScene::Draw()
 	glVertex3f(1.0f, 1.0f, 0.0f);
 	glVertex3f(0.0f, 1.0f, -1.0f);
 	glVertex3f(0.0f, 1.0f, 0.0f);
-	
+
 	glVertex3f(0.0f, 1.0f, -1.0f);
 	glVertex3f(1.0f, 1.0f, 0.0f);
 	glVertex3f(1.0f, 1.0f, -1.0f);
-	
+
 	//Bot
 	glVertex3f(1.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, -1.0f);
-	
+
 	glVertex3f(0.0f, 0.0f, -1.0f);
 	glVertex3f(1.0f, 0.0f, -1.0f);
 	glVertex3f(1.0f, 0.0f, 0.0f);
 
 	glEnd();
-}
-
-void ModuleScene::IndexCube()
-{
-	indices = { 0, 1, 2, 0, 3, 2, //FRONT
-		3, 0, 4, 5, 3, 4, //RIGHT
-		6, 2, 1, 6, 7, 2, //LEFT
-		5, 4, 6, 6, 4, 7, //BACk
-		3, 6, 1, 6, 3, 5, //TOP
-		0, 2, 7, 7, 4, 0 //BOT
-	};
-	
-	vertexes.push_back((1.0f, 0.0f, 0.0f));
-	vertexes.push_back((0.0f, 1.0f, 0.0f));
-	vertexes.push_back((0.0f, 0.0f, 0.0f));
-	vertexes.push_back((1.0f, 1.0f, 0.0f));
-
-	vertexes.push_back((1.0f, 0.0f, -1.0f));
-	vertexes.push_back((1.0f, 1.0f, -1.0f));
-
-	vertexes.push_back((0.0f, 1.0f, -1.0f));
-	vertexes.push_back((0.0f, 0.0f, -1.0f));
-
-	uint index = 0;
-
-	glGenBuffers(1, (GLuint*) &(index));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices, GL_STATIC_DRAW);
-
 }
 
 bool ModuleScene::CleanUp()
