@@ -16,6 +16,7 @@
 
 #include "GUI_Config.h"
 #include "GUI_Console.h"
+#include "GUI_Scene.h"
 #include <array>
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Active Gui Windows"; }
@@ -33,10 +34,12 @@ bool ModuleGui::Init(const JSON_Object& config)
 	SDL_GL_CreateContext(App->window->window);
 
 	configuration = new GUI_Config(App);
-	console = new GUI_Console(App);
+	//console = new GUI_Console(App);
+	scene = new GUI_Scene(App);
 
 	Gui.push_back((GUI_Config*)configuration);
-	Gui.push_back((GUI_Console*)console);
+	//Gui.push_back((GUI_Console*)console);
+	Gui.push_back((GUI_Scene*)scene);
 
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 
@@ -59,7 +62,7 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
-	//for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
+	for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
 
 	return UPDATE_CONTINUE;
 }
