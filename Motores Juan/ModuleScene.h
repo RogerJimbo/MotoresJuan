@@ -30,6 +30,8 @@ public:
 	void IndexCube();
 	void ArrayCube();
 
+	void DrawGrid(int HALF_GRID_SIZE);
+
 	string config_name;
 	vector<unsigned int> indices;
 	vector<vec3> vertexes;

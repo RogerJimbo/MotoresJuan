@@ -39,7 +39,7 @@ update_status ModuleScene::PostUpdate(float dt)
 
 void ModuleScene::Draw()
 {
-	//Indices
+	DrawGrid(10);
 	ArrayCube();
 	
 }
@@ -138,6 +138,21 @@ void ModuleScene::ArrayCube()
 	glVertex3f(1.0f, 0.0f, -1.0f);
 	glVertex3f(1.0f, 0.0f, 0.0f);
 
+	glEnd();
+}
+
+void ModuleScene::DrawGrid(int HALF_GRID_SIZE)
+{
+	glBegin(GL_LINES);
+	glColor3f(0.75f, 0.75f, 0.75f);
+	for (int i = -HALF_GRID_SIZE; i <= HALF_GRID_SIZE; i++)
+	{
+		glVertex3f((float)i, 0, (float)-HALF_GRID_SIZE);
+		glVertex3f((float)i, 0, (float)HALF_GRID_SIZE);
+
+		glVertex3f((float)-HALF_GRID_SIZE, 0, (float)i);
+		glVertex3f((float)HALF_GRID_SIZE, 0, (float)i);
+	}
 	glEnd();
 }
 
