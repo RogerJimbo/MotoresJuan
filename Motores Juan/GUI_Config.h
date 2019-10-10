@@ -11,8 +11,6 @@ public:
 	void Draw();
 
 private:
-	bool close_tab = true;
-
 	bool fullscreen = false;
 	bool resizable = false;
 	bool borderless = false;

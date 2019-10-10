@@ -7,7 +7,7 @@
 #include "Globals.h"
 #include <vector>
 
-enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, HARDWARE, NUM_ACT_WIN};
+enum EngineWindows {HIERARCHY, CONSOLE,  INSPECTOR, CONFIG, ABOUT, SCENE, HARDWARE, NUM_ACT_WIN};
 
 class GUI_Element;
 class GUI_Config;
@@ -32,10 +32,9 @@ public:
 
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	void CreateConfigWindow();
+	void CreateInfoWindow();
 	void CreateAboutWindow();
 	void CreateHardwareWindow();
-
 	void CreatePropertiesWindow();
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
@@ -44,10 +43,10 @@ public:
 	void Save_Config(JSON_Object& config) const;
 	void Load_Config(JSON_Object& config);
 	
-private:
 	bool active_engine_windows[NUM_ACT_WIN];
-		
-	bool close_tab = true;
+
+private:
+	bool show = true;
 
 	char* RDTSC;
 	char* MMX;

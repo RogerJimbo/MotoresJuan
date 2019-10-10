@@ -62,7 +62,7 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
-	for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
+	//for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
 
 	return UPDATE_CONTINUE;
 }
@@ -73,7 +73,9 @@ update_status ModuleGui::Update(float dt)
 	//Engine Windows
 	if (active_engine_windows[ABOUT]) { CreateAboutWindow();}
 	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
-	if (!active_engine_windows[CONFIG]) { CreateConfigWindow(); }
+	if (!active_engine_windows[CONFIG]) { CreateInfoWindow(); }	
+	if (!active_engine_windows[SCENE]) { this->scene->Draw(); }
+
 
 	// ImGui::ShowDemoWindow();
 
@@ -103,10 +105,19 @@ update_status ModuleGui::Update(float dt)
 
 			if (ImGui::MenuItem("GitHub", false, true)) { App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan"); }
 
-			if (ImGui::MenuItem("Hardware Info", NULL, &active_engine_windows[HARDWARE])) {}
+			if (ImGui::MenuItem("Hardware Info", NULL, &active_engine_windows[HARDWARE])) { }
 
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Windows"))
+		{
+			if(ImGui::MenuItem("Configuration")) {}
+			if (ImGui::MenuItem("Scene", NULL, &active_engine_windows[SCENE])) {}
+
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 	return UPDATE_CONTINUE;
@@ -142,7 +153,7 @@ void ModuleGui::CreateAboutWindow()
 	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	ImGui::SetNextWindowPos(ImVec2(0, 20));
 
-	if (ImGui::Begin("About"), 0, window_flags)
+	if (ImGui::Begin("About", &show), 0, window_flags)
 	{
 		ImGui::Text("Motores Juan"), ImGui::Separator();
 		ImGui::Text("This is a video game engine with academic purposes.");
@@ -159,25 +170,25 @@ void ModuleGui::CreateAboutWindow()
 	}	
 }
 
-void ModuleGui::CreateConfigWindow()
+void ModuleGui::CreateInfoWindow()
 {
-	ImGui::SetNextWindowPos(ImVec2(0, 400), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(270, 700));
+	ImGui::SetNextWindowPos(ImVec2(1410, 18));
 	ImGui::Begin(" ");
 
 	static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable;
-	const char* tab_names[2] = { "Configuration", "Other" };
+	const char* tab_names[2] = { "Configuration", "Inspector" };
 	static bool opened_tab[2] = { true, true };
 
 	if (ImGui::BeginTabBar(" ", tab_bar_flags))
 
-		for (int iter = 0; iter < IM_ARRAYSIZE(opened_tab); iter++)
-			if (opened_tab[iter] && ImGui::BeginTabItem(tab_names[iter], &opened_tab[iter]))
-			{
-				if(iter == 0) { this->configuration->Draw(); }
-				else if (iter == 1) { /*Call other tab function*/}
-				ImGui::EndTabItem();
-			}
+	for (int iter = 0; iter < IM_ARRAYSIZE(opened_tab); iter++)
+		if (opened_tab[iter] && ImGui::BeginTabItem(tab_names[iter], &opened_tab[iter]))
+		{
+			if(iter == 0) { this->configuration->Draw(); }
+			else if (iter == 1) { /*Call inspector tab function*/}
+			ImGui::EndTabItem();
+		}
 
 	ImGui::EndTabBar();
 	ImGui::End();
