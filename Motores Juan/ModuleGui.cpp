@@ -34,11 +34,11 @@ bool ModuleGui::Init(const JSON_Object& config)
 	SDL_GL_CreateContext(App->window->window);
 
 	configuration = new GUI_Config(App);
-	//console = new GUI_Console(App);
+	console = new GUI_Console(App);
 	scene = new GUI_Scene(App);
 
 	Gui.push_back((GUI_Config*)configuration);
-	//Gui.push_back((GUI_Console*)console);
+	Gui.push_back((GUI_Console*)console);
 	Gui.push_back((GUI_Scene*)scene);
 
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
@@ -126,10 +126,6 @@ update_status ModuleGui::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleGui::PostUpdate(float dt)
 {
-	ImGui::Render();
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
-	//SDL_GL_SwapWindow(App->window->window);
 
 	return UPDATE_CONTINUE;
 }
@@ -141,7 +137,7 @@ bool ModuleGui::CleanUp()
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
 	SDL_GL_DeleteContext(App->renderer3D->context);
-	//SDL_GL_DeleteContext(App->window->window);
+	SDL_GL_DeleteContext(App->window->window);
 	SDL_DestroyWindow(App->window->window);
 	SDL_Quit();
 
