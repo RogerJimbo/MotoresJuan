@@ -32,6 +32,8 @@ public:
 
 	void DrawGrid(int HALF_GRID_SIZE);
 
+	void DrawAxis();
+
 	string config_name;
 	vector<unsigned int> indices;
 	vector<vec3> vertexes;

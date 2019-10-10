@@ -26,7 +26,7 @@ ModuleGui::~ModuleGui() {}
 
 bool ModuleGui::Init(const JSON_Object& config)
 {
-	IMGUI_CHECKVERSION();
+	//IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 
@@ -232,6 +232,11 @@ void ModuleGui::CreateHardwareWindow()
 	IDirect3DDevice9* glGetString();	//GPU
 
 	ImGui::End();
+}
+
+void ModuleGui::Docking()
+{
+	
 }
 
 void ModuleGui::Save_Config(JSON_Object& config) const

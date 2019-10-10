@@ -98,7 +98,9 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-	}	glewInit();
+	}
+
+	glewInit();
 	GLenum err = glewInit();
 
 	// Projection matrix for

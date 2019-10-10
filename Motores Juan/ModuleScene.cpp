@@ -41,7 +41,7 @@ void ModuleScene::Draw()
 {
 	DrawGrid(10);
 	ArrayCube();
-	
+	DrawAxis();
 }
 
 void ModuleScene::IndexCube()
@@ -138,6 +138,24 @@ void ModuleScene::ArrayCube()
 	glVertex3f(1.0f, 0.0f, -1.0f);
 	glVertex3f(1.0f, 0.0f, 0.0f);
 
+	glEnd();
+}
+
+void ModuleScene::DrawAxis()
+{
+	glBegin(GL_LINES);
+	// draw line for x axis
+	glColor3f(1.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(1.0, 0.0, 0.0);
+	// draw line for y axis
+	glColor3f(0.0, 1.0, 0.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 1.0, 0.0);
+	// draw line for Z axis
+	glColor3f(0.0, 0.0, 1.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, 1.0);
 	glEnd();
 }
 
