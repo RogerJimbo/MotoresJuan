@@ -33,8 +33,8 @@ public:
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	void CreateInfoWindow();
-	void CreateAboutWindow();
-	void CreateHardwareWindow();
+	void CreateAboutWindow(bool* open);
+	void CreateHardwareWindow(bool* open);
 
 	void Docking();
 

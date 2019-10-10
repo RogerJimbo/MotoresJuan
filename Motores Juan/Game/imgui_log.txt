@@ -14,3 +14,703 @@ Copy "Hello, world!" to clipboard
 ## Filtering ##
 
 ## Inputs, Navigation & Focus ##
+You can also call ImGui::LogText() to output directly to the log without a visual output.
+Copy "Hello, world!" to clipboard
+
+## Window options ##
+
+## Widgets ##
+
+## Layout ##
+
+## Popups & Modal windows ##
+
+## Columns ##
+[ ]
+Disable tree indentation (?)
+> Basic
+    Without border:
+    --------------------------------
+    Item 0 Item 1 Item 2
+    Item 3 Item 4 Item 5
+    Item 6 Item 7 Item 8
+    Item 9 Item 10 Item 11
+    Item 12 Item 13
+    --------------------------------
+    With border:
+    --------------------------------
+    ID Name Path Hovered
+    --------------------------------
+    0000 One /path/one 0
+    0001 Two /path/two 0
+    0002 Three /path/three 0
+    --------------------------------
+> Borders
+    4 columns [x]
+    horizontal [x]
+    vertical
+    --------------------------------
+    aaa
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button bbb
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ccc
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button ddd
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    eee
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button fff
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ggg
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button hhh
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    iii
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button jjj
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button kkk
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button lll
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+> Mixed items
+    --------------------------------
+    Hello
+    Banana ImGui
+    Apple
+    1.000 - + red
+    An extra line here. Sailor
+    Corniflower
+    1.000 - + blue
+    
+    ## Category A ## 
+    ## Category B ## 
+    ## Category C ##
+    --------------------------------
+> Word-wrapping
+    --------------------------------
+    The quick brown fox jumps over the lazy dog.
+    Hello Left The quick brown fox jumps over the lazy dog.
+    Hello Right
+    --------------------------------
+> Horizontal Scrolling
+> Tree
+    > Node0 Node contents
+        > Node0.0 Node contents
+        > Node0.1 Node contents
+        > Node0.2 Node contents
+    > Node1 Node contents
+        > Node1.0 Node contents
+        > Node1.1 Node contents
+        > Node1.2 Node contents
+    > Node2 Node contents
+        > Node2.0 Node contents
+        > Node2.1 Node contents
+        > Node2.2 Node contents
+
+## Filtering ##
+
+## Inputs, Navigation & Focus ##
+You can also call ImGui::LogText() to output directly to the log without a visual output.
+Copy "Hello, world!" to clipboard
+
+## Window options ##
+
+## Widgets ##
+
+## Layout ##
+
+## Popups & Modal windows ##
+
+## Columns ##
+[ ]
+Disable tree indentation (?)
+> Basic
+    Without border:
+    --------------------------------
+    Item 0 Item 1 Item 2
+    Item 3 Item 4 Item 5
+    Item 6 Item 7 Item 8
+    Item 9 Item 10 Item 11
+    Item 12 Item 13
+    --------------------------------
+    With border:
+    --------------------------------
+    ID Name Path Hovered
+    --------------------------------
+    0000 One /path/one 0
+    0001 Two /path/two 0
+    0002 Three /path/three 0
+    --------------------------------
+> Borders
+    4 columns [x]
+    horizontal [x]
+    vertical
+    --------------------------------
+    aaa
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button bbb
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ccc
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button ddd
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    eee
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button fff
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ggg
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button hhh
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    iii
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button jjj
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button kkk
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button lll
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+> Mixed items
+    --------------------------------
+    Hello
+    Banana ImGui
+    Apple
+    1.000 - + red
+    An extra line here. Sailor
+    Corniflower
+    1.000 - + blue
+    
+    ## Category A ## 
+    ## Category B ## 
+    ## Category C ##
+    --------------------------------
+> Word-wrapping
+    --------------------------------
+    The quick brown fox jumps over the lazy dog.
+    Hello Left The quick brown fox jumps over the lazy dog.
+    Hello Right
+    --------------------------------
+> Horizontal Scrolling
+> Tree
+    > Node0 Node contents
+        > Node0.0 Node contents
+        > Node0.1 Node contents
+        > Node0.2 Node contents
+    > Node1 Node contents
+        > Node1.0 Node contents
+        > Node1.1 Node contents
+        > Node1.2 Node contents
+    > Node2 Node contents
+        > Node2.0 Node contents
+        > Node2.1 Node contents
+        > Node2.2 Node contents
+
+## Filtering ##
+
+## Inputs, Navigation & Focus ##
+You can also call ImGui::LogText() to output directly to the log without a visual output.
+Copy "Hello, world!" to clipboard
+
+## Window options ##
+
+## Widgets ##
+
+## Layout ##
+
+## Popups & Modal windows ##
+
+## Columns ##
+[ ]
+Disable tree indentation (?)
+> Basic
+    Without border:
+    --------------------------------
+    Item 0 Item 1 Item 2
+    Item 3 Item 4 Item 5
+    Item 6 Item 7 Item 8
+    Item 9 Item 10 Item 11
+    Item 12 Item 13
+    --------------------------------
+    With border:
+    --------------------------------
+    ID Name Path Hovered
+    --------------------------------
+    0000 One /path/one 0
+    0001 Two /path/two 0
+    0002 Three /path/three 0
+    --------------------------------
+> Borders
+    4 columns [x]
+    horizontal [x]
+    vertical
+    --------------------------------
+    aaa
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button bbb
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ccc
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button ddd
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    eee
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button fff
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ggg
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button hhh
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    iii
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button jjj
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button kkk
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button lll
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+> Mixed items
+    --------------------------------
+    Hello
+    Banana ImGui
+    Apple
+    1.000 - + red
+    An extra line here. Sailor
+    Corniflower
+    1.000 - + blue
+    
+    ## Category A ## 
+    ## Category B ## 
+    ## Category C ##
+    --------------------------------
+> Word-wrapping
+    --------------------------------
+    The quick brown fox jumps over the lazy dog.
+    Hello Left The quick brown fox jumps over the lazy dog.
+    Hello Right
+    --------------------------------
+> Horizontal Scrolling
+> Tree
+    > Node0 Node contents
+        > Node0.0 Node contents
+        > Node0.1 Node contents
+        > Node0.2 Node contents
+    > Node1 Node contents
+        > Node1.0 Node contents
+        > Node1.1 Node contents
+        > Node1.2 Node contents
+    > Node2 Node contents
+        > Node2.0 Node contents
+        > Node2.1 Node contents
+        > Node2.2 Node contents
+
+## Filtering ##
+
+## Inputs, Navigation & Focus ##
+You can also call ImGui::LogText() to output directly to the log without a visual output.
+Copy "Hello, world!" to clipboard
+
+## Window options ##
+
+## Widgets ##
+
+## Layout ##
+
+## Popups & Modal windows ##
+
+## Columns ##
+[ ]
+Disable tree indentation (?)
+> Basic
+    Without border:
+    --------------------------------
+    Item 0 Item 1 Item 2
+    Item 3 Item 4 Item 5
+    Item 6 Item 7 Item 8
+    Item 9 Item 10 Item 11
+    Item 12 Item 13
+    --------------------------------
+    With border:
+    --------------------------------
+    ID Name Path Hovered
+    --------------------------------
+    0000 One /path/one 0
+    0001 Two /path/two 0
+    0002 Three /path/three 0
+    --------------------------------
+> Borders
+    4 columns [x]
+    horizontal [x]
+    vertical
+    --------------------------------
+    aaa
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button bbb
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ccc
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button ddd
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    eee
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button fff
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ggg
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button hhh
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    iii
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button jjj
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button kkk
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button lll
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+> Mixed items
+    --------------------------------
+    Hello
+    Banana ImGui
+    Apple
+    1.000 - + red
+    An extra line here. Sailor
+    Corniflower
+    1.000 - + blue
+    
+    ## Category A ## 
+    ## Category B ## 
+    ## Category C ##
+    --------------------------------
+> Word-wrapping
+    --------------------------------
+    The quick brown fox jumps over the lazy dog.
+    Hello Left The quick brown fox jumps over the lazy dog.
+    Hello Right
+    --------------------------------
+> Horizontal Scrolling
+> Tree
+    > Node0 Node contents
+        > Node0.0 Node contents
+        > Node0.1 Node contents
+        > Node0.2 Node contents
+    > Node1 Node contents
+        > Node1.0 Node contents
+        > Node1.1 Node contents
+        > Node1.2 Node contents
+    > Node2 Node contents
+        > Node2.0 Node contents
+        > Node2.1 Node contents
+        > Node2.2 Node contents
+
+## Filtering ##
+
+## Inputs, Navigation & Focus ##
+You can also call ImGui::LogText() to output directly to the log without a visual output.
+Copy "Hello, world!" to clipboard
+
+## Window options ##
+
+## Widgets ##
+
+## Layout ##
+
+## Popups & Modal windows ##
+
+## Columns ##
+[ ]
+Disable tree indentation (?)
+> Basic
+    Without border:
+    --------------------------------
+    Item 0 Item 1 Item 2
+    Item 3 Item 4 Item 5
+    Item 6 Item 7 Item 8
+    Item 9 Item 10 Item 11
+    Item 12 Item 13
+    --------------------------------
+    With border:
+    --------------------------------
+    ID Name Path Hovered
+    --------------------------------
+    0000 One /path/one 0
+    0001 Two /path/two 0
+    0002 Three /path/three 0
+    --------------------------------
+> Borders
+    4 columns [x]
+    horizontal [x]
+    vertical
+    --------------------------------
+    aaa
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button bbb
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ccc
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button ddd
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    eee
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button fff
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button ggg
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button hhh
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+    iii
+    Width 144.00
+    Avail 128.00
+    Offset 21.00
+    Long text that is likely to clip
+    Button jjj
+    Width 144.00
+    Avail 128.00
+    Offset 165.00
+    Long text that is likely to clip
+    Button kkk
+    Width 144.00
+    Avail 128.00
+    Offset 309.00
+    Long text that is likely to clip
+    Button lll
+    Width 144.00
+    Avail 128.00
+    Offset 453.00
+    Long text that is likely to clip
+    Button
+    --------------------------------
+> Mixed items
+    --------------------------------
+    Hello
+    Banana ImGui
+    Apple
+    1.000 - + red
+    An extra line here. Sailor
+    Corniflower
+    1.000 - + blue
+    
+    ## Category A ## 
+    ## Category B ## 
+    ## Category C ##
+    --------------------------------
+> Word-wrapping
+    --------------------------------
+    The quick brown fox jumps over the lazy dog.
+    Hello Left The quick brown fox jumps over the lazy dog.
+    Hello Right
+    --------------------------------
+> Horizontal Scrolling
+> Tree
+    > Node0 Node contents
+        > Node0.0 Node contents
+        > Node0.1 Node contents
+        > Node0.2 Node contents
+    > Node1 Node contents
+        > Node1.0 Node contents
+        > Node1.1 Node contents
+        > Node1.2 Node contents
+    > Node2 Node contents
+        > Node2.0 Node contents
+        > Node2.1 Node contents
+        > Node2.2 Node contents
+
+## Filtering ##
+
+## Inputs, Navigation & Focus ##

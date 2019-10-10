@@ -18,7 +18,6 @@ void GUI_Hierarchy::Draw(bool* open)
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{
 
-
 	}
 	ImGui::End();
 

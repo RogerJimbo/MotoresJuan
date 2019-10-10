@@ -8,34 +8,20 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Scene"; }
+
 ModuleScene::~ModuleScene() {}
 
-bool ModuleScene::Init(const JSON_Object& config)
-{
-	return true;
-}
+bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
-bool ModuleScene::Start()
-{
-	return true;
-}
+bool ModuleScene::Start() { return true; }
 
-update_status ModuleScene::PreUpdate(float dt)
-{
-	return UPDATE_CONTINUE;
-}
+update_status ModuleScene::PreUpdate(float dt) { return UPDATE_CONTINUE; }
 
-update_status ModuleScene::Update(float dt)
-{
-	return UPDATE_CONTINUE;
-}
+update_status ModuleScene::Update(float dt) { return UPDATE_CONTINUE; }
 
-update_status ModuleScene::PostUpdate(float dt)
-{
-	return UPDATE_CONTINUE;
-}
+update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
+
 
 void ModuleScene::Draw()
 {
@@ -46,16 +32,14 @@ void ModuleScene::Draw()
 
 void ModuleScene::IndexCube()
 {
-	GLuint ibo = 0;
-	GLuint vbo = 0;
+	GLuint ibo, vbo = 0;		//WTF ARE THOSE?	
 
-	indices = { 0, 1, 2, 0, 3, 2, //FRONT
-		3, 0, 4, 5, 3, 4, //RIGHT
-		6, 2, 1, 6, 7, 2, //LEFT
-		5, 4, 6, 6, 4, 7, //BACk
-		3, 6, 1, 6, 3, 5, //TOP
-		0, 2, 7, 7, 4, 0 //BOT
-	};
+	indices = { 0, 1, 2, 0, 3, 2,			//FRONT
+					 3, 0, 4, 5, 3, 4,		//RIGHT
+					 6, 2, 1, 6, 7, 2,			//LEFT
+				     5, 4, 6, 6, 4, 7,		//BACk
+					 3, 6, 1, 6, 3, 5,			//TOP
+					 0, 2, 7, 7, 4, 0 };		//BOT
 	
 	vertexes.push_back((1.0f, 0.0f, 0.0f));
 	vertexes.push_back((0.0f, 1.0f, 0.0f));
@@ -64,7 +48,6 @@ void ModuleScene::IndexCube()
 
 	vertexes.push_back((1.0f, 0.0f, -1.0f));
 	vertexes.push_back((1.0f, 1.0f, -1.0f));
-
 	vertexes.push_back((0.0f, 1.0f, -1.0f));
 	vertexes.push_back((0.0f, 0.0f, -1.0f));
 
@@ -76,7 +59,6 @@ void ModuleScene::IndexCube()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexes.size(), &vertexes, GL_STATIC_DRAW);
 	
-
 }
 
 void ModuleScene::ArrayCube()

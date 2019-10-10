@@ -21,9 +21,8 @@ void GUI_Console::Draw(bool* open)
 
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{
-		ImGui::BeginChild("Scrolling");
-		for (int n = 0; n < 50; n++)
-			ImGui::Text("%04d: Some text", n);
+		ImGui::BeginChild("Scrolling Bar");
+		for (int i = 0; i < 50; i++) { ImGui::Text("%04d: Logs", i); }
 		ImGui::EndChild();
 	}
 	ImGui::End();

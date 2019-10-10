@@ -73,19 +73,20 @@ update_status ModuleGui::Update(float dt)
 {
 	ImGui::ShowDemoWindow();
 
+	//Engine Windows
 	static bool scene_open = true;
 	static bool hierarchy_open = true;
 	static bool console_open = true;
 	static bool config_open = true;
-
-	//Engine Windows
-	if (active_engine_windows[ABOUT]) { CreateAboutWindow();}
-	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
+	static bool about_open = false;
+	static bool hardware_open = false;
 
 	if (scene_open)			this->scene->Draw(&scene_open);      
 	if (hierarchy_open)	this->hierarchy->Draw(&hierarchy_open);
 	if (console_open)		this->console->Draw(&console_open);
 	if (config_open)		this->configuration->Draw(&config_open);
+	if (about_open)			this->CreateAboutWindow(&about_open);
+	if (hardware_open)	this->CreateHardwareWindow(&hardware_open);
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -109,15 +110,14 @@ update_status ModuleGui::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT])) {}
+			if (ImGui::MenuItem("About", NULL, &about_open)) {}
+			if (ImGui::MenuItem("Hardware Info", NULL, &hardware_open)) {}
 			if (ImGui::MenuItem("GitHub", false, true)) { App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan"); }
-			if (ImGui::MenuItem("Hardware Info", NULL, &active_engine_windows[HARDWARE])) { }
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("Windows"))
 		{
-			//if(ImGui::MenuItem("Configuration", NULL, &config_open)) {}
 			if (ImGui::MenuItem("Hierarchy", NULL, &hierarchy_open)) {}
 			if (ImGui::MenuItem("Console", NULL, &console_open)) {}
 			if(ImGui::MenuItem("Scene", NULL, &scene_open)) {}
@@ -130,7 +130,6 @@ update_status ModuleGui::Update(float dt)
 }
 
 update_status ModuleGui::PostUpdate(float dt) { return UPDATE_CONTINUE; }
-
 
 bool ModuleGui::CleanUp()
 {	
@@ -145,12 +144,12 @@ bool ModuleGui::CleanUp()
 	return true;
 }
 
-void ModuleGui::CreateAboutWindow()
+void ModuleGui::CreateAboutWindow(bool* open)
 {
 	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	ImGui::SetNextWindowPos(ImVec2(0, 20));
 
-	if (ImGui::Begin("About", &show), 0, window_flags)
+	if (ImGui::Begin("About", open), 0, window_flags)
 	{
 		ImGui::Text("Motores Juan"), ImGui::Separator();
 		ImGui::Text("This is a video game engine with academic purposes.");
@@ -169,7 +168,6 @@ void ModuleGui::CreateAboutWindow()
 
 void ModuleGui::CreateInfoWindow()
 {
-
 	static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable;
 	const char* tab_names[2] = { "Configuration", "Inspector" };
 	static bool opened_tab[2] = { true, true };
@@ -185,14 +183,13 @@ void ModuleGui::CreateInfoWindow()
 		}
 
 	ImGui::EndTabBar();
-
 }
 
-void ModuleGui::CreateHardwareWindow()
+void ModuleGui::CreateHardwareWindow(bool* open)
 {
 	ImGui::SetNextWindowSize(ImVec2(300, 300));
 	ImGui::SetNextWindowPos(ImVec2(100, 100));
-	ImGui::Begin("Hardware Info");
+	ImGui::Begin("Hardware Info", open);
 
 	static bool active = false;
 	ImGui::Checkbox("Active", &active);
