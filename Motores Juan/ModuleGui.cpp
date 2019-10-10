@@ -219,7 +219,6 @@ void ModuleGui::CreateHardwareWindow(bool* open)
 	SDL_bool SDL_HasSSE42();	 if (SDL_HasSSE42) { SSE42 = "SSE42"; }
 
 	ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
-	
 	IDirect3DDevice9* glGetString();	//GPU
 
 	ImGui::End();
@@ -227,14 +226,8 @@ void ModuleGui::CreateHardwareWindow(bool* open)
 
 void ModuleGui::Docking()
 {
-
-	ImGuiWindowFlags window_flags;
-
-	ImGuiViewport* viewport = ImGui::GetWindowViewport();
-
-	ImGui::SetNextWindowPos(viewport->Pos);
-	ImGui::SetNextWindowSize(viewport->Size);
-	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGuiWindowFlags window_flags = ImGuiDockNodeFlags_None;
+	//ImGuiViewport* viewport = ImGui::GetWindowViewport();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -246,7 +239,7 @@ void ModuleGui::Docking()
 	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 	{
 		ImGuiID dockspace_id = ImGui::GetID("Docking");
-		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), window_flags);
 	}
 }
 
