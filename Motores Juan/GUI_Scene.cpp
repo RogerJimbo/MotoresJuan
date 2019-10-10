@@ -17,7 +17,8 @@ GUI_Scene::~GUI_Scene() {}
 
 void GUI_Scene::Draw()
 {
-	ImGui::SetNextWindowPos(ImVec2(400, 100), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(450, 20));
+	ImGui::SetNextWindowSize(ImVec2(800, 600));
 
 	if (ImGui::Begin(elem_name.c_str(), &show))
 	{
