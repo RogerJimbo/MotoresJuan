@@ -6901,9 +6901,9 @@ float ImGui::GetCursorPosY()
 
 void ImGui::SetCursorPos(const ImVec2& local_pos)
 {
-    ImGuiWindow* window = GetCurrentWindow();
-    window->DC.CursorPos = window->Pos - window->Scroll + local_pos;
-    window->DC.CursorMaxPos = ImMax(window->DC.CursorMaxPos, window->DC.CursorPos);
+	ImGuiWindow* window = GetCurrentWindow();
+	window->DC.CursorPos = window->Pos - window->Scroll + local_pos;
+	window->DC.CursorMaxPos = ImMax(window->DC.CursorMaxPos, window->DC.CursorPos);
 }
 
 void ImGui::SetCursorPosX(float x)

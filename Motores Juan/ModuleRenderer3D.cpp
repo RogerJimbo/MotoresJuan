@@ -98,14 +98,14 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-	}
+	}	glewInit();
+	GLenum err = glewInit();
+
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	glewInit();
-	GLenum err = glewInit();
-
-	glGenFramebuffers(1, &frame_buffer);
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	glGenTextures(1, &buffer_text);
 	glBindTexture(GL_TEXTURE_2D, buffer_text);
@@ -116,6 +116,7 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, buffer_text, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	return ret;
 }
@@ -125,7 +126,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glBindTexture(GL_TEXTURE_2D, buffer_text);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
 
@@ -144,6 +148,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->modscene->Draw();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	ImGui::Render();
 

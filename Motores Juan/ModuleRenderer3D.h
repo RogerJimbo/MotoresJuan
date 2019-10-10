@@ -26,7 +26,8 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	uint frame_buffer = 0;
+	uint fbo = 0;
+	uint rbo;
 	uint buffer_text = 0;
 	bool vsync = false;
 };
