@@ -107,16 +107,15 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-	glGenTextures(1, &buffer_text);
-	glBindTexture(GL_TEXTURE_2D, buffer_text);
+	glGenTextures(1, &buffer_tex);
+	glBindTexture(GL_TEXTURE_2D, buffer_tex);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, buffer_text, 0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, buffer_tex, 0);
 
 	return ret;
 }
@@ -127,7 +126,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glBindTexture(GL_TEXTURE_2D, buffer_text);
+	glBindTexture(GL_TEXTURE_2D, buffer_tex);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -163,6 +162,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
+	glDeleteFramebuffers(1, &fbo);
 	SDL_GL_DeleteContext(context);
 	return true;
 }

@@ -28,6 +28,6 @@ public:
 
 	uint fbo = 0;
 	uint rbo;
-	uint buffer_text = 0;
+	uint buffer_tex = 0;
 	bool vsync = false;
 };

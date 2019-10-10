@@ -25,7 +25,7 @@ void GUI_Scene::Draw()
 		vec2 screen_size = (SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 		ImGui::SetCursorPos(ImVec2(win_size.x - screen_size.x, win_size.y - screen_size.y));
-		ImGui::Image((ImTextureID)App->renderer3D->buffer_text, ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+		ImGui::Image((ImTextureID)App->renderer3D->buffer_tex, ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	}
 	ImGui::End();
 }
