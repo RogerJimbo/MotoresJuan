@@ -25,7 +25,7 @@ update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 void ModuleScene::Draw()
 {
-	DrawGrid(10);
+	DrawGrid(gridsize);
 	ArrayCube();
 	DrawAxis();
 }
@@ -35,9 +35,9 @@ void ModuleScene::IndexCube()
 	GLuint ibo, vbo = 0;		//WTF ARE THOSE?	
 
 	indices = { 0, 1, 2, 0, 3, 2,			//FRONT
-					 3, 0, 4, 5, 3, 4,		//RIGHT
+					 3, 0, 4, 5, 3, 4,			//RIGHT
 					 6, 2, 1, 6, 7, 2,			//LEFT
-				     5, 4, 6, 6, 4, 7,		//BACk
+				     5, 4, 6, 6, 4, 7,			//BACK
 					 3, 6, 1, 6, 3, 5,			//TOP
 					 0, 2, 7, 7, 4, 0 };		//BOT
 	
@@ -58,7 +58,6 @@ void ModuleScene::IndexCube()
 	glGenBuffers(1, (GLuint*) & (vbo));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexes.size(), &vertexes, GL_STATIC_DRAW);
-	
 }
 
 void ModuleScene::ArrayCube()
@@ -66,6 +65,7 @@ void ModuleScene::ArrayCube()
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	glColor3f(1.0, 0.0, 1.0);
+
 	//Front
 	glVertex3f(1.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 1.0f, 0.0f);
@@ -126,32 +126,38 @@ void ModuleScene::ArrayCube()
 void ModuleScene::DrawAxis()
 {
 	glBegin(GL_LINES);
-	// draw line for x axis
+
+	glLineWidth(5.0f);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+
+	// X
 	glColor3f(1.0, 0.0, 0.0);
 	glVertex3f(0.0, 0.0, 0.0);
 	glVertex3f(1.0, 0.0, 0.0);
-	// draw line for y axis
+	// Y
 	glColor3f(0.0, 1.0, 0.0);
 	glVertex3f(0.0, 0.0, 0.0);
 	glVertex3f(0.0, 1.0, 0.0);
-	// draw line for Z axis
+	// Z
 	glColor3f(0.0, 0.0, 1.0);
 	glVertex3f(0.0, 0.0, 0.0);
 	glVertex3f(0.0, 0.0, 1.0);
+
 	glEnd();
 }
 
-void ModuleScene::DrawGrid(int HALF_GRID_SIZE)
+void ModuleScene::DrawGrid(int GridSize)
 {
 	glBegin(GL_LINES);
 	glColor3f(0.75f, 0.75f, 0.75f);
-	for (int i = -HALF_GRID_SIZE; i <= HALF_GRID_SIZE; i++)
-	{
-		glVertex3f((float)i, 0, (float)-HALF_GRID_SIZE);
-		glVertex3f((float)i, 0, (float)HALF_GRID_SIZE);
 
-		glVertex3f((float)-HALF_GRID_SIZE, 0, (float)i);
-		glVertex3f((float)HALF_GRID_SIZE, 0, (float)i);
+	for (int i = -GridSize; i <= GridSize; i++)
+	{
+		glVertex3f((float)i, 0, (float)-GridSize);
+		glVertex3f((float)i, 0, (float)GridSize);
+		glVertex3f((float)-GridSize, 0, (float)i);
+		glVertex3f((float)GridSize, 0, (float)i);
 	}
 	glEnd();
 }

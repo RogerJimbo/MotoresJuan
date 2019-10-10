@@ -73,6 +73,8 @@ update_status ModuleGui::Update(float dt)
 {
 	ImGui::ShowDemoWindow();
 
+	Docking();
+
 	//Engine Windows
 	static bool scene_open = true;
 	static bool hierarchy_open = true;
@@ -82,11 +84,11 @@ update_status ModuleGui::Update(float dt)
 	static bool hardware_open = false;
 
 	if (scene_open)			this->scene->Draw(&scene_open);      
-	if (hierarchy_open)	this->hierarchy->Draw(&hierarchy_open);
-	if (console_open)		this->console->Draw(&console_open);
-	if (config_open)		this->configuration->Draw(&config_open);
+	if (hierarchy_open)		this->hierarchy->Draw(&hierarchy_open);
+	if (console_open)			this->console->Draw(&console_open);
+	if (config_open)			this->configuration->Draw(&config_open);
 	if (about_open)			this->CreateAboutWindow(&about_open);
-	if (hardware_open)	this->CreateHardwareWindow(&hardware_open);
+	if (hardware_open)		this->CreateHardwareWindow(&hardware_open);
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -227,7 +229,33 @@ void ModuleGui::CreateHardwareWindow(bool* open)
 
 void ModuleGui::Docking()
 {
-	
+	ImGuiWindowFlags window = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	static ImGuiDockNodeFlags optional = ImGuiDockNodeFlags_PassthruCentralNode;
+
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+
+	ImGui::SetNextWindowBgAlpha(0.0f);
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+	ImGui::Begin("Kuroko Engine", &docking_background, window);
+	ImGui::PopStyleVar();
+	ImGui::PopStyleVar();
+	ImGui::PopStyleVar();
+
+	ImGuiIO& io = ImGui::GetIO();
+
+	ImGuiID dockspace_id = ImGui::GetID("The dockspace");
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), optional);
+
+	ImGui::End();
 }
 
 void ModuleGui::Save_Config(JSON_Object& config) const

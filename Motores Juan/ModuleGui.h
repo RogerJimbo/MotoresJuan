@@ -48,6 +48,7 @@ public:
 
 private:
 	bool show = true;
+	bool docking_background;
 
 	char* RDTSC;
 	char* MMX;

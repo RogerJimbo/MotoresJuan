@@ -13,26 +13,23 @@ public:
 	~ModuleScene();
 
 	bool Init(const JSON_Object& config);
-
 	bool Start();
 
 	update_status PreUpdate(float dt);
-
 	update_status Update(float dt);
-
 	update_status PostUpdate(float dt);
 
 	bool CleanUp();
 	void Save_Config(JSON_Object& config) const;
 
 	void Draw();
-
 	void IndexCube();
 	void ArrayCube();
 
-	void DrawGrid(int HALF_GRID_SIZE);
-
+	void DrawGrid(int GridSize);
 	void DrawAxis();
+
+	int gridsize = 50;
 
 	string config_name;
 	vector<unsigned int> indices;
