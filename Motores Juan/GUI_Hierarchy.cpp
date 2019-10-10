@@ -10,12 +10,12 @@ GUI_Hierarchy::GUI_Hierarchy(Application* app, bool start_enabled) : GUI_Element
 
 GUI_Hierarchy::~GUI_Hierarchy() {}
 
-void GUI_Hierarchy::Draw()
+void GUI_Hierarchy::Draw(bool* open)
 {
 	ImGui::SetNextWindowSize(ImVec2(270, 700));
 	ImGui::SetNextWindowPos(ImVec2(0, 18));
 
-	if (ImGui::Begin(elem_name.c_str()))
+	if (ImGui::Begin(elem_name.c_str(), open))
 	{
 
 

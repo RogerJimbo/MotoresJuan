@@ -8,7 +8,7 @@ public:
 	GUI_Config(Application* app, bool start_enabled = true);
 	~GUI_Config();
 
-	void Draw();
+	void Draw(bool* open);
 
 private:
 	bool fullscreen = false;

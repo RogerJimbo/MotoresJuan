@@ -8,7 +8,7 @@ public:
 	GUI_Hierarchy(Application* app, bool start_enabled = true);
 	~GUI_Hierarchy();
 
-	void Draw();
+	void Draw(bool* open);
 
 };
 

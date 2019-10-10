@@ -14,18 +14,19 @@ GUI_Console::GUI_Console(Application* app, bool start_enabled) : GUI_Element(app
 
 GUI_Console::~GUI_Console() {}
 
-void GUI_Console::Draw()
+void GUI_Console::Draw(bool* open)
 {
-	ImGui::SetNextWindowSize(ImVec2(1680, 300));
+	ImGui::SetNextWindowSize(ImVec2(1680, 335));
 	ImGui::SetNextWindowPos(ImVec2(0, 718));
 
-	if (ImGui::Begin(elem_name.c_str()))
+	if (ImGui::Begin(elem_name.c_str(), open))
 	{
-
-
+		ImGui::BeginChild("Scrolling");
+		for (int n = 0; n < 50; n++)
+			ImGui::Text("%04d: Some text", n);
+		ImGui::EndChild();
 	}
 	ImGui::End();
-
 }
 
 

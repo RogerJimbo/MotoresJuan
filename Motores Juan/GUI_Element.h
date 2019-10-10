@@ -30,7 +30,7 @@ public:
 	virtual void Save_Config(JSON_Object& config) const {}
 	virtual void Load_Config(const JSON_Object& config) {}
 
-	virtual void Draw() {}
+	virtual void Draw(bool* open) {}
 
 	virtual bool CleanUp() { return true; }
 

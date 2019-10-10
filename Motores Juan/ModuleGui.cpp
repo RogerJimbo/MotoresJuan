@@ -65,21 +65,27 @@ update_status ModuleGui::PreUpdate(float dt)
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
-	//for (auto item = Gui.begin(); item != Gui.end(); item++) { if ((*item)->show) (*item)->Draw(); }
-
 	return UPDATE_CONTINUE;
 }
 
 // Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
+	ImGui::ShowDemoWindow();
+
+	static bool scene_open = true;
+	static bool hierarchy_open = true;
+	static bool console_open = true;
+	static bool config_open = true;
+
 	//Engine Windows
 	if (active_engine_windows[ABOUT]) { CreateAboutWindow();}
 	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
-	if (!active_engine_windows[CONFIG]) { CreateInfoWindow(); }	
-	if (!active_engine_windows[SCENE]) { this->scene->Draw(); }
-	if (!active_engine_windows[HIERARCHY]) { this->hierarchy->Draw(); }
-	if (!active_engine_windows[CONSOLE]) { this->console->Draw(); }
+
+	if (scene_open)			this->scene->Draw(&scene_open);      
+	if (hierarchy_open)	this->hierarchy->Draw(&hierarchy_open);
+	if (console_open)		this->console->Draw(&console_open);
+	if (config_open)		this->configuration->Draw(&config_open);
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -104,37 +110,28 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About", NULL, &active_engine_windows[ABOUT])) {}
-
 			if (ImGui::MenuItem("GitHub", false, true)) { App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan"); }
-
 			if (ImGui::MenuItem("Hardware Info", NULL, &active_engine_windows[HARDWARE])) { }
-
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("Windows"))
 		{
-			if(ImGui::MenuItem("Configuration")) {}
-			if (ImGui::MenuItem("Scene", NULL, &active_engine_windows[SCENE])) {}
-			if (ImGui::MenuItem("Hierarchy", NULL, &active_engine_windows[HIERARCHY])) {}
-			if (ImGui::MenuItem("Console", NULL, &active_engine_windows[CONSOLE])) {}
-
+			//if(ImGui::MenuItem("Configuration", NULL, &config_open)) {}
+			if (ImGui::MenuItem("Hierarchy", NULL, &hierarchy_open)) {}
+			if (ImGui::MenuItem("Console", NULL, &console_open)) {}
+			if(ImGui::MenuItem("Scene", NULL, &scene_open)) {}
+			if (ImGui::MenuItem("Configuration", NULL, &config_open)) {}
 			ImGui::EndMenu();
 		}
-
 		ImGui::EndMainMenuBar();
 	}
 	return UPDATE_CONTINUE;
 }
 
-// PostUpdate present buffer to screen
-update_status ModuleGui::PostUpdate(float dt)
-{
+update_status ModuleGui::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
-	return UPDATE_CONTINUE;
-}
 
-// Called before quitting
 bool ModuleGui::CleanUp()
 {	
 	ImGui_ImplSDL2_Shutdown();
@@ -172,9 +169,6 @@ void ModuleGui::CreateAboutWindow()
 
 void ModuleGui::CreateInfoWindow()
 {
-	ImGui::SetNextWindowSize(ImVec2(270, 700));
-	ImGui::SetNextWindowPos(ImVec2(1410, 18));
-	ImGui::Begin(" ");
 
 	static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable;
 	const char* tab_names[2] = { "Configuration", "Inspector" };
@@ -185,13 +179,13 @@ void ModuleGui::CreateInfoWindow()
 	for (int iter = 0; iter < IM_ARRAYSIZE(opened_tab); iter++)
 		if (opened_tab[iter] && ImGui::BeginTabItem(tab_names[iter], &opened_tab[iter]))
 		{
-			if(iter == 0) { this->configuration->Draw(); }
+			if(iter == 0) {  }
 			else if (iter == 1) {  }
 			ImGui::EndTabItem();
 		}
 
 	ImGui::EndTabBar();
-	ImGui::End();
+
 }
 
 void ModuleGui::CreateHardwareWindow()

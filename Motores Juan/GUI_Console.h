@@ -8,6 +8,8 @@ public:
 	GUI_Console(Application* app, bool start_enabled = true);
 	~GUI_Console();
 
-	void Draw();
+	void Draw(bool* open);
+
 private:
+
 };

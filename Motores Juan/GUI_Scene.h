@@ -7,7 +7,9 @@ public:
 	GUI_Scene(Application* app, bool start_enabled = true);
 	~GUI_Scene();
 
-	void Draw();
+	void Draw(bool* open);
+
 private:
+
 };
 
