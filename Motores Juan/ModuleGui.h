@@ -61,7 +61,6 @@ private:
 
 	float fps[100];
 	float ms[100];
-
 	float bright_slider_scroll = 1;
 
 	ImGuiIO* io;

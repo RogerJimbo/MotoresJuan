@@ -25,7 +25,7 @@ update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 void ModuleScene::Draw()
 {
-	DrawGrid(gridsize);
+	DrawGrid(GRIDSIZE);
 	ArrayCube();
 	DrawAxis();
 }
@@ -126,10 +126,6 @@ void ModuleScene::ArrayCube()
 void ModuleScene::DrawAxis()
 {
 	glBegin(GL_LINES);
-
-	glLineWidth(5.0f);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-	glEnable(GL_COLOR_MATERIAL);
 
 	// X
 	glColor3f(1.0, 0.0, 0.0);

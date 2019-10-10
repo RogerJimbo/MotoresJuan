@@ -4,6 +4,8 @@
 #include <vector>
 #include "Module.h"
 
+#define GRIDSIZE 50
+
 using namespace std;
 
 class ModuleScene : public Module
@@ -28,8 +30,6 @@ public:
 
 	void DrawGrid(int GridSize);
 	void DrawAxis();
-
-	int gridsize = 50;
 
 	string config_name;
 	vector<unsigned int> indices;

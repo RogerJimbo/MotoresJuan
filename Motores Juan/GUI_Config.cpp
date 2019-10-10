@@ -15,8 +15,6 @@ GUI_Config::~GUI_Config() {}
 
 void GUI_Config::Draw(bool* open)
 {
-	ImGui::SetNextWindowSize(ImVec2(270, 700));
-	ImGui::SetNextWindowPos(ImVec2(1410, 18));
 	ImGui::Begin("Configuration", open);
 	{
 		if (ImGui::CollapsingHeader("Application"))		//Application Configuration

@@ -20,14 +20,15 @@
 #include "GUI_Hierarchy.h"
 #include <array>
 
-ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Active Gui Windows"; }
+ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Gui"; }
 
 ModuleGui::~ModuleGui() {}
 
 bool ModuleGui::Init(const JSON_Object& config)
 {
-	//IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	io = &ImGui::GetIO();
+	io->ConfigFlags |= ImGuiConfigFlags_DockingEnable, ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
@@ -51,29 +52,26 @@ bool ModuleGui::Init(const JSON_Object& config)
 
 bool ModuleGui::Start()
 {
-	io = &ImGui::GetIO();
 	return true;
 }
 
-// PreUpdate: clear buffer
 update_status ModuleGui::PreUpdate(float dt)
 {
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
-	
+
 	ImGui::SetNextWindowPos({ 0,20 });
 	ImGui::SetNextWindowSize({(float)App->window->window_width, (float)App->window->window_height});
 
 	return UPDATE_CONTINUE;
 }
 
-// Update: debug camera
 update_status ModuleGui::Update(float dt)
 {
-	ImGui::ShowDemoWindow();
-
 	Docking();
+
+	//ImGui::ShowDemoWindow();
 
 	//Engine Windows
 	static bool scene_open = true;
@@ -229,33 +227,27 @@ void ModuleGui::CreateHardwareWindow(bool* open)
 
 void ModuleGui::Docking()
 {
-	ImGuiWindowFlags window = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-		ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-	ImGuiViewport* viewport = ImGui::GetMainViewport();
-	static ImGuiDockNodeFlags optional = ImGuiDockNodeFlags_PassthruCentralNode;
+	ImGuiWindowFlags window_flags;
+
+	ImGuiViewport* viewport = ImGui::GetWindowViewport();
 
 	ImGui::SetNextWindowPos(viewport->Pos);
 	ImGui::SetNextWindowSize(viewport->Size);
 	ImGui::SetNextWindowViewport(viewport->ID);
 
-	ImGui::SetNextWindowBgAlpha(0.0f);
-
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-	ImGui::Begin("Kuroko Engine", &docking_background, window);
-	ImGui::PopStyleVar();
-	ImGui::PopStyleVar();
-	ImGui::PopStyleVar();
+	ImGui::PopStyleVar(); 	ImGui::PopStyleVar(2);
 
 	ImGuiIO& io = ImGui::GetIO();
-
-	ImGuiID dockspace_id = ImGui::GetID("The dockspace");
-	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), optional);
-
-	ImGui::End();
+	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		ImGuiID dockspace_id = ImGui::GetID("Docking");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+	}
 }
 
 void ModuleGui::Save_Config(JSON_Object& config) const
@@ -266,7 +258,6 @@ void ModuleGui::Save_Config(JSON_Object& config) const
 	json_object_set_boolean(&config, "hardware", active_engine_windows[HARDWARE]);
 	json_object_set_boolean(&config, "console", active_engine_windows[CONSOLE]);
 	json_object_set_boolean(&config, "inspector", active_engine_windows[INSPECTOR]);
-
 }
 
 void ModuleGui::Load_Config(JSON_Object& config)

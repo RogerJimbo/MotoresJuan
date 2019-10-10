@@ -16,9 +16,6 @@ GUI_Console::~GUI_Console() {}
 
 void GUI_Console::Draw(bool* open)
 {
-	ImGui::SetNextWindowSize(ImVec2(1680, 335));
-	ImGui::SetNextWindowPos(ImVec2(0, 718));
-
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{
 		ImGui::BeginChild("Scrolling Bar");
