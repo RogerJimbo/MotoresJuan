@@ -1,7 +1,6 @@
 #include "Application.h"
 #include <Windows.h>
 
-
 Application::Application()
 {
 	//Modules
@@ -15,6 +14,7 @@ Application::Application()
 	// Gui Elements
 	configuration = new GUI_Config(this);
 	console = new GUI_Console(this);
+	jerarchy = new GUI_Hierarchy(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -31,6 +31,7 @@ Application::Application()
 	//Main Gui Elements
 	AddGuiElement(configuration);
 	AddGuiElement(console);
+	AddGuiElement(jerarchy);
 }
 
 Application::~Application()

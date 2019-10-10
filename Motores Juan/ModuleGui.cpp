@@ -17,6 +17,7 @@
 #include "GUI_Config.h"
 #include "GUI_Console.h"
 #include "GUI_Scene.h"
+#include "GUI_Hierarchy.h"
 #include <array>
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Active Gui Windows"; }
@@ -36,10 +37,12 @@ bool ModuleGui::Init(const JSON_Object& config)
 	configuration = new GUI_Config(App);
 	console = new GUI_Console(App);
 	scene = new GUI_Scene(App);
+	hierarchy = new GUI_Hierarchy(App);
 
 	Gui.push_back((GUI_Config*)configuration);
 	Gui.push_back((GUI_Console*)console);
 	Gui.push_back((GUI_Scene*)scene);
+	Gui.push_back((GUI_Hierarchy*)hierarchy);
 
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 
@@ -75,9 +78,8 @@ update_status ModuleGui::Update(float dt)
 	if (active_engine_windows[HARDWARE]) { CreateHardwareWindow(); }
 	if (!active_engine_windows[CONFIG]) { CreateInfoWindow(); }	
 	if (!active_engine_windows[SCENE]) { this->scene->Draw(); }
-
-
-	// ImGui::ShowDemoWindow();
+	if (!active_engine_windows[HIERARCHY]) { this->hierarchy->Draw(); }
+	if (!active_engine_windows[CONSOLE]) { this->console->Draw(); }
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -114,6 +116,8 @@ update_status ModuleGui::Update(float dt)
 		{
 			if(ImGui::MenuItem("Configuration")) {}
 			if (ImGui::MenuItem("Scene", NULL, &active_engine_windows[SCENE])) {}
+			if (ImGui::MenuItem("Hierarchy", NULL, &active_engine_windows[HIERARCHY])) {}
+			if (ImGui::MenuItem("Console", NULL, &active_engine_windows[CONSOLE])) {}
 
 			ImGui::EndMenu();
 		}
@@ -182,15 +186,13 @@ void ModuleGui::CreateInfoWindow()
 		if (opened_tab[iter] && ImGui::BeginTabItem(tab_names[iter], &opened_tab[iter]))
 		{
 			if(iter == 0) { this->configuration->Draw(); }
-			else if (iter == 1) { /*Call inspector tab function*/}
+			else if (iter == 1) {  }
 			ImGui::EndTabItem();
 		}
 
 	ImGui::EndTabBar();
 	ImGui::End();
 }
-
-void ModuleGui::CreatePropertiesWindow() {}
 
 void ModuleGui::CreateHardwareWindow()
 {

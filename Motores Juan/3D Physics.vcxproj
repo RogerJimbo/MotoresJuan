@@ -86,6 +86,7 @@
     <ClInclude Include="GUI_Config.h" />
     <ClInclude Include="GUI_Console.h" />
     <ClInclude Include="GUI_Element.h" />
+    <ClInclude Include="GUI_Hierarchy.h" />
     <ClInclude Include="GUI_Scene.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="GUI_Config.cpp" />
     <ClCompile Include="GUI_Console.cpp" />
+    <ClCompile Include="GUI_Hierarchy.cpp" />
     <ClCompile Include="GUI_Scene.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />

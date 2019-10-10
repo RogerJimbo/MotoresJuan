@@ -12,6 +12,7 @@
 #include "GUI_Element.h"
 #include "GUI_Config.h"
 #include "GUI_Console.h"
+#include "GUI_Hierarchy.h"
 
 #include "Parson\parson.h"
 
@@ -33,6 +34,7 @@ public:
 	GUI_Config* configuration;
 	GUI_Console* console;
 	GUI_Scene* scene;
+	GUI_Hierarchy* jerarchy;
 
 private:
 	Timer	ms_timer;

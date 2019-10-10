@@ -16,7 +16,16 @@ GUI_Console::~GUI_Console() {}
 
 void GUI_Console::Draw()
 {
-	
+	ImGui::SetNextWindowSize(ImVec2(1680, 300));
+	ImGui::SetNextWindowPos(ImVec2(0, 718));
+
+	if (ImGui::Begin(elem_name.c_str()))
+	{
+
+
+	}
+	ImGui::End();
+
 }
 
 
