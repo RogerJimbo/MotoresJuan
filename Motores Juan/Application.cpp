@@ -10,6 +10,7 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	modulegui = new ModuleGui(this);
 	modscene = new ModuleScene(this);
+	loader = new ModuleLoader(this);
 
 	// Gui Elements
 	configuration = new GUI_Config(this);
@@ -26,6 +27,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(modulegui);
 	AddModule(modscene);
+	AddModule(loader);
 	AddModule(renderer3D); // Renderer last!
 
 	//Main Gui Elements

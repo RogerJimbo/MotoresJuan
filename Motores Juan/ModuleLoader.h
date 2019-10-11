@@ -13,7 +13,7 @@ public:
 
 	ModuleLoader(Application* app, bool start_enabled = true);
 
-	 ~ModuleLoader() {}
+	~ModuleLoader();
 
 	 bool Init(const JSON_Object& config);
 

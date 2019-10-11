@@ -8,6 +8,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleGui.h"
 #include "ModuleScene.h"
+#include "ModuleLoader.h"
 
 #include "GUI_Element.h"
 #include "GUI_Config.h"
@@ -30,6 +31,7 @@ public:
 	ModuleCamera3D* camera;
 	ModuleGui* modulegui;
 	ModuleScene* modscene;
+	ModuleLoader* loader;
 
 	GUI_Config* configuration;
 	GUI_Console* console;
