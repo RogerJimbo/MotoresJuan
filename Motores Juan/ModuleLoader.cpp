@@ -1,18 +1,26 @@
+#include "Application.h"
 #include "ModuleLoader.h"
+#include "ModuleScene.h"
+#include "ModuleRenderer3D.h"
 
-//#include "Assimp/include/Importer.hpp"
-//#include "Assimp/include/scene.h"
-//#include "Assimp/include/postprocess.h"
-//
-//#include "Assimp/include/cimport.h"
-//#include "Assimp/include/cfileio.h"
-//
-//#include <vector>
-//#pragma comment (lib, "Assimp/libx86/assimp.lib")
+#include "Assimp/include/cimport.h"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/postprocess.h"
+#include "Assimp/include/cfileio.h"
 
-//using namespace Assimp;
+#include <vector>
+#pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "loader"; }
+using namespace Assimp;
+
+ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, start_enabled) 
+{ 
+	module_name = "loader";
+	//Assimp Debug
+	struct aiLogStream stream;
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	aiAttachLogStream(&stream);
+}
 ModuleLoader::~ModuleLoader() {}
 
 bool ModuleLoader::Init(const JSON_Object& config) { return true; }
@@ -20,43 +28,53 @@ bool ModuleLoader::Start() { return true; }
 update_status ModuleLoader::PreUpdate(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::Update(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
-bool ModuleLoader::CleanUp() {/* aiDetachAllLogStreams();*/	 return true; }
 
 bool ModuleLoader::Import(const string& pFile)
 {
-	//Importer importer;
+	const aiScene* scene = aiImportFile(pFile.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 
-	//aiProcess_CalcTangentSpace |aiProcess_Triangulate |aiProcess_JoinIdenticalVertices | aiProcess_SortByPType
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		for (int i = 0; i < scene->mNumMeshes; ++i)
+		{
+			const aiMesh* m = scene->mMeshes[i];
+			Mesh* new_mesh = new Mesh;
 
-	//const aiScene* scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_MaxQuality);	
+			new_mesh->num_vertices = m->mNumVertices;
+			new_mesh->vertices = new float[new_mesh->num_vertices * 3];
+			memcpy(new_mesh->vertices, m->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
+			LOG("New mesh with %d vertices", new_mesh->num_vertices);
 
-	//if (scene && scene->HasMeshes()) { aiReleaseImport(scene); }
-
-	//if (!scene) LOG("%s", importer.GetErrorString()); LOG("Error loading scene %s", pFile); return  false;
-
-	//Turn on the Debugger
-	//struct aiLogStream stream;
-	//stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	//aiAttachLogStream(&stream);
-
-	//Create a struct to contain vertex data
-
-	//Mesh = vertices, normals, texturecoords, faces, materialIndex	
-
-	//uint id_index = 0;	uint num_index = 0; uint* index = nullptr;		//Index in VRAM
-	//uint id_vertex = 0; uint num_vertex = 0; uint* vertex = nullptr;	//Unique Vertex In VRAM
-
-
-	//Copy vertices
-	// mesh.mNumVertices //Initialize with nthe number of vertices
-	//	mesh.mVertices = new float[mesh.mNumVertices * 3];		
-	//	memcpy(mesh.mVertices, new_mesh->mVertices, sizeof(float) * mesh.mNumVertices * 3);
-
-	//Copy Faces
-	
-	
-
-
+			if (m->HasFaces())
+			{
+				new_mesh->num_indices = m->mNumFaces * 3;
+				new_mesh->indices = new uint[new_mesh->num_indices]; // assume each face is a triangle
+				for (uint i = 0; i < m->mNumFaces; ++i)
+				{
+					if (m->mFaces[i].mNumIndices != 3)
+					{
+						LOG("WARNING, geometry face with != 3 indices!");
+					}
+					else
+					{
+						memcpy(&new_mesh->indices[i * 3], m->mFaces[i].mIndices, 3 * sizeof(uint));
+					}
+				}
+			}
+			// Use scene->mNumMeshes to iterate on scene->mMeshes array
+			aiReleaseImport(scene);
+		}
+	}
+	else
+	{
+		LOG("Error loading scene %s", pFile);
+	}
 	return true;
+	
 }
 
+bool ModuleLoader::CleanUp() 
+{
+	aiDetachAllLogStreams();	 
+	return true; 
+}
