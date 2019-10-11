@@ -5,6 +5,7 @@
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/cfileio.h"
 
+#include <vector>
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 using namespace Assimp;
@@ -38,11 +39,21 @@ bool ModuleLoader::Import(const string& pFile)
 
 	//Create a struct to contain vertex data
 
-	uint id_index = 0;	uint num_index = 0; uint* index = nullptr;		//Index in VRAM
-	uint id_vertex = 0; uint num_vertex = 0; uint* vertex = nullptr;	//Unique Vertex In VRAM
+	//Mesh = vertices, normals, texturecoords, faces, materialIndex	
 
+	//uint id_index = 0;	uint num_index = 0; uint* index = nullptr;		//Index in VRAM
+	//uint id_vertex = 0; uint num_vertex = 0; uint* vertex = nullptr;	//Unique Vertex In VRAM
+
+
+	//Copy vertices
+	// mesh.mNumVertices //Initialize with nthe number of vertices
+	//	mesh.mVertices = new float[mesh.mNumVertices * 3];		
+	//	memcpy(mesh.mVertices, new_mesh->mVertices, sizeof(float) * mesh.mNumVertices * 3);
+
+	//Copy Faces
 	
-	 
+	
+
 
 	return true;
 }

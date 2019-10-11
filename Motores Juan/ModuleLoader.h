@@ -27,8 +27,8 @@ public:
 
 	 bool CleanUp();
 
-	string module_name;
+	 bool Import(const string& pFile);
 
-	bool Import();
+	string module_name;
 
 };
