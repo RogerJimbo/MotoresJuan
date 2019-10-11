@@ -25,7 +25,7 @@ public:
 
 	 update_status PostUpdate(float dt);
 
-	 bool CleanUp();
+	bool CleanUp();
 
 	 bool Import(const string& pFile);
 

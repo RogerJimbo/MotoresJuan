@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GUI_Element.h"
 #include "SDL/include/SDL.h"
 
@@ -9,7 +10,9 @@ public:
 	~GUI_Console();
 
 	void Draw(bool* open);
+	void CreateLog(const char* log);
 
-private:
-
+	bool scrolling = false;
+	ImGuiTextBuffer buffer;
+	ImVector<int> console_elems;
 };

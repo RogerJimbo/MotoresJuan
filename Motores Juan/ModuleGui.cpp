@@ -260,6 +260,12 @@ void ModuleGui::Docking()
 	ImGui::End();
 }
 
+void ModuleGui::AddLog(const char* log)
+{
+	if (this && console != nullptr)
+		console->CreateLog(log);
+}
+
 void ModuleGui::Save_Config(JSON_Object& config) const
 {
 	json_object_set_boolean(&config, "configuration", active_engine_windows[CONFIG]);

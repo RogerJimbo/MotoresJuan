@@ -35,7 +35,6 @@ public:
 
 	GUI_Config* configuration;
 	GUI_Console* console;
-	GUI_Scene* scene;
 	GUI_Hierarchy* jerarchy;
 
 private:

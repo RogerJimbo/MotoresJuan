@@ -18,11 +18,31 @@ void GUI_Console::Draw(bool* open)
 {
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{
+		if (ImGui::Button("Clear Console")) buffer.clear(); console_elems.clear();
 		ImGui::BeginChild("Scrolling Bar");
-		for (int i = 0; i < 50; i++) { ImGui::Text("%04d: Logs", i); }
+
+		ImGui::TextUnformatted(buffer.begin());
+
+		if (scrolling)	ImGui::SetScrollHere(1.0f);
+		!scrolling;
+
 		ImGui::EndChild();
 	}
 	ImGui::End();
 }
+
+void GUI_Console::CreateLog(const char* log)
+{      
+	int buffsize, newsize = buffer.size();
+	buffer.appendf("%s \n", log);
+
+	while (buffsize < newsize)
+	{
+		if (buffer[buffsize] == '\n') console_elems.push_back(buffsize);	
+		buffsize++;
+	}
+	scrolling;
+}
+
 
 
