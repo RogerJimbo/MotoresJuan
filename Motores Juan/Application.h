@@ -1,6 +1,7 @@
 #pragma once
 #include "Globals.h"
 #include "Timer.h"
+
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
@@ -73,3 +74,5 @@ private:
 	bool saveconfig = false;
 	bool loadconfig = false;
 };
+
+extern Application* App;

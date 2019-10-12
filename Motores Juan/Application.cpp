@@ -33,14 +33,10 @@ bool Application::Init()
 	LOG("Application Init");
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	//Modules
 		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->module_name.c_str()));
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++)	//Gui Elements
-		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->elem_name.c_str()));
 
 	// Start
 	LOG("Application Start"); 	
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	//Modules
-		ret = (*iter)->Start();
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++)	//Gui Elements
 		ret = (*iter)->Start();
 
 	ms_timer.Start();
@@ -65,23 +61,15 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 
-	LOG("Application Update");
 	// Pre Update
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	//Modules
-		ret = (*iter)->PreUpdate(dt);
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret == UPDATE_CONTINUE; iter++)	//Gui Elements
 		ret = (*iter)->PreUpdate(dt);
 	// Update
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	//Modules
 		ret = (*iter)->Update(dt);
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret == UPDATE_CONTINUE; iter++)	//Gui Elements
-		ret = (*iter)->Update(dt);
 	// Post Update
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	//Modules
 		ret = (*iter)->PostUpdate(dt);
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret == UPDATE_CONTINUE; iter++)	//Gui Elements
-		ret = (*iter)->PostUpdate(dt);
-
 	FinishUpdate();
 	return ret;
 }
@@ -91,7 +79,7 @@ bool Application::CleanUp()
 	bool ret = true;
 	LOG("Application CleanUp");
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++) { ret = (*iter)->CleanUp(); }
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++) { ret = (*iter)->CleanUp(); }
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++) { ret = (*iter)->CleanUp(); RELEASE(*iter); }
 
 	return ret;
 }
@@ -117,13 +105,6 @@ void Application::SaveConfigToFile()
 		JSON_Value* module_config = json_value_init_object();
 		(*iter)->Save_Config(*json_object(module_config));
 		json_object_set_value(json_object(config), (*iter)->module_name.c_str(), module_config);
-	}
-
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
-	{
-		JSON_Value* module_config = json_value_init_object();
-		(*iter)->Save_Config(*json_object(module_config));
-		json_object_set_value(json_object(config), (*iter)->elem_name.c_str(), module_config);
 	}
 
 	if (config == NULL) { LOG("Error opening config file."); }

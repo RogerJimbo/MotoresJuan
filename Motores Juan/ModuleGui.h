@@ -41,7 +41,6 @@ public:
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
 	float verticalFactor = (float)SCREEN_HEIGHT * SCREEN_SIZE / SCREEN_HEIGHT;
 
-	void AddLog(const char* log);
 	void Save_Config(JSON_Object& config) const;
 	void Load_Config(JSON_Object& config);
 	

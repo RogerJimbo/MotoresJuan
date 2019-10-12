@@ -11,6 +11,7 @@ public:
 
 	void Draw(bool* open);
 	void CreateLog(const char* log);
+	void Clear() { buffer.clear(); }
 
 	bool scrolling = false;
 	ImGuiTextBuffer buffer;
