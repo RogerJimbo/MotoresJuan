@@ -3,37 +3,20 @@
 
 Application::Application()
 {
-	//Modules
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	modulegui = new ModuleGui(this);
-	modscene = new ModuleScene(this);
-	loader = new ModuleLoader(this);
-
-	// Gui Elements
-	configuration = new GUI_Config(this);
-	console = new GUI_Console(this);
-	jerarchy = new GUI_Hierarchy(this);
-
-	// The order of calls is very important!
-	// Modules will Init() Start() and Update in this order
-	// They will CleanUp() in reverse order
-
 	// Main Modules
-	AddModule(window);
-	AddModule(camera);
-	AddModule(input);
-	AddModule(modulegui);
-	AddModule(modscene);
-	AddModule(loader);
-	AddModule(renderer3D); // Renderer last!
+	AddModule(window = new ModuleWindow(this));
+	AddModule(camera = new ModuleCamera3D(this));
+	AddModule(input = new ModuleInput(this));
+	AddModule(modulegui = new ModuleGui(this));
+	AddModule(modscene = new ModuleScene(this));
+	AddModule(loader = new ModuleLoader(this));
+	AddModule(renderer3D = new ModuleRenderer3D(this)); // Renderer last!
 
 	//Main Gui Elements
-	AddGuiElement(configuration);
-	AddGuiElement(console);
-	AddGuiElement(jerarchy);
+	AddGuiElement(configuration = new GUI_Config(this));
+	AddGuiElement(console = new GUI_Console(this));
+	AddGuiElement(hierarchy = new GUI_Hierarchy(this));
+	AddGuiElement(scene = new GUI_Scene(this));
 }
 
 Application::~Application()

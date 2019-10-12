@@ -65,14 +65,6 @@ private:
 	float bright_slider_scroll = 1;
 
 	ImGuiIO* io;
-
-public:
-	GUI_Config* configuration = nullptr;
-	GUI_Hierarchy* hierarchy = nullptr;
-	GUI_Scene* scene = nullptr;
-	GUI_Console* console = nullptr;
-
-	vector<GUI_Element*> Gui;
 };
 
 #endif 

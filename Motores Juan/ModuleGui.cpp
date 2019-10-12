@@ -7,10 +7,9 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/MathGeoLib.h"
 
-#include "ImGui\imgui.h"
-#include "ImGui/imgui_internal.h"
-#include "ImGui\imgui_impl_sdl.h"
-#include "ImGui\imgui_impl_opengl2.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl2.h"
 
 #include "Parson/parson.h"
 
@@ -34,16 +33,6 @@ bool ModuleGui::Init(const JSON_Object& config)
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 	SDL_GL_CreateContext(App->window->window);
-
-	configuration = new GUI_Config(App);
-	console = new GUI_Console(App);
-	scene = new GUI_Scene(App);
-	hierarchy = new GUI_Hierarchy(App);
-
-	Gui.push_back((GUI_Config*)configuration);
-	Gui.push_back((GUI_Console*)console);
-	Gui.push_back((GUI_Scene*)scene);
-	Gui.push_back((GUI_Hierarchy*)hierarchy);
 
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 
@@ -80,10 +69,10 @@ update_status ModuleGui::Update(float dt)
 	static bool about_open = false;
 	static bool hardware_open = false;
 
-	if (scene_open)			this->scene->Draw(&scene_open);      
-	if (hierarchy_open)		this->hierarchy->Draw(&hierarchy_open);
-	if (console_open)			this->console->Draw(&console_open);
-	if (config_open)			this->configuration->Draw(&config_open);
+	if (scene_open)			App->scene->Draw(&scene_open);      
+	if (hierarchy_open)		App->hierarchy->Draw(&hierarchy_open);
+	if (console_open)			App->console->Draw(&console_open);
+	if (config_open)			App->configuration->Draw(&config_open);
 	if (about_open)			this->CreateAboutWindow(&about_open);
 	if (hardware_open)		this->CreateHardwareWindow(&hardware_open);
 
@@ -262,8 +251,8 @@ void ModuleGui::Docking()
 
 void ModuleGui::AddLog(const char* log)
 {
-	if (this && console != nullptr)
-		console->CreateLog(log);
+	if (App->modulegui && App->console != nullptr)
+		App->console->CreateLog(log);
 }
 
 void ModuleGui::Save_Config(JSON_Object& config) const

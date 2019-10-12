@@ -1,3 +1,4 @@
+#pragma once
 #include "GUI_Element.h"
 #include "SDL/include/SDL.h"
 

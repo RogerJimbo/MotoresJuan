@@ -14,6 +14,7 @@
 #include "GUI_Config.h"
 #include "GUI_Console.h"
 #include "GUI_Hierarchy.h"
+#include "GUI_Scene.h"
 
 #include "Parson\parson.h"
 
@@ -33,9 +34,10 @@ public:
 	ModuleScene* modscene;
 	ModuleLoader* loader;
 
-	GUI_Config* configuration;
-	GUI_Console* console;
-	GUI_Hierarchy* jerarchy;
+	GUI_Config* configuration = nullptr;
+	GUI_Hierarchy* hierarchy = nullptr;
+	GUI_Scene* scene = nullptr;
+	GUI_Console* console = nullptr;
 
 private:
 	Timer	ms_timer;
