@@ -16,10 +16,7 @@ ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, sta
 }
 
 // Destructor
-ModuleInput::~ModuleInput()
-{
-	delete[] keyboard;
-}
+ModuleInput::~ModuleInput() { delete[] keyboard; }
 
 // Called before render is available
 bool ModuleInput::Init(const JSON_Object& config)

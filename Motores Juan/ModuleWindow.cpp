@@ -47,12 +47,8 @@ bool ModuleWindow::Init(const JSON_Object& config)
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
-		else
-		{
-			screen_surface = SDL_GetWindowSurface(window);
-		}
+		else { screen_surface = SDL_GetWindowSurface(window); }
 	}
-
 	return ret;
 }
 
@@ -125,8 +121,8 @@ void ModuleWindow::Save_Config(JSON_Object& config) const
 	 //SetFullscreen(json_object_get_boolean(&config, "fullscreen"));
 	 SetResizable(json_object_get_boolean(&config, "resizable"));
 	 SetBorderless(json_object_get_boolean(&config, "borderless"));
-	 SetFullDesktop(json_object_get_boolean(&config, "fulldesktop"));
+	 SetFullDesktop(json_object_get_boolean(&config, "fulldesktop"));	
 
-	 //SetLightSlider(json_object_get_number(&config, "brightness"));
-	 SetWindowSize(json_object_get_number(&config, "width"), json_object_get_number(&config, "height"));
+	// SetLightSlider(json_object_get_number(&config, "brightness"));
+	// SetWindowSize(json_object_get_number(&config, "width"), json_object_get_number(&config, "height"));
  }

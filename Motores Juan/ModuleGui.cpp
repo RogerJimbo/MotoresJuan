@@ -87,7 +87,7 @@ update_status ModuleGui::Update(float dt)
 			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }		//Save data JSON
 			if (ImGui::MenuItem("Load Config", "Ctrl+L", false,true)) { App->Load_Config(); }		//Load data JSON
 
-			if (ImGui::MenuItem("Close", "ESC"))
+			if (ImGui::MenuItem("Close", "ALT+F4"))
 			{
 				ImGui::EndMenu();
 				ImGui::EndMainMenuBar();

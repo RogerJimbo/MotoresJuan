@@ -62,13 +62,13 @@ update_status Application::Update()
 	PrepareUpdate();
 
 	// Pre Update
-	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	//Modules
+	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	
 		ret = (*iter)->PreUpdate(dt);
 	// Update
-	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	//Modules
+	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	
 		ret = (*iter)->Update(dt);
 	// Post Update
-	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	//Modules
+	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	
 		ret = (*iter)->PostUpdate(dt);
 	FinishUpdate();
 	return ret;
@@ -79,7 +79,7 @@ bool Application::CleanUp()
 	bool ret = true;
 	LOG("Application CleanUp");
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++) { ret = (*iter)->CleanUp(); }
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++) { ret = (*iter)->CleanUp(); RELEASE(*iter); }
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret; iter++) { RELEASE(*iter); }
 
 	return ret;
 }
@@ -119,5 +119,8 @@ void Application::LoadConfigFromFile()
 	JSON_Object* config = json_value_get_object(json_parse_file(config_name.c_str()));
 
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end(); iter++)
+		(*iter)->Load_Config(*json_object_get_object(config, config_name.c_str()));
+
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
 		(*iter)->Load_Config(*json_object_get_object(config, config_name.c_str()));
 }

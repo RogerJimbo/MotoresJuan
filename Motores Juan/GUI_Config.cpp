@@ -82,4 +82,4 @@ void GUI_Config::Draw(bool* open)
 
 		ImGui::End();
 	}
-}
+}	
