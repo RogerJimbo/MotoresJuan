@@ -20,16 +20,17 @@ using namespace Assimp;
 
 ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, start_enabled) 
 { 
-	module_name = "loader";
-	//Assimp Debug
-	struct aiLogStream stream;
+	module_name = "Loader";
+	struct aiLogStream stream;	//Assimp Debug
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
+	aiAttachLogStream(&stream);
 }
+
 ModuleLoader::~ModuleLoader() {}
 
 bool ModuleLoader::Init(const JSON_Object& config) { return true; }
 bool ModuleLoader::Start() { return true; }
+
 update_status ModuleLoader::PreUpdate(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::Update(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
@@ -56,14 +57,8 @@ bool ModuleLoader::Import(const string& pFile)
 				new_mesh->indices = new uint[new_mesh->num_indices]; // assume each face is a triangle
 				for (uint i = 0; i < m->mNumFaces; ++i)
 				{
-					if (m->mFaces[i].mNumIndices != 3)
-					{
-						LOG("WARNING, geometry face with != 3 indices!");
-					}
-					else
-					{
-						memcpy(&new_mesh->indices[i * 3], m->mFaces[i].mIndices, 3 * sizeof(uint));
-					}
+					if (m->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
+					else { memcpy(&new_mesh->indices[i * 3], m->mFaces[i].mIndices, 3 * sizeof(uint)); }
 				}				glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
 				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices, new_mesh->vertices, GL_STATIC_DRAW);
@@ -76,12 +71,8 @@ bool ModuleLoader::Import(const string& pFile)
 			aiReleaseImport(scene);
 		}
 	}
-	else
-	{
-		LOG("Error loading scene %s", pFile);
-	}
-	return true;
-	
+	else { LOG("Error loading scene %s", pFile); }
+	return true;	
 }
 
 bool ModuleLoader::CleanUp() 

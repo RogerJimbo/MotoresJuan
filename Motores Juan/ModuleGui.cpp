@@ -59,7 +59,7 @@ update_status ModuleGui::PreUpdate(float dt)
 update_status ModuleGui::Update(float dt)
 {
 	Docking();
-	//ImGui::ShowDemoWindow();
+	ImGui::ShowDemoWindow();
 
 	//Engine Windows
 	static bool scene_open = true;
@@ -82,8 +82,15 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::BeginMenu("File")) 
 		{ 
 			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);												//Create new scene
-			ImGui::MenuItem("Open", "Ctrl+O", false, true);															//Import Files
-
+			if (ImGui::MenuItem("Open", "Ctrl+O", false, true))
+			{
+				ImGui::MenuItem("walk.FBX");
+				if (ImGui::MenuItem("warrior.FBX"))
+				{
+					// Call Loader
+				}
+			}
+			
 			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }		//Save data JSON
 			if (ImGui::MenuItem("Load Config", "Ctrl+L", false,true)) { App->Load_Config(); }		//Load data JSON
 

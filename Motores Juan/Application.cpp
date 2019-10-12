@@ -31,12 +31,12 @@ bool Application::Init()
 
 	// Init
 	LOG("Application Init");
-	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	//Modules
+	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	
 		ret = (*iter)->Init(*json_object_get_object(config, (*iter)->module_name.c_str()));
 
 	// Start
 	LOG("Application Start"); 	
-	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	//Modules
+	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret; iter++)	
 		ret = (*iter)->Start();
 
 	ms_timer.Start();
