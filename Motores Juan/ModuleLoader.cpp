@@ -3,6 +3,11 @@
 #include "ModuleScene.h"
 #include "ModuleRenderer3D.h"
 
+#include "Glew/include/glew.h"
+#include "SDL\include\SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -59,7 +64,13 @@ bool ModuleLoader::Import(const string& pFile)
 					{
 						memcpy(&new_mesh->indices[i * 3], m->mFaces[i].mIndices, 3 * sizeof(uint));
 					}
-				}
+				}				glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
+				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices, new_mesh->vertices, GL_STATIC_DRAW);
+
+				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);
 			}
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			aiReleaseImport(scene);

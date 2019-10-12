@@ -2,6 +2,7 @@
 #define __ModuleScene_H__
 
 #include <vector>
+#include "ModuleLoader.h"
 #include "Module.h"
 
 #define GRIDSIZE 50
@@ -34,5 +35,6 @@ public:
 	string config_name;
 	vector<unsigned int> indices;
 	vector<vec3> vertexes;
+	vector<Mesh*> mesh;
 };
 #endif

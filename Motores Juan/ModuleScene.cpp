@@ -28,6 +28,11 @@ void ModuleScene::Draw()
 	DrawGrid(GRIDSIZE);
 	ArrayCube();
 	DrawAxis();
+
+	/*for (auto item = mesh.begin(); item != mesh.end(); item++)
+	{
+
+	}*/
 }
 
 void ModuleScene::IndexCube()
