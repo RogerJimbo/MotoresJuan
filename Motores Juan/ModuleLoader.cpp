@@ -62,11 +62,11 @@ bool ModuleLoader::Import(const string& pFile)
 				}				glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
 				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices, new_mesh->vertices, GL_STATIC_DRAW);
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindFramebuffer(GL_FRAMEBUFFER, 0);				App->modscene->mesh.push_back(new_mesh);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				App->modscene->mesh.push_back(new_mesh);
+				App->modscene->model_loaded = true;
 			}
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			aiReleaseImport(scene);
