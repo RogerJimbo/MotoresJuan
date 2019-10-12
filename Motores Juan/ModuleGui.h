@@ -46,6 +46,14 @@ public:
 	
 	bool active_engine_windows[NUM_ACT_WIN];
 
+public:
+	bool scene_open = true;
+	bool hierarchy_open = true;
+	bool console_open = true;
+	bool config_open = true;
+	bool about_open = false;
+	bool hardware_open = false;
+
 private:
 	bool show = true;
 	bool docking_background;

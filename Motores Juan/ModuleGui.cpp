@@ -62,18 +62,12 @@ update_status ModuleGui::Update(float dt)
 	ImGui::ShowDemoWindow();
 
 	//Engine Windows
-	static bool scene_open = true;
-	static bool hierarchy_open = true;
-	static bool console_open = true;
-	static bool config_open = true;
-	static bool about_open = false;
-	static bool hardware_open = false;
 
 	if (scene_open)			App->scene->Draw(&scene_open);      
 	if (hierarchy_open)		App->hierarchy->Draw(&hierarchy_open);
 	if (console_open)			App->console->Draw(&console_open);
 	if (config_open)			App->configuration->Draw(&config_open);
-	if (about_open)			this->CreateAboutWindow(&about_open);
+	if (about_open)			this->CreateAboutWindow(&about_open); 
 	if (hardware_open)		this->CreateHardwareWindow(&hardware_open);
 
 	// Main Menu Bar
@@ -87,7 +81,7 @@ update_status ModuleGui::Update(float dt)
 				ImGui::MenuItem("walk.FBX");
 				if (ImGui::MenuItem("warrior.FBX"))
 				{
-					// Call Loader
+					// Call LoaderImGui::OpenPopup("About");
 				}
 			}
 			
@@ -141,10 +135,8 @@ bool ModuleGui::CleanUp()
 
 void ModuleGui::CreateAboutWindow(bool* open)
 {
-	ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
-	ImGui::SetNextWindowPos(ImVec2(0, 20));
-
-	if (ImGui::Begin("About", open), 0, window_flags)
+	ImGui::OpenPopup("About");
+	if (ImGui::BeginPopupModal("About"))
 	{
 		ImGui::Text("Motores Juan"), ImGui::Separator();
 		ImGui::Text("This is a video game engine with academic purposes.");
@@ -157,8 +149,9 @@ void ModuleGui::CreateAboutWindow(bool* open)
 		if (ImGui::Button("Open GL")) App->RequestBrowser("https://www.opengl.org/"); ImGui::SameLine();
 		if (ImGui::Button("Parson")) App->RequestBrowser("https://github.com/kgabis/parson");
 			
-		ImGui::End();
-	}	
+		if (ImGui::Button("Close")) ImGui::CloseCurrentPopup(); 
+		ImGui::EndPopup();
+	}		
 }
 
 void ModuleGui::CreateInfoWindow()
