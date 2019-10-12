@@ -29,10 +29,12 @@ void ModuleScene::Draw()
 	ArrayCube();
 	DrawAxis();
 
-	/*for (auto item = mesh.begin(); item != mesh.end(); item++)
+	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
-
-	}*/
+		
+	}
+	
+	//App->loader->Import("warrior.fbx");
 }
 
 void ModuleScene::IndexCube()

@@ -3,6 +3,9 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "ModuleLoader.h"
+
+#include <vector>
 
 #define MAX_LIGHTS 8
 
@@ -30,4 +33,5 @@ public:
 	uint rbo;
 	uint buffer_tex = 0;
 	bool vsync = false;
+
 };
