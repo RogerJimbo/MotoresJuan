@@ -7,76 +7,44 @@
 #include <gl/GLU.h>
 #include "ImGui/imgui_impl_opengl2.h"
 
-
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
-{
-}
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled) { module_name = "Renderer3D"; }
 
-// Destructor
-ModuleRenderer3D::~ModuleRenderer3D()
-{}
+ModuleRenderer3D::~ModuleRenderer3D() {}
 
-// Called before render is available
 bool ModuleRenderer3D::Init(const JSON_Object& config)
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
-	//Creates SDL OpenGL context
 	context = SDL_GL_CreateContext(App->window->window);
-	if(context == NULL)
-	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
-		ret = false;
-	}
+	if (context == NULL) { LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError()); ret = false; }
 	
 	if(ret == true)
 	{
-		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-
-		//Initialize Projection Matrix
+		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0) { LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError()); }
+			
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		//Check for error
 		GLenum error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
+		if (error != GL_NO_ERROR) { LOG("Error initializing OpenGL! %s\n", gluErrorString(error)); ret = false; }
 
-		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		//Check for error
 		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
+		if (error != GL_NO_ERROR) { LOG("Error initializing OpenGL! %s\n", gluErrorString(error)); ret = false; }
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
-		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		//Check for error
 		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
+		if (error != GL_NO_ERROR) { LOG("Error initializing OpenGL! %s\n", gluErrorString(error));	ret = false; }
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -103,7 +71,6 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	glewInit();
 	GLenum err = glewInit();
 
-	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	glGenFramebuffers(1, &fbo);
@@ -123,7 +90,6 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	return ret;
 }
 
-// PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -138,7 +104,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
-	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i) lights[i].Render();

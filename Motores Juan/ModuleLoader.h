@@ -9,13 +9,22 @@ using namespace std;
 
 struct Mesh
 {
-	uint id_indices = 0; // index in VRAM
+	// index in VRAM
+	uint id_indices = 0; 
 	uint num_indices = 0;
 	uint* indices = nullptr;
 
-	uint id_vertices = 0; // unique vertex in VRAM
+	// unique vertex in VRAM
+	uint id_vertices = 0; 
 	uint num_vertices = 0;
 	float* vertices = nullptr;
+
+	// Textures
+
+	uint texture = 0;
+	uint texture_width = 0;
+	uint texture_height = 0;
+	float* texture_coords = nullptr;
 };
 
 class ModuleLoader : public Module
@@ -35,7 +44,7 @@ public:
 	bool CleanUp();
 	bool Import(const string& pFile);
 
-	uint Texturing(const char* file_name);
+	uint Texturing(const char* file_name, uint texture_width, uint texture_height);
 
 	string module_name;
 

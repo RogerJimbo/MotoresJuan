@@ -35,6 +35,9 @@ ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, s
 	aiAttachLogStream(&stream);
 
 	ilInit();
+	iluInit();
+	ilutInit();
+	ilutRenderer(ILUT_OPENGL);
 	glEnable(GL_TEXTURE_2D);
 }
 
@@ -81,26 +84,29 @@ bool ModuleLoader::Import(const string& pFile)
 			}
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			aiReleaseImport(scene);
+
+			new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
+
 		}
 	}
 	else { LOG("Error loading scene %s", pFile); }
 	return true;	
 }
 
-uint ModuleLoader::Texturing(const char* file_name)
+uint ModuleLoader::Texturing(const char* file_name, uint texture_width, uint texture_height)
 {
 	ILuint imageID = 0;
 	GLuint textureID = 0;
-	ILboolean success;
 	ILenum error;
+	ILinfo ImageInfo;
 
-	success = ilLoadImage(file_name);	
+	iluGetImageInfo(&ImageInfo);
 	ilGenImages(1, &imageID); 		
 	ilBindImage(imageID); 			
 
-	if (success)	
+	if (ilLoadImage(file_name))
 	{
-		LOG("Texture created succesfuly!")
+		LOG("Texture loaded succesfuly!")
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -109,15 +115,13 @@ uint ModuleLoader::Texturing(const char* file_name)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(GL_RGBA), ilGetInteger(IL_IMAGE_WIDTH),
-			ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(GL_RGBA), GL_UNSIGNED_BYTE, ilGetData());
+		texture_width = ImageInfo.Width; texture_height = ImageInfo.Height;
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 
 	}
-	else //error = ilGetError(); LOG("Error creating texture: %i", error); 
-		LOG("Error loading mesh... %i", error = ilGetError()); 
+	else 	while (error = ilGetError()) { LOG("Error %d: %s", error, iluErrorString(error)); }
 
 	ilDeleteImages(1, &imageID);
-
 	return textureID;
 }
 

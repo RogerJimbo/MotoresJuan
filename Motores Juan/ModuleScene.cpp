@@ -30,9 +30,9 @@ void ModuleScene::Draw()
 	DrawAxis();
 
 	App->loader->Import("warrior.fbx");
-	App->loader->Texturing("Baker_House_DDS.png");
+	App->loader->Texturing("Baker_House_DDS.dds", 1024, 1024);
 
-	
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
@@ -83,61 +83,31 @@ void ModuleScene::ArrayCube()
 {
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
-	glColor3f(1.0, 0.0, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
 
 	//Front
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 1.0f, 0.0f);	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(0.0f, 1.0f, 0.0f);
 
 	//Right
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
-
-	glVertex3f(1.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(1.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(1.0f, 0.0f, -1.0f);
 
 	//Left
-	glVertex3f(0.0f, 1.0f, -1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
-
-	glVertex3f(0.0f, 1.0f, -1.0f);
-	glVertex3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(0.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(0.0f, 0.0f, -1.0f);	glVertex3f(0.0f, 0.0f, 0.0f);
 
 	//Back
-	glVertex3f(1.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
-	glVertex3f(0.0f, 1.0f, -1.0f);
-
-	glVertex3f(0.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
-	glVertex3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 0.0f, -1.0f);	glVertex3f(0.0f, 1.0f, -1.0f);
+	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 0.0f, -1.0f);	glVertex3f(0.0f, 0.0f, -1.0f);
 
 	//Top
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, -1.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
-
-	glVertex3f(0.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(1.0f, 1.0f, -1.0f);
 
 	//Bot
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, -1.0f);
-
-	glVertex3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(1.0f, 0.0f, -1.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 0.0f, -1.0f);
+	glVertex3f(0.0f, 0.0f, -1.0f);	glVertex3f(1.0f, 0.0f, -1.0f);	glVertex3f(1.0f, 0.0f, 0.0f);
 
 	glEnd();
 }
@@ -146,18 +116,9 @@ void ModuleScene::DrawAxis()
 {
 	glBegin(GL_LINES);
 
-	// X
-	glColor3f(1.0, 0.0, 0.0);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(1.0, 0.0, 0.0);
-	// Y
-	glColor3f(0.0, 1.0, 0.0);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, 1.0, 0.0);
-	// Z
-	glColor3f(0.0, 0.0, 1.0);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, 0.0, 1.0);
+	glColor3f(1.0, 0.0, 0.0);	glVertex3f(0.0, 0.0, 0.0);		glVertex3f(1.0, 0.0, 0.0);		// X
+	glColor3f(0.0, 1.0, 0.0);	glVertex3f(0.0, 0.0, 0.0);		glVertex3f(0.0, 1.0, 0.0);		// Y
+	glColor3f(0.0, 0.0, 1.0);	glVertex3f(0.0, 0.0, 0.0);		glVertex3f(0.0, 0.0, 1.0);		// Z
 
 	glEnd();
 }
