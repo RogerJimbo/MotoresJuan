@@ -23,22 +23,18 @@ class ModuleLoader : public Module
 public:
 
 	ModuleLoader(Application* app, bool start_enabled = true);
-
 	~ModuleLoader();
 
 	bool Init(const JSON_Object& config);
-
 	bool Start();
 
 	update_status PreUpdate(float dt);
-
 	update_status Update(float dt);
-
 	update_status PostUpdate(float dt);
 
 	bool CleanUp();
-
 	bool Import(const string& pFile);
+	void Texturing();
 
 	string module_name;
 

@@ -5,8 +5,13 @@
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
+
 #include <gl/GL.h>
 #include <gl/GLU.h>
+
+#include "Devil/includes/il.h"
+#include "Devil/includes/ilu.h"
+#include "Devil/includes/ilut.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -73,6 +78,13 @@ bool ModuleLoader::Import(const string& pFile)
 	}
 	else { LOG("Error loading scene %s", pFile); }
 	return true;	
+}
+
+void ModuleLoader::Texturing()
+{
+
+
+
 }
 
 bool ModuleLoader::CleanUp() 
