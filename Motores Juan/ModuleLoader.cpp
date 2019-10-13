@@ -85,7 +85,7 @@ bool ModuleLoader::Import(const string& pFile)
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
 			aiReleaseImport(scene);
 
-			new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
+		//	new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
 
 		}
 	}

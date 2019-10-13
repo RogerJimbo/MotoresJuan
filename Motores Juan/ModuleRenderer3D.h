@@ -18,6 +18,7 @@ public:
 	bool Init(const JSON_Object& config);
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
+
 	bool CleanUp();
 	void ChangeMeshTexture(const char* path);
 	void OnResize(int width, int height);
@@ -35,5 +36,4 @@ public:
 	bool vsync = false;
 
 	list<Mesh*> meshes;
-
 };

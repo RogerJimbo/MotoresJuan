@@ -17,7 +17,7 @@ void log(const char file[], int line, const char* format, ...)
 
 	if (App)
 	{
-		sprintf_s(tmp_string, 4096, "%s \n", tmp_string);
+		sprintf_s(tmp_string, 4096, "%s \n", tmp_string); 
 		App->console->CreateLog(tmp_string);
 	}
 }

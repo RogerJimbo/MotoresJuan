@@ -49,11 +49,7 @@ void Application::PrepareUpdate()
 	ms_timer.Start();
 }
 
-void Application::FinishUpdate()
-{
-	if (saveconfig) { SaveConfigToFile();  !saveconfig; }
-	if (loadconfig) { LoadConfigFromFile(); !loadconfig; }
-}
+void Application::FinishUpdate() {}
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
@@ -70,8 +66,16 @@ update_status Application::Update()
 	// Post Update
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	
 		ret = (*iter)->PostUpdate(dt);
-	FinishUpdate();
+
+	PostUpdate();
+
 	return ret;
+}
+
+void 	Application::PostUpdate()
+{
+	if (saveconfig) { SaveConfigToFile();  !saveconfig; }
+	if (loadconfig) { LoadConfigFromFile(); !loadconfig; }
 }
 
 bool Application::CleanUp()

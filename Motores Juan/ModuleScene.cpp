@@ -14,23 +14,24 @@ ModuleScene::~ModuleScene() {}
 
 bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
-bool ModuleScene::Start() { return true; }
+bool ModuleScene::Start()
+{
+	App->loader->Import("warrior.fbx");  
+
+	App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
+
+	return true;
+}
 
 update_status ModuleScene::PreUpdate(float dt) { return UPDATE_CONTINUE; }
-
 update_status ModuleScene::Update(float dt) { return UPDATE_CONTINUE; }
-
 update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
-
 
 void ModuleScene::Draw()
 {
 	DrawGrid(GRIDSIZE);
-	//ArrayCube();
+	ArrayCube();
 	DrawAxis();
-
-	//App->loader->Import("warrior.fbx");
-	//App->loader->Texturing("Baker_House_DDS.dds");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -59,15 +60,15 @@ void ModuleScene::IndexCube()
 					 3, 6, 1, 6, 3, 5,			//TOP
 					 0, 2, 7, 7, 4, 0 };		//BOT
 	
-	vertexes.push_back((1.0f, 0.0f, 0.0f));
-	vertexes.push_back((0.0f, 1.0f, 0.0f));
-	vertexes.push_back((0.0f, 0.0f, 0.0f));
-	vertexes.push_back((1.0f, 1.0f, 0.0f));
+	vertexs.push_back((1.0f, 0.0f, 0.0f));
+	vertexs.push_back((0.0f, 1.0f, 0.0f));
+	vertexs.push_back((0.0f, 0.0f, 0.0f));
+	vertexs.push_back((1.0f, 1.0f, 0.0f));
 
-	vertexes.push_back((1.0f, 0.0f, -1.0f));
-	vertexes.push_back((1.0f, 1.0f, -1.0f));
-	vertexes.push_back((0.0f, 1.0f, -1.0f));
-	vertexes.push_back((0.0f, 0.0f, -1.0f));
+	vertexs.push_back((1.0f, 0.0f, -1.0f));
+	vertexs.push_back((1.0f, 1.0f, -1.0f));
+	vertexs.push_back((0.0f, 1.0f, -1.0f));
+	vertexs.push_back((0.0f, 0.0f, -1.0f));
 
 	glGenBuffers(1, (GLuint*) & (ibo));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -75,7 +76,7 @@ void ModuleScene::IndexCube()
 
 	glGenBuffers(1, (GLuint*) & (vbo));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexes.size(), &vertexes, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexs.size(), &vertexs, GL_STATIC_DRAW);
 }
 
 void ModuleScene::ArrayCube()

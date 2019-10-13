@@ -54,6 +54,7 @@ public:
 
 	bool Init();
 	update_status Update();
+	void PostUpdate();
 	bool CleanUp();
 
 	void RequestBrowser(char* url);

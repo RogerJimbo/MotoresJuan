@@ -32,9 +32,10 @@ public:
 	void DrawGrid(int GridSize);
 	void DrawAxis();
 
+
 	string config_name;
 	vector<unsigned int> indices;
-	vector<vec3> vertexes;
+	vector<vec3> vertexs;
 	vector<Mesh*> mesh;
 };
 #endif

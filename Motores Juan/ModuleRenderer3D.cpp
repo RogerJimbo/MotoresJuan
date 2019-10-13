@@ -156,10 +156,10 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 void ModuleRenderer3D::ChangeMeshTexture(const char* path)
 {
-	uint width, height;
+	uint width, height = 1024;		//TODO
 	GLuint tex_id = App->loader->Texturing(path, width, height);
 
-	for (list<Mesh*>::iterator iter = meshes.begin(); iter != meshes.end(); iter++)
+	for (vector<Mesh*>::iterator iter = App->modscene->mesh.begin(); iter != App->modscene->mesh.end(); iter++)
 	{
 		(*iter)->texture = tex_id;
 		(*iter)->texture_width = width;
