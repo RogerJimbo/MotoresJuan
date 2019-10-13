@@ -45,6 +45,8 @@ bool Application::Init()
 
 void Application::PrepareUpdate()
 {
+	milliseconds = ms_timer.ReadTime();
+
 	dt = (float)ms_timer.ReadTime() / 1000.0f;
 	ms_timer.Start();
 }

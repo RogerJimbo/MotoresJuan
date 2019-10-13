@@ -19,20 +19,20 @@ void GUI_Config::Draw(bool* open)
 	{
 		if (ImGui::CollapsingHeader("Application"))		//Application Configuration
 		{
-			//Calculate FPS
+			static float sf1 = 60.0f;
 			string title_fps, title_ms;
-
+			//Calculate FPS
 			ImGui::Text("Limit Framerate: ");
 			for (int i = 99; i >= 0; --i)
 			{
 				if (i != 0) { fps[i] = fps[i - 1]; }
-				else { fps[i] = ImGui::GetIO().Framerate; }
+				else { fps[i] = ImGui::GetIO().Framerate; fps[i] -= fps[i] - sf1; }
 			}
-
+			//Calculate ms
 			for (int i = 99; i >= 0; --i)
 			{
 				if (i != 0) { ms[i] = ms[i - 1]; }
-				else { ms[i] = SDL_GetTicks(); }
+				else { ms[i] = App->milliseconds;}
 			}
 			//App Name and Organitzation
 			static char app_name[30] = "Motores Juan";
@@ -42,7 +42,6 @@ void GUI_Config::Draw(bool* open)
 			ImGui::InputText("Organitzation", org, sizeof(org));
 
 			//Max FPS
-			static float sf1 = 60.0f;
 			ImGui::SliderFloat("Max FPS", &sf1, 0.0f, 100.0f, "%.f FPS");
 
 			// Histograms

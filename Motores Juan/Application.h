@@ -63,6 +63,7 @@ public:
 	void Load_Config();
 
 	string config_name;
+	float milliseconds;
 
 private:
 	void AddModule(Module* mod);

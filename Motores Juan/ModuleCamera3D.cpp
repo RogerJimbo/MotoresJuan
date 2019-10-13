@@ -45,7 +45,9 @@ update_status ModuleCamera3D::Update(float dt)
 
 	Position += Camera_view.translation();
 
-	//Reference += newPos;
+	Move(newPos);
+
+	Reference += newPos;
 
 	// Mouse motion ----------------
 
