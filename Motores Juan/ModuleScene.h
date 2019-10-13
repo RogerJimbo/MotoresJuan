@@ -32,8 +32,6 @@ public:
 	void DrawGrid(int GridSize);
 	void DrawAxis();
 
-	bool model_loaded = false;
-
 	string config_name;
 	vector<unsigned int> indices;
 	vector<vec3> vertexes;
