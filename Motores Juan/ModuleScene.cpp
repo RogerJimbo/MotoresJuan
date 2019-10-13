@@ -16,7 +16,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 {
-	App->loader->Import("warrior.fbx");  
+	//App->loader->Import("warrior.fbx");  
 
 	App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
 
@@ -33,7 +33,7 @@ void ModuleScene::Draw()
 	ArrayCube();
 	DrawAxis();
 
-	//glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
@@ -44,7 +44,8 @@ void ModuleScene::Draw()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-	//glDisableClientState(GL_VERTEX_ARRAY);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	
 }

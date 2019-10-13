@@ -137,7 +137,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			size_t i = dropped_file.rfind('.', dropped_file.length());
 
 			if (i != string::npos) { dropped_file = dropped_file.substr(i + 1, dropped_file.length() - i); }
-			if (dropped_file == "fbx" || dropped_file == "FBX") { App->loader->Import(dropped_file); }
+			if (dropped_file == "fbx" || dropped_file == "FBX") { App->loader->Import(event.drop.file); }
 			else if (dropped_file == "png" || dropped_file == "dds") { App->renderer3D->ChangeMeshTexture(event.drop.file); }
 			else { LOG("Unsupported file format"); }
 
