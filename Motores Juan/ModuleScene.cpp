@@ -30,6 +30,7 @@ void ModuleScene::Draw()
 	DrawAxis();
 
 	App->loader->Import("warrior.fbx");
+	App->loader->Texturing("Baker_House_DDS.png");
 
 	if (model_loaded)
 	{

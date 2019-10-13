@@ -34,7 +34,8 @@ public:
 
 	bool CleanUp();
 	bool Import(const string& pFile);
-	void Texturing();
+
+	uint Texturing(const char* file_name);
 
 	string module_name;
 

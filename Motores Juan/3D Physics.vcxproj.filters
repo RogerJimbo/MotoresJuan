@@ -46,6 +46,9 @@
     <Filter Include="Sources\Tools\Assimp">
       <UniqueIdentifier>{9c2b6b56-9387-442e-bcb0-ab19bef8871c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\DevIL">
+      <UniqueIdentifier>{f40a3426-06bb-4cfe-9e60-fb96a28f4058}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -434,6 +437,27 @@
     </ClInclude>
     <ClInclude Include="Assimp\include\version.h">
       <Filter>Sources\Tools\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\devil_internal_exports.h">
+      <Filter>Sources\Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\il.h">
+      <Filter>Sources\Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\il_wrap.h">
+      <Filter>Sources\Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\ilu.h">
+      <Filter>Sources\Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\ilu_region.h">
+      <Filter>Sources\Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\ilut.h">
+      <Filter>Sources\Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Devil\includes\ilut_config.h">
+      <Filter>Sources\Tools\DevIL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

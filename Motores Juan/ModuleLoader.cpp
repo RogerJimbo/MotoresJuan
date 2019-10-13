@@ -6,6 +6,7 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
+#include <vector>
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -18,17 +19,23 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
-#include <vector>
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
+#pragma comment (lib, "Devil/libx86/DevIL.lib")
+#pragma comment (lib, "Devil/libx86/ILU.lib")
+#pragma comment (lib, "Devil/libx86/ILUT.lib")
 
+typedef unsigned int uint;
 using namespace Assimp;
 
 ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, start_enabled) 
 { 
 	module_name = "Loader";
-	struct aiLogStream stream;	//Assimp Debug
+	struct aiLogStream stream;	
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
+
+	ilInit();
+	glEnable(GL_TEXTURE_2D);
 }
 
 ModuleLoader::~ModuleLoader() {}
@@ -81,12 +88,40 @@ bool ModuleLoader::Import(const string& pFile)
 	return true;	
 }
 
-void ModuleLoader::Texturing()
+uint ModuleLoader::Texturing(const char* file_name)
 {
+	ILuint imageID = 0;
+	GLuint textureID = 0;
+	ILboolean success;
+	ILenum error;
 
+	success = ilLoadImage(file_name);	
+	ilGenImages(1, &imageID); 		
+	ilBindImage(imageID); 			
 
+	if (success)	
+	{
+		LOG("Texture created succesfuly!")
+		glGenTextures(1, &textureID);
+		glBindTexture(GL_TEXTURE_2D, textureID);
 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(GL_RGBA), ilGetInteger(IL_IMAGE_WIDTH),
+			ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(GL_RGBA), GL_UNSIGNED_BYTE, ilGetData());
+
+	}
+	else //error = ilGetError(); LOG("Error creating texture: %i", error); 
+		LOG("Error loading mesh... %i", error = ilGetError()); 
+
+	ilDeleteImages(1, &imageID);
+
+	return textureID;
 }
+
 
 bool ModuleLoader::CleanUp() 
 {

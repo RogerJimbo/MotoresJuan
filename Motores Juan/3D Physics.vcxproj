@@ -110,6 +110,13 @@
     <ClInclude Include="Assimp\include\vector3.h" />
     <ClInclude Include="Assimp\include\version.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Devil\includes\devil_internal_exports.h" />
+    <ClInclude Include="Devil\includes\il.h" />
+    <ClInclude Include="Devil\includes\ilu.h" />
+    <ClInclude Include="Devil\includes\ilut.h" />
+    <ClInclude Include="Devil\includes\ilut_config.h" />
+    <ClInclude Include="Devil\includes\ilu_region.h" />
+    <ClInclude Include="Devil\includes\il_wrap.h" />
     <ClInclude Include="Glew\include\eglew.h" />
     <ClInclude Include="Glew\include\glew.h" />
     <ClInclude Include="Glew\include\glxew.h" />
