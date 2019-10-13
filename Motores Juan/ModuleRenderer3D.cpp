@@ -153,3 +153,16 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+void ModuleRenderer3D::ChangeMeshTexture(const char* path)
+{
+	uint width, height;
+	GLuint tex_id = App->loader->Texturing(path, width, height);
+
+	for (list<Mesh*>::iterator iter = meshes.begin(); iter != meshes.end(); iter++)
+	{
+		(*iter)->texture = tex_id;
+		(*iter)->texture_width = width;
+		(*iter)->texture_height = height;
+	}
+}

@@ -29,9 +29,8 @@ void ModuleScene::Draw()
 	//ArrayCube();
 	DrawAxis();
 
-	App->loader->Import("warrior.fbx");
-	App->loader->Texturing("Baker_House_DDS.dds", 1024, 1024);
-
+	//App->loader->Import("warrior.fbx");
+	//App->loader->Texturing("Baker_House_DDS.dds");
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 

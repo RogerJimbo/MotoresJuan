@@ -150,20 +150,27 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 		case SDL_WINDOWEVENT:
-		{
-			if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-				App->renderer3D->OnResize(event.window.data1, event.window.data2);
-		}
+			if (event.window.event == SDL_WINDOWEVENT_RESIZED)	App->renderer3D->OnResize(event.window.data1, event.window.data2);
+			break;
+
+		case SDL_DROPFILE:
+			string dropped_file = event.drop.file;
+			size_t i = dropped_file.rfind('.', dropped_file.length());
+
+			if (i != string::npos) { dropped_file = dropped_file.substr(i + 1, dropped_file.length() - i); }
+			if (dropped_file == "fbx" || dropped_file == "FBX") { App->loader->Import(dropped_file); }
+			else if (dropped_file == "png" || dropped_file == "dds") { App->renderer3D->ChangeMeshTexture(event.drop.file); }
+			else { LOG("Unsupported file format"); }
+
+			break;
 		}
 	}
 
-	if (quit == true || keyboard[SDL_SCANCODE_F4] && keyboard[SDL_SCANCODE_LALT] == KEY_UP)
-		return UPDATE_STOP;
-
+	if (quit == true || keyboard[SDL_SCANCODE_F4] && keyboard[SDL_SCANCODE_LALT] == KEY_UP) { return UPDATE_STOP; }
+		
 	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
 bool ModuleInput::CleanUp()
 {
 	LOG("Quitting SDL input event subsystem");

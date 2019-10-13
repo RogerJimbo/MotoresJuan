@@ -93,7 +93,7 @@ bool ModuleLoader::Import(const string& pFile)
 	return true;	
 }
 
-uint ModuleLoader::Texturing(const char* file_name, uint texture_width, uint texture_height)
+uint ModuleLoader::Texturing(const char* file_name, uint& texture_width, uint& texture_height)
 {
 	ILuint imageID = 0;
 	GLuint textureID = 0;
