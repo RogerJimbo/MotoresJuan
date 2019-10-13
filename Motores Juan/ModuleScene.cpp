@@ -31,8 +31,7 @@ void ModuleScene::Draw()
 
 	App->loader->Import("warrior.fbx");
 
-	if (model_loaded)
-	{
+	
 		glEnableClientState(GL_VERTEX_ARRAY);
 
 		for (auto item = mesh.begin(); item != mesh.end(); item++)
@@ -46,7 +45,7 @@ void ModuleScene::Draw()
 		}
 		glDisableClientState(GL_VERTEX_ARRAY);
 
-	}
+	
 }
 
 void ModuleScene::IndexCube()
