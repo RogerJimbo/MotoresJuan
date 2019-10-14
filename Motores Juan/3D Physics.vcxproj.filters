@@ -459,6 +459,9 @@
     <ClInclude Include="Devil\includes\ilut_config.h">
       <Filter>Sources\Tools\DevIL</Filter>
     </ClInclude>
+    <ClInclude Include="GUI_Inspector.h">
+      <Filter>Sources\ImGui Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -631,6 +634,9 @@
     </ClCompile>
     <ClCompile Include="ModuleLoader.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Inspector.cpp">
+      <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,7 @@ class GUI_Config;
 class GUI_Hierarchy;
 class GUI_Scene;
 class GUI_Console;
+class GUI_Inspector;
 
 class ModuleGui : public Module
 {
@@ -52,6 +53,8 @@ public:
 	bool hierarchy_open = true;
 	bool console_open = true;
 	bool config_open = true;
+	bool inspector_open = true;
+
 	bool about_open = false;
 	bool hardware_open = false;
 	bool controls_open = false;

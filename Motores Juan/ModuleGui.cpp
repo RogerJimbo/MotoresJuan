@@ -63,12 +63,14 @@ update_status ModuleGui::Update(float dt)
 
 	//Engine Windows
 	if (scene_open)				App->scene->Draw(&scene_open);      
-	if (hierarchy_open)		App->hierarchy->Draw(&hierarchy_open);
-	if (console_open)			App->console->Draw(&console_open);
-	if (config_open)			App->configuration->Draw(&config_open);
+	if (hierarchy_open)			App->hierarchy->Draw(&hierarchy_open);
+	if (console_open)				App->console->Draw(&console_open);
+	if (config_open)				App->configuration->Draw(&config_open);
+	if (inspector_open)			App->inspector->Draw(&inspector_open);
 	if (about_open)				this->CreateAboutWindow(&about_open); 
-	if (hardware_open)		this->CreateHardwareWindow(&hardware_open);
+	if (hardware_open)			this->CreateHardwareWindow(&hardware_open);
 	if (controls_open)			this->CreateControlsWindow(&controls_open);
+
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
@@ -106,6 +108,7 @@ update_status ModuleGui::Update(float dt)
 			if (ImGui::MenuItem("Console", NULL, &console_open)) {}
 			if(ImGui::MenuItem("Scene", NULL, &scene_open)) {}
 			if (ImGui::MenuItem("Configuration", NULL, &config_open)) {}
+			if(ImGui::MenuItem("Inspector", NULL, &inspector_open)) {}
 			ImGui::EndMenu();
 		}
 
@@ -159,8 +162,10 @@ void ModuleGui::CreateAboutWindow(bool* open)
 		if (ImGui::Button("MathGeoLib")) App->RequestBrowser("http://clb.demon.fi/MathGeoLib/"); ImGui::SameLine();
 		if (ImGui::Button("SDL")) App->RequestBrowser("https://wiki.libsdl.org/FrontPage"); ImGui::SameLine();
 		if (ImGui::Button("Open GL")) App->RequestBrowser("https://www.opengl.org/"); ImGui::SameLine();
-		if (ImGui::Button("Parson")) App->RequestBrowser("https://github.com/kgabis/parson");
-			
+		if (ImGui::Button("Parson")) App->RequestBrowser("https://github.com/kgabis/parson"); ImGui::SameLine();
+		if (ImGui::Button("DevIL")) App->RequestBrowser("http://openil.sourceforge.net/"); ImGui::SameLine();
+		if (ImGui::Button("Glew")) App->RequestBrowser("http://glew.sourceforge.net/"); ImGui::SameLine();
+		if (ImGui::Button("Assimp")) App->RequestBrowser("http://www.assimp.org/"); 	ImGui::Separator();
 		if (ImGui::Button("Close")) { ImGui::CloseCurrentPopup(); about_open = false; }
 		ImGui::EndPopup();
 	}		

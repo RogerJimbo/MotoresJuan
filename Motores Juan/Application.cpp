@@ -17,6 +17,7 @@ Application::Application()
 	AddGuiElement(console = new GUI_Console(this));
 	AddGuiElement(hierarchy = new GUI_Hierarchy(this));
 	AddGuiElement(scene = new GUI_Scene(this));
+	AddGuiElement(inspector = new GUI_Inspector(this));
 }
 
 Application::~Application()
