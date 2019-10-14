@@ -35,6 +35,7 @@ public:
 	void CreateInfoWindow();
 	void CreateAboutWindow(bool* open);
 	void CreateHardwareWindow(bool* open);
+	void CreateControlsWindow(bool* open);
 
 	void Docking();
 
@@ -53,6 +54,7 @@ public:
 	bool config_open = true;
 	bool about_open = false;
 	bool hardware_open = false;
+	bool controls_open = false;
 
 private:
 	bool show = true;

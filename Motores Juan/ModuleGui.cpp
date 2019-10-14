@@ -62,20 +62,19 @@ update_status ModuleGui::Update(float dt)
 	ImGui::ShowDemoWindow();
 
 	//Engine Windows
-
-	if (scene_open)			App->scene->Draw(&scene_open);      
+	if (scene_open)				App->scene->Draw(&scene_open);      
 	if (hierarchy_open)		App->hierarchy->Draw(&hierarchy_open);
 	if (console_open)			App->console->Draw(&console_open);
 	if (config_open)			App->configuration->Draw(&config_open);
-	if (about_open)			this->CreateAboutWindow(&about_open); 
+	if (about_open)				this->CreateAboutWindow(&about_open); 
 	if (hardware_open)		this->CreateHardwareWindow(&hardware_open);
+	if (controls_open)			this->CreateControlsWindow(&controls_open);
 
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File")) 
 		{ 
-
 			ImGui::MenuItem("New Scene", false, true);												//Create new scene
 			if (ImGui::MenuItem("Load Texture")) { App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds"); }
 			if (ImGui::MenuItem("Load Model")) { App->loader->Import("warrior.fbx"); }
@@ -97,6 +96,7 @@ update_status ModuleGui::Update(float dt)
 			if (ImGui::MenuItem("About", NULL, &about_open)) {}
 			if (ImGui::MenuItem("Hardware Info", NULL, &hardware_open)) {}
 			if (ImGui::MenuItem("GitHub", false, true)) { App->RequestBrowser("https://github.com/RogerJimbo/MotoresJuan"); }
+			if (ImGui::MenuItem("Controls", NULL, &controls_open)) { }
 			ImGui::EndMenu();
 		}
 
@@ -108,6 +108,7 @@ update_status ModuleGui::Update(float dt)
 			if (ImGui::MenuItem("Configuration", NULL, &config_open)) {}
 			ImGui::EndMenu();
 		}
+
 		ImGui::EndMainMenuBar();
 	}
 	return UPDATE_CONTINUE;
@@ -126,6 +127,22 @@ bool ModuleGui::CleanUp()
 	SDL_Quit();
 
 	return true;
+}
+
+void ModuleGui::CreateControlsWindow(bool* open)
+{
+	ImGui::OpenPopup("Controls");
+	if (ImGui::BeginPopupModal("Controls"))
+	{
+		ImGui::Text("Use 'Right Click +WASD' to move arround the scene."), ImGui::Separator();
+		ImGui::Text("Use 'Mouse Wheel' to zoom In and Out."); ImGui::Separator();
+		ImGui::Text("Use 'Alt+Left Click' to orbit arround the object."); ImGui::Separator();
+		ImGui::Text("Use 'F' to focus the camera on the object."); ImGui::Separator();
+		ImGui::Text("Use 'Shift' to duplicate movement speed."); ImGui::Separator();
+
+		if (ImGui::Button("Close")) { ImGui::CloseCurrentPopup(); controls_open = false; }
+		ImGui::EndPopup();
+	}
 }
 
 void ModuleGui::CreateAboutWindow(bool* open)

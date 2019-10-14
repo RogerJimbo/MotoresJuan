@@ -12,7 +12,6 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
-
 }
 
 ModuleCamera3D::~ModuleCamera3D() {}
@@ -33,13 +32,21 @@ update_status ModuleCamera3D::Update(float dt)
 	float speed = 3.0f * dt; float wheel = 2000.0f * dt;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed = 8.0f * dt;
 		
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		//Focus camera into mesh
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) Reference -= X * speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) Reference += X * speed;
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= X * speed;
+	}
 
 	if (App->input->GetMouseZ() != 0)
 	{
@@ -47,17 +54,16 @@ update_status ModuleCamera3D::Update(float dt)
 		else { newPos += Z * wheel; }
 	}
 
-	Reference += newPos;
-	Position += Camera_view.translation();
+	//Position += Camera_view.translation();
+	Position += newPos;
 	Move(newPos);
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT))
 	{
-		int mouse_x = -App->input->GetMouseXMotion();
+		int mouse_x = +App->input->GetMouseXMotion();
 		int mouse_y = -App->input->GetMouseYMotion();
 
 		float Sensitivity = 0.4f;
-
 		Position -= Reference;
 
 		if (mouse_x != 0)

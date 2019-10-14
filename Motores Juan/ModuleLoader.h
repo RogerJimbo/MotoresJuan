@@ -25,6 +25,9 @@ struct Mesh
 	uint texture_width = 0;
 	uint texture_height = 0;
 	float* texture_coords = nullptr;
+
+	//Position
+
 };
 
 class ModuleLoader : public Module
@@ -47,5 +50,4 @@ public:
 	uint Texturing(const char* file_name, uint& texture_width, uint& texture_height);
 
 	string module_name;
-
 };
