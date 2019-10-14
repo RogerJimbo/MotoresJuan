@@ -20,19 +20,14 @@ public:
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 
-
 private:
-
 	void CalculateViewMatrix();
 
 public:
-
-	vec3 X, Y, Z, Position, Reference;
+	vec3 X, Y, Z, Position, Reference, Proba;
 	mat4x4 Camera_view;
 
 private:
-
 	mat4x4 ViewMatrix, ViewMatrixInverse;
-
 
 };

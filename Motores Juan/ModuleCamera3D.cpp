@@ -12,6 +12,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
+
 }
 
 ModuleCamera3D::~ModuleCamera3D() {}
@@ -24,80 +25,76 @@ bool ModuleCamera3D::CleanUp()
 
 update_status ModuleCamera3D::Update(float dt)
 {
-	// Implement a debug camera with keys and mouse
-	// Now we can make this movememnt frame rate independant!
 	SDL_Event event;
 	vec3 newPos = { 0,0,0 };
 
-	float speed = 3.0f * dt; float wheel = 2000.0f * dt;
+	float speed = 3.0f * dt; 
+	float wheel = 150.0f * dt;
+
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed = 8.0f * dt;
-		
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-	{
-		//Focus camera into mesh
-	}
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) { LookAt(newPos); }
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
-
+		//	KEYS
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed;
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += X * speed;
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= X * speed;
-	}
 
-	if (App->input->GetMouseZ() != 0)
-	{
-		if(App->input->GetMouseZ() > 0) { newPos -= Z * wheel; }
-		else { newPos += Z * wheel; }
-	}
-
-	//Position += Camera_view.translation();
-	Position += newPos;
-	Move(newPos);
-
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT))
-	{
+		float Sensitivity = 0.4f;
 		int mouse_x = +App->input->GetMouseXMotion();
 		int mouse_y = -App->input->GetMouseYMotion();
 
-		float Sensitivity = 0.4f;
-		Position -= Reference;
-
-		if (mouse_x != 0)
+		if (mouse_x != 0) 		//Mouse X
 		{
 			float DeltaX = (float)mouse_x * Sensitivity;
-
 			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if (mouse_y != 0)
-		{
+		if (mouse_y != 0) 		//Mouse Y
+		{ 
 			float DeltaY = (float)mouse_y * Sensitivity;
-
 			Y = rotate(Y, DeltaY, X);
 			Z = rotate(Z, DeltaY, X);
-
-			if (Y.y < 0.0f)
-			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-			}
+			if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); }
 		}
-		Position = Reference + Z * length(Position);
+
+		//	Position = Reference + Z * length(Position);
+		Position = Z * length(Position);
 	}
-		// Recalculate matrix -------------
 
+	
+
+	if (App->input->GetMouseZ() != 0)	//	Wheel
+	{
+		if(App->input->GetMouseZ() > 0) { newPos -= Z * wheel; }
+		else { newPos += Z * wheel; }
+	}
+
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT))
+	{
+		Move(newPos);
 		Look(Position, Camera_view.translation(), true);
-		CalculateViewMatrix();
 
-		return UPDATE_CONTINUE;
+	}
+
+	Move(newPos);
+	Look(Position, Camera_view.translation(), false);
+
+	//Position += Camera_view.translation();
+	//Position += newPos;
+	//Move(newPos);
+
+	//Look(Position, Camera_view.translation(), false);
+	//LookAt(Position);
+	//CalculateViewMatrix();
+	return UPDATE_CONTINUE;
 }
-
 
 void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference)
 {
@@ -111,7 +108,7 @@ void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool Rota
 	if(!RotateAroundReference)
 	{
 		this->Reference = this->Position;
-		this->Position += Z * 0.05f;
+	//	this->Position += Z * 0.05f;
 	}
 
 	CalculateViewMatrix();
@@ -133,7 +130,7 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 	Position += Movement;
 	Reference += Movement;
 
-	CalculateViewMatrix();
+	//CalculateViewMatrix();
 }
 
 float* ModuleCamera3D::GetViewMatrix()
