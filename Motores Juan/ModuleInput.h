@@ -34,6 +34,8 @@ public:
 	int GetMouseY() const { return mouse_y; }
 	int GetMouseZ() const { return mouse_z; }
 
+	int GetMouseRoll() const { return mouse_z; }
+
 	int GetMouseXMotion() const { return mouse_x_motion; }
 	int GetMouseYMotion() const { return mouse_y_motion; }
 

@@ -27,29 +27,29 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
+	SDL_Event event;
 	vec3 newPos = { 0,0,0 };
 
-	float speed = 3.0f * dt;
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 8.0f * dt;
-
+	float speed = 3.0f * dt; float wheel = 2000.0f * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed = 8.0f * dt;
+		
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) Reference -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) Reference += X * speed;
 
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-	Position += Camera_view.translation();
-
-	Move(newPos);
+	if (App->input->GetMouseZ() != 0)
+	{
+		if(App->input->GetMouseZ() > 0) { newPos -= Z * wheel; }
+		else { newPos += Z * wheel; }
+	}
 
 	Reference += newPos;
-
-	// Mouse motion ----------------
+	Position += Camera_view.translation();
+	Move(newPos);
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -82,18 +82,16 @@ update_status ModuleCamera3D::Update(float dt)
 				Y = cross(Z, X);
 			}
 		}
-
 		Position = Reference + Z * length(Position);
 	}
+		// Recalculate matrix -------------
 
-	// Recalculate matrix -------------
+		Look(Position, Camera_view.translation(), true);
+		CalculateViewMatrix();
 
-	Look(Position, Camera_view.translation(), true);
-	CalculateViewMatrix();
-
-
-	return UPDATE_CONTINUE;
+		return UPDATE_CONTINUE;
 }
+
 
 void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference)
 {
