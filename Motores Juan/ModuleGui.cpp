@@ -75,18 +75,13 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::BeginMenu("File")) 
 		{ 
-			ImGui::MenuItem("New Scene", "Ctrl+N", false, true);												//Create new scene
-			if (ImGui::MenuItem("Open", "Ctrl+O", false, true))
-			{
-				ImGui::MenuItem("walk.FBX");
-				if (ImGui::MenuItem("warrior.FBX"))
-				{
-					// Call LoaderImGui::OpenPopup("About");
-				}
-			}
-			
-			if (ImGui::MenuItem("Save Config", "Ctrl+S", false, true)) { App->Save_Config(); }		//Save data JSON
-			if (ImGui::MenuItem("Load Config", "Ctrl+L", false,true)) { App->Load_Config(); }		//Load data JSON
+
+			ImGui::MenuItem("New Scene", false, true);												//Create new scene
+			if (ImGui::MenuItem("Load Texture")) { App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds"); }
+			if (ImGui::MenuItem("Load Model")) { App->loader->Import("warrior.fbx"); }
+
+			if (ImGui::MenuItem("Save Config", false, true)) { App->Save_Config(); }		//Save data JSON
+			if (ImGui::MenuItem("Load Config", false,true)) { App->Load_Config(); }		//Load data JSON
 
 			if (ImGui::MenuItem("Close", "ALT+F4"))
 			{
@@ -149,7 +144,7 @@ void ModuleGui::CreateAboutWindow(bool* open)
 		if (ImGui::Button("Open GL")) App->RequestBrowser("https://www.opengl.org/"); ImGui::SameLine();
 		if (ImGui::Button("Parson")) App->RequestBrowser("https://github.com/kgabis/parson");
 			
-		if (ImGui::Button("Close")) ImGui::CloseCurrentPopup(); 
+		if (ImGui::Button("Close")) { ImGui::CloseCurrentPopup(); about_open = false; }
 		ImGui::EndPopup();
 	}		
 }
@@ -175,41 +170,43 @@ void ModuleGui::CreateInfoWindow()
 
 void ModuleGui::CreateHardwareWindow(bool* open)
 {
-	ImGui::SetNextWindowSize(ImVec2(300, 300));
-	ImGui::SetNextWindowPos(ImVec2(100, 100));
-	ImGui::Begin("Hardware Info", open);
+	ImGui::OpenPopup("Hardware Info");
+	if (ImGui::BeginPopupModal("Hardware Info"))
+	{
+		static bool active = false;
+		ImGui::Checkbox("Active", &active);
 
-	static bool active = false;
-	ImGui::Checkbox("Active", &active);
+		//SDL Version
+		SDL_version ver;
+		SDL_GetVersion(&ver);
+		ImGui::Text("SDL Version: %d.%d.%d", ver.major, ver.minor, ver.patch);
+		ImGui::Separator();
 
-	//SDL Version
-	SDL_version ver;
-	SDL_GetVersion(&ver);
-	ImGui::Text("SDL Version: %d.%d.%d", ver.major, ver.minor, ver.patch);
-	ImGui::Separator();
+		//CPU Caché
+		int cpu_cache = SDL_GetCPUCount();
+		ImGui::Text("CPU's: %i", cpu_cache);
 
-	//CPU Caché
-	int cpu_cache = SDL_GetCPUCount();
-	ImGui::Text("CPU's: %i", cpu_cache);
+		//RAM 
+		float ram = SDL_GetSystemRAM();
+		ImGui::Text("System RAM: %f Gb", ram / 1000);
 
-	//RAM 
-	float ram = SDL_GetSystemRAM();
-	ImGui::Text("System RAM: %f Gb", ram / 1000);
+		//Caps
+		SDL_bool SDL_HasRDTSC();	 if (SDL_HasRDTSC) { RDTSC = "RDTSC"; }
+		SDL_bool SDL_HasMMX();		 if (SDL_HasMMX) { MMX = "MMX"; }
+		SDL_bool SDL_HasAVX();		 if (SDL_HasAVX) { AVX = "AVX"; }
+		SDL_bool SDL_HasSSE();	     if (SDL_HasSSE) { SSE = "SSE"; }
+		SDL_bool SDL_HasSSE2();		 if (SDL_HasSSE2) { SSE2 = "SSE2"; }
+		SDL_bool SDL_HasSSE3();		 if (SDL_HasSSE3) { SSE3 = "SSE3"; }
+		SDL_bool SDL_HasSSE41();	 if (SDL_HasSSE41) { SSE41 = "SSE41"; }
+		SDL_bool SDL_HasSSE42();	 if (SDL_HasSSE42) { SSE42 = "SSE42"; }
 
-	//Caps
-	SDL_bool SDL_HasRDTSC();	 if (SDL_HasRDTSC) { RDTSC = "RDTSC"; }
-	SDL_bool SDL_HasMMX();		 if (SDL_HasMMX) { MMX = "MMX"; }
-	SDL_bool SDL_HasAVX();		 if (SDL_HasAVX) { AVX = "AVX"; }
-	SDL_bool SDL_HasSSE();	     if (SDL_HasSSE) { SSE = "SSE"; }
-	SDL_bool SDL_HasSSE2();		 if (SDL_HasSSE2) { SSE2 = "SSE2"; }
-	SDL_bool SDL_HasSSE3();		 if (SDL_HasSSE3) { SSE3 = "SSE3"; }
-	SDL_bool SDL_HasSSE41();	 if (SDL_HasSSE41) { SSE41 = "SSE41"; }
-	SDL_bool SDL_HasSSE42();	 if (SDL_HasSSE42) { SSE42 = "SSE42"; }
+		ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
+		IDirect3DDevice9* glGetString();	//GPU
 
-	ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
-	IDirect3DDevice9* glGetString();	//GPU
+		if (ImGui::Button("Close")) { ImGui::CloseCurrentPopup(); hardware_open = false; }
 
-	ImGui::End();
+		ImGui::EndPopup();
+	}
 }
 
 void ModuleGui::Docking()

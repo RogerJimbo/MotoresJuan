@@ -16,9 +16,8 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 {
-	//App->loader->Import("warrior.fbx");  
-
-	App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
+	//App->loader->Import("warrior.fbx");  //Loaded from MENU
+	//App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
 
 	return true;
 }
