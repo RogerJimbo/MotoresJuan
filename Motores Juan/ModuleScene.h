@@ -31,7 +31,7 @@ public:
 
 	void DrawGrid(int GridSize);
 	void DrawAxis();
-
+	void CreatePrimitives();
 
 	string config_name;
 	vector<unsigned int> indices;

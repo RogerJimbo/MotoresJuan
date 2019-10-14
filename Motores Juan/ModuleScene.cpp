@@ -30,7 +30,7 @@ update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 void ModuleScene::Draw()
 {
 	DrawGrid(GRIDSIZE);
-	ArrayCube();
+	CreatePrimitives();
 	DrawAxis();
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -45,10 +45,16 @@ void ModuleScene::Draw()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-	
+	glDisableClientState(GL_VERTEX_ARRAY);	
 }
+
+void ModuleScene::CreatePrimitives()
+{
+	if(App->hierarchy->createCube) { ArrayCube(); }
+
+
+}
+
 
 void ModuleScene::IndexCube()
 {
@@ -139,14 +145,9 @@ void ModuleScene::DrawGrid(int GridSize)
 	glEnd();
 }
 
-bool ModuleScene::CleanUp()
-{
-	return true;
-}
+bool ModuleScene::CleanUp() { return true; }
 
-void ModuleScene::Save_Config(JSON_Object& config) const
-{
+void ModuleScene::Save_Config(JSON_Object& config) const { }
 
-}
 
 

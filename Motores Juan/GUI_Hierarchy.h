@@ -10,5 +10,13 @@ public:
 
 	void Draw(bool* open);
 
+public:
+	bool createCube = false;
+	bool createSphere = false;
+	bool createPlane = false;
+
+private:
+	int numberPrimitives = 0;
+	const char* prim_name;
 };
 
