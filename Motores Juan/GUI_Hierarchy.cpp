@@ -21,7 +21,7 @@ GUI_Hierarchy::~GUI_Hierarchy() {}
 void GUI_Hierarchy::Draw(bool* open)
 {
 	if (ImGui::Begin(elem_name.c_str(), open))
-	{
+	{	
 		if (ImGui::CollapsingHeader("Create Cube") || createCube)
 		{
 			if (ImGui::Button("Cube")) { createCube = true; ++numberPrimitives; prim_name = "Cube"; }

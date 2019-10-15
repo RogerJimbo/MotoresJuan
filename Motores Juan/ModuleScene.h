@@ -33,7 +33,10 @@ public:
 	void ArrayPlane(float x, float y, float posx, float posy, float posz);
 
 	void DrawGrid(int GridSize);
-	void DrawAxis();
+	void DrawAxis(bool active);
+
+	bool active_axis = true;
+	bool active_grid = true;
 
 	string config_name;
 	vector<uint> indices;

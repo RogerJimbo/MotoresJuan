@@ -28,9 +28,9 @@ update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 void ModuleScene::Draw()
 {
-	DrawGrid(GRIDSIZE);
+	if(active_grid) DrawGrid(GRIDSIZE);
 	App->hierarchy->CreatePrimitives();
-	DrawAxis();
+	if(active_axis) DrawAxis(&active_axis);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -183,7 +183,7 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 	glEnd();
 }
 
-void ModuleScene::DrawAxis()
+void ModuleScene::DrawAxis(bool active)
 {
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);

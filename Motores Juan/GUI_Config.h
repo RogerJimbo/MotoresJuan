@@ -29,6 +29,5 @@ private:
 	float ms[100];
 
 	float bright_slider_scroll = 1;
-
 };
 
