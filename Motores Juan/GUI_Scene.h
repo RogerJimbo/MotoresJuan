@@ -9,8 +9,10 @@ public:
 	~GUI_Scene();
 
 	void Draw(bool* open);
+	void DrawGrid(int GridSize);
+	void DrawAxis(bool active);
 
-private:
-
+	bool active_grid = true;
+	bool active_axis = true;
 };
 

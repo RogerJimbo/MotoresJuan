@@ -62,7 +62,7 @@ update_status ModuleGui::Update(float dt)
 	ImGui::ShowDemoWindow();
 
 	//Engine Windows
-	if (scene_open)				App->scene->Draw(&scene_open);      
+	if (scene_open)				App->scene->Draw(&scene_open);
 	if (hierarchy_open)			App->hierarchy->Draw(&hierarchy_open);
 	if (console_open)				App->console->Draw(&console_open);
 	if (config_open)				App->configuration->Draw(&config_open);

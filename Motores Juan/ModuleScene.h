@@ -26,17 +26,13 @@ public:
 	void Save_Config(JSON_Object& config) const;
 
 	void Draw();
+
 	void IndexCube();
-	void ArrayCube();
 	void IndexSphere();
+
 	void ArraySphere();
+	void ArrayCube(float x, float y, float z, float posx, float posy, float posz);
 	void ArrayPlane(float x, float y, float posx, float posy, float posz);
-
-	void DrawGrid(int GridSize);
-	void DrawAxis(bool active);
-
-	bool active_axis = true;
-	bool active_grid = true;
 
 	string config_name;
 	vector<uint> indices;

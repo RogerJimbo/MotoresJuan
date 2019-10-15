@@ -16,7 +16,6 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 {
 	//App->loader->Import("BakerHouse.fbx");  //REQUIREMENT 1
-
 	//App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
 
 	return true;
@@ -28,10 +27,6 @@ update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 void ModuleScene::Draw()
 {
-	if(active_grid) DrawGrid(GRIDSIZE);
-	App->hierarchy->CreatePrimitives();
-	if(active_axis) DrawAxis(&active_axis);
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
@@ -75,38 +70,6 @@ void ModuleScene::IndexCube()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexs.size(), &vertexs, GL_STATIC_DRAW);
 }
-void ModuleScene::ArrayCube()
-{
-	glLineWidth(2.0f);
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0, 1.0, 1.0);
-
-	//Front
-	glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 1.0f, 0.0f);	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(0.0f, 1.0f, 0.0f);
-
-	//Right
-	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(1.0f, 0.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(1.0f, 0.0f, -1.0f);
-
-	//Left
-	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(0.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(0.0f, 0.0f, -1.0f);	glVertex3f(0.0f, 0.0f, 0.0f);
-
-	//Back
-	glVertex3f(1.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 0.0f, -1.0f);	glVertex3f(0.0f, 1.0f, -1.0f);
-	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 0.0f, -1.0f);	glVertex3f(0.0f, 0.0f, -1.0f);
-
-	//Top
-	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, -1.0f);	glVertex3f(1.0f, 1.0f, 0.0f);		glVertex3f(1.0f, 1.0f, -1.0f);
-
-	//Bot
-	glVertex3f(1.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 0.0f, 0.0f);	glVertex3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(0.0f, 0.0f, -1.0f);	glVertex3f(1.0f, 0.0f, -1.0f);	glVertex3f(1.0f, 0.0f, 0.0f);
-
-	glEnd();
-}
 void ModuleScene::IndexSphere()
 {
 	//GLuint plane = 0;
@@ -132,6 +95,7 @@ void ModuleScene::IndexSphere()
 
 
 }
+
 void ModuleScene::ArraySphere()
 {
 	glLineWidth(2.0f);	
@@ -169,7 +133,38 @@ void ModuleScene::ArraySphere()
 	}
 	glEnd();
 }
+void ModuleScene::ArrayCube(float x, float y, float z, float posx, float posy, float posz)
+{
+	glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
+	glColor3f(1.0, 1.0, 1.0);
 
+	//Front
+	glVertex3f(posx+x, posz, posy);	glVertex3f(posx, posz+z, posy);			glVertex3f(posx, posz, posy);
+	glVertex3f(posx+x, posz, posy);	glVertex3f(posx+x, posz + z, posy);		glVertex3f(posx, posz + z, posy);
+
+	//Right
+	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, posy);				glVertex3f(posx + x, posz, -posy - y);
+	glVertex3f(posx + x, posz + z, -posy-y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, -posy - y);
+
+	//Left
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz + z, posy);
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx, posz, posy);
+
+	//Back
+	glVertex3f(posx + x, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz + z, -posy - y);
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz, -posy - y);
+
+	//Top
+	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz + z, posy);
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz + z, -posy - y);
+
+	//Bot
+	glVertex3f(posx + x, posz, posy);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz, -posy - y);
+	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx + x, posz, posy);
+
+	glEnd();
+}
 void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float posz)
 {
 	glBegin(GL_TRIANGLES);
@@ -180,39 +175,10 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 	glVertex3f(x+ posx, posz, posy); glVertex3f(posx, posz, y+ posy); glVertex3f(posx, posz, posy);
 	glVertex3f(posx, posz, y+ posy); glVertex3f(x+ posx, posz, posy); glVertex3f(x+ posx, posz, y+ posy);
 
-
-	glEnd();
-}
-
-void ModuleScene::DrawAxis(bool active)
-{
-	glLineWidth(2.0f);
-	glBegin(GL_LINES);
-
-	glColor3f(1.0, 0.0, 0.0);	glVertex3f(0.0, 0.0, 0.0);		glVertex3f(1.0, 0.0, 0.0);		// X
-	glColor3f(0.0, 1.0, 0.0);	glVertex3f(0.0, 0.0, 0.0);		glVertex3f(0.0, 1.0, 0.0);		// Y
-	glColor3f(0.0, 0.0, 1.0);	glVertex3f(0.0, 0.0, 0.0);		glVertex3f(0.0, 0.0, 1.0);		// Z
-
-	glEnd();
-}
-
-void ModuleScene::DrawGrid(int GridSize)
-{
-	glBegin(GL_LINES);
-	glColor3f(0.75f, 0.75f, 0.75f);
-
-	for (int i = -GridSize; i <= GridSize; i++)
-	{
-		glVertex3f((float)i, 0, (float)-GridSize);
-		glVertex3f((float)i, 0, (float)GridSize);
-		glVertex3f((float)-GridSize, 0, (float)i);
-		glVertex3f((float)GridSize, 0, (float)i);
-	}
 	glEnd();
 }
 
 bool ModuleScene::CleanUp() { return true; }
-
 void ModuleScene::Save_Config(JSON_Object& config) const { }
 
 
