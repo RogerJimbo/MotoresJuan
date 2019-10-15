@@ -77,8 +77,20 @@ void GUI_Config::Draw(bool* open)
 
 		if (ImGui::CollapsingHeader("Renderer")) 
 		{
-			if (ImGui::Checkbox("Axis Active", &App->modscene->active_axis)) {}
-			if (ImGui::Checkbox("Grid Active", &App->modscene->active_grid)) {}
+			ImGui::Checkbox("Axis Active", &App->modscene->active_axis);
+			ImGui::Checkbox("Grid Active", &App->modscene->active_grid);
+			ImGui::Checkbox("Lighting", &App->renderer3D->lightning);
+			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
+			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);	
+
+			ImGui::Checkbox("Texture", &none);
+			ImGui::Checkbox("Wireframe", &none);
+			ImGui::Checkbox("Bounding Box", &none);
+
+			ImGui::Checkbox("Triangle Normals", &none);
+			ImGui::Checkbox("Face Normals", &none);
+
+
 		}
 
 		if (ImGui::CollapsingHeader("Input Info")) { ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY()); }

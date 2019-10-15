@@ -16,6 +16,8 @@ private:
 	bool borderless = false;
 	bool fulldesktop = false;
 
+	bool none = false;	//TODO	
+
 	char* RDTSC;
 	char* MMX;
 	char* AVX;

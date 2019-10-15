@@ -17,6 +17,7 @@ public:
 
 	bool Init(const JSON_Object& config);
 	update_status PreUpdate(float dt);
+	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 
 	bool CleanUp();
@@ -33,7 +34,11 @@ public:
 	uint fbo = 0;
 	uint rbo;
 	uint buffer_tex = 0;
+
 	bool vsync = false;
+	bool lightning = true;
+	bool backface = true;
+	bool lights_on = false;
 
 	list<Mesh*> meshes;
 };

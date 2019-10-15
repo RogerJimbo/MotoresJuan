@@ -62,9 +62,7 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
 		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
+
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
@@ -88,6 +86,16 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	return ret;
+}
+
+update_status ModuleRenderer3D::Update(float dt)
+{
+	if (lightning) { lights[0].Active(true); } else lights[0].Active(false);
+	if (!backface) { glEnable(GL_CULL_FACE); } else { glDisable(GL_CULL_FACE); }		
+	if (!lights_on) { glEnable(GL_LIGHTING); }	else { glDisable(GL_LIGHTING); }
+
+
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRenderer3D::PreUpdate(float dt)

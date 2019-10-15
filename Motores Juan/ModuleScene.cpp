@@ -180,6 +180,7 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 	glVertex3f(x+ posx, posz, posy); glVertex3f(posx, posz, y+ posy); glVertex3f(posx, posz, posy);
 	glVertex3f(posx, posz, y+ posy); glVertex3f(x+ posx, posz, posy); glVertex3f(x+ posx, posz, y+ posy);
 
+
 	glEnd();
 }
 

@@ -14,6 +14,11 @@ struct Mesh
 	uint num_indices = 0;
 	uint* indices = nullptr;
 
+	//Normals
+	uint* normals = nullptr;		//TODO
+	uint num_normals = 0;
+	uint id_normals = 0;
+
 	// unique vertex in VRAM
 	uint id_vertices = 0; 
 	uint num_vertices = 0;

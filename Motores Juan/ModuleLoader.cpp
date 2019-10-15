@@ -58,22 +58,22 @@ bool ModuleLoader::Import(const string& pFile)
 	{
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
-			const aiMesh* m = scene->mMeshes[i];
+			const aiMesh* mesh = scene->mMeshes[i];
 			Mesh* new_mesh = new Mesh;
 
-			new_mesh->num_vertices = m->mNumVertices;
+			new_mesh->num_vertices = mesh->mNumVertices;
 			new_mesh->vertices = new float[new_mesh->num_vertices * 3];
-			memcpy(new_mesh->vertices, m->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
+			memcpy(new_mesh->vertices, mesh->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
 			LOG("New mesh with %d vertices", new_mesh->num_vertices);
 
-			if (m->HasFaces())
+			if (mesh->HasFaces())
 			{
-				new_mesh->num_indices = m->mNumFaces * 3;
+				new_mesh->num_indices = mesh->mNumFaces * 3;
 				new_mesh->indices = new uint[new_mesh->num_indices]; // assume each face is a triangle
-				for (uint i = 0; i < m->mNumFaces; ++i)
+				for (uint i = 0; i < mesh->mNumFaces; ++i)
 				{
-					if (m->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
-					else { memcpy(&new_mesh->indices[i * 3], m->mFaces[i].mIndices, 3 * sizeof(uint)); }
+					if (mesh->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
+					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
 				}				glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
 				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices, new_mesh->vertices, GL_STATIC_DRAW);
@@ -82,11 +82,22 @@ bool ModuleLoader::Import(const string& pFile)
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				App->modscene->mesh.push_back(new_mesh);
 			}
-			// Use scene->mNumMeshes to iterate on scene->mMeshes array
-			aiReleaseImport(scene);
 
+			if(mesh->HasNormals())
+			{
+				
+				
+
+				glGenBuffers(1, (GLuint*) & (new_mesh->id_normals));
+				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_normals);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->num_normals, new_mesh->normals, GL_STATIC_DRAW);
+				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+				glEnableVertexAttribArray(1);
+
+
+			}
+		aiReleaseImport(scene); // Use scene->mNumMeshes to iterate on scene->mMeshes array
 		//	new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
-
 		}
 	}
 	else { LOG("Error loading scene %s", pFile); }
