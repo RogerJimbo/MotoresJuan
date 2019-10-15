@@ -9,6 +9,7 @@ public:
 	~GUI_Hierarchy();
 
 	void Draw(bool* open);
+	void CreatePrimitives();
 
 public:
 	bool createCube = false;

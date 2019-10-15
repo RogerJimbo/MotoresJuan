@@ -28,13 +28,15 @@ public:
 	void Draw();
 	void IndexCube();
 	void ArrayCube();
+	void IndexSphere();
+	void ArraySphere();
+	void ArrayPlane(float x, float y, float posx, float posy, float posz);
 
 	void DrawGrid(int GridSize);
 	void DrawAxis();
-	void CreatePrimitives();
 
 	string config_name;
-	vector<unsigned int> indices;
+	vector<uint> indices;
 	vector<vec3> vertexs;
 	vector<Mesh*> mesh;
 };
