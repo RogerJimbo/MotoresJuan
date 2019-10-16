@@ -76,7 +76,7 @@ bool ModuleLoader::Import(const string& pFile)
 					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
 				}				glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
 				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices, new_mesh->vertices, GL_STATIC_DRAW);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices * 3, new_mesh->vertices, GL_STATIC_DRAW);
 
 				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
