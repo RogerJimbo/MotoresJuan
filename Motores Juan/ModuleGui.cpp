@@ -71,16 +71,20 @@ update_status ModuleGui::Update(float dt)
 	if (hardware_open)			this->CreateHardwareWindow(&hardware_open);
 	if (controls_open)			this->CreateControlsWindow(&controls_open);
 
-
 	// Main Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File")) 
 		{ 
-			ImGui::MenuItem("New Scene", false, true);												//Create new scene
+			ImGui::MenuItem("New Scene", false, true);	//Todo Create new scene
 			if (ImGui::MenuItem("Load Texture")) { App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds"); }
-			if (ImGui::MenuItem("Load Model")) { App->loader->Import("warrior.fbx"); }
-
+			if (ImGui::BeginMenu("Load Model")) 
+			{
+				if(ImGui::MenuItem("Warrior.fbx")) App->loader->Import("warrior.fbx");  
+				if (ImGui::MenuItem("BakerHouse.fbx")) App->loader->Import("BakerHouse.fbx");
+				if (ImGui::MenuItem("Cop.fbx")) App->loader->Import("Cop.fbx");	
+				ImGui::EndMenu();
+			}
 			if (ImGui::MenuItem("Save Config", false, true)) { App->Save_Config(); }		//Save data JSON
 			if (ImGui::MenuItem("Load Config", false,true)) { App->Load_Config(); }		//Load data JSON
 
