@@ -23,6 +23,7 @@ public:
 	bool CleanUp();
 	void ChangeMeshTexture(const char* path);
 	void OnResize(int width, int height);
+	void ActivateWireframe();
 
 public:
 
@@ -39,6 +40,7 @@ public:
 	bool lightning = true;
 	bool backface = true;
 	bool lights_on = false;
+	bool wireframe = false;
 
 	list<Mesh*> meshes;
 };

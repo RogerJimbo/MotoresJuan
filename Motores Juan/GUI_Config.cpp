@@ -81,10 +81,15 @@ void GUI_Config::Draw(bool* open)
 			ImGui::Checkbox("Grid Active", &App->scene->active_grid);
 			ImGui::Checkbox("Lighting", &App->renderer3D->lightning);
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
-			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);	
+			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);
 
 			ImGui::Checkbox("Texture", &none);
-			ImGui::Checkbox("Wireframe", &none);
+
+			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe))
+			{
+				App->renderer3D->ActivateWireframe();
+			}
+
 			ImGui::Checkbox("Bounding Box", &none);
 
 			ImGui::Checkbox("Triangle Normals", &none);
