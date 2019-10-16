@@ -14,5 +14,7 @@ public:
 
 	bool active_grid = true;
 	bool active_axis = true;
+
+	float grid_size;
 };
 

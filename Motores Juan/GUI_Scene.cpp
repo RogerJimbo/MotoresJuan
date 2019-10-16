@@ -31,7 +31,7 @@ void GUI_Scene::Draw(bool* open)
 		ImGui::Image((ImTextureID)App->renderer3D->buffer_tex, ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT), { 1,1 }, { 0,0 });
 
 
-		if (active_grid) DrawGrid(GRIDSIZE);
+		if (active_grid) DrawGrid(grid_size);
 		if (active_axis) DrawAxis(&active_axis);
 	}
 	ImGui::End();

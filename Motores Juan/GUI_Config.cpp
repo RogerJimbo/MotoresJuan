@@ -79,6 +79,7 @@ void GUI_Config::Draw(bool* open)
 		{
 			ImGui::Checkbox("Axis Active", &App->scene->active_axis);
 			ImGui::Checkbox("Grid Active", &App->scene->active_grid);
+			//ImGui::SliderInt("Grid Size", App->scene->grid_size, 0, 500);
 			ImGui::Checkbox("Lighting", &App->renderer3D->lightning);
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
 			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);

@@ -83,7 +83,7 @@ bool ModuleLoader::Import(const string& pFile)
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				App->modscene->mesh.push_back(new_mesh);
 			}
 
-			if(mesh->HasNormals())
+			/*if(mesh->HasNormals())
 			{
 				
 				
@@ -93,12 +93,15 @@ bool ModuleLoader::Import(const string& pFile)
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * new_mesh->num_normals, new_mesh->normals, GL_STATIC_DRAW);
 				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 				glEnableVertexAttribArray(1);
-			}
-		aiReleaseImport(scene); // Use scene->mNumMeshes to iterate on scene->mMeshes array
+			}*/
+		 // Use scene->mNumMeshes to iterate on scene->mMeshes array
 		//	new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
 		}
 	}
 	else { LOG("Error loading scene %s", pFile); }
+
+	aiReleaseImport(scene);
+
 	return true;	
 }
 
