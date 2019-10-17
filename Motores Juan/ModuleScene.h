@@ -17,14 +17,9 @@ public:
 
 	bool Init(const JSON_Object& config);
 	bool Start();
-
-	update_status PreUpdate(float dt);
-	update_status Update(float dt);
-	update_status PostUpdate(float dt);
-
 	bool CleanUp();
-	void Save_Config(JSON_Object& config) const;
 
+	void Save_Config(JSON_Object& config) const;
 	void Draw();
 
 	void IndexCube();

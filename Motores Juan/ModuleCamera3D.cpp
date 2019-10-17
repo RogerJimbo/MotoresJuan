@@ -12,7 +12,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
-
+	Rotation = vec3(0.0f, 0.0f, 0.0f);
 }
 
 ModuleCamera3D::~ModuleCamera3D() {}
@@ -68,35 +68,26 @@ update_status ModuleCamera3D::Update(float dt)
 		Position = Z * length(Position);
 	}
 
-	
-
 	if (App->input->GetMouseZ() != 0)	//	Wheel
 	{
 		if(App->input->GetMouseZ() > 0) { newPos -= Z * wheel; }
 		else { newPos += Z * wheel; }
 	}
 
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT))
-	{
-		Move(newPos);
-		Look(Position, Camera_view.translation(), true);
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT)) {}
 
-	}
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) { Rotate(); }
 
 	Move(newPos);
-	Look(Position, Camera_view.translation(), false);
+	Look(Position, Camera_view.translation());
 
-	//Position += Camera_view.translation();
-	//Position += newPos;
-	//Move(newPos);
-
-	//Look(Position, Camera_view.translation(), false);
-	//LookAt(Position);
-	//CalculateViewMatrix();
+	CalculateViewMatrix();
 	return UPDATE_CONTINUE;
 }
 
-void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference)
+void ModuleCamera3D::Rotate() { this->Position += X * 0.20f; }	//TODO: It moves faster when closer to reference.
+
+void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference)
 {
 	this->Position = Position;
 	this->Reference = Reference;
@@ -104,12 +95,6 @@ void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool Rota
 	Z = normalize(Position - Reference);
 	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
 	Y = cross(Z, X);
-
-	if(!RotateAroundReference)
-	{
-		this->Reference = this->Position;
-	//	this->Position += Z * 0.05f;
-	}
 
 	CalculateViewMatrix();
 }
@@ -130,7 +115,7 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 	Position += Movement;
 	Reference += Movement;
 
-	//CalculateViewMatrix();
+	CalculateViewMatrix();
 }
 
 float* ModuleCamera3D::GetViewMatrix()

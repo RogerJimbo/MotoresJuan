@@ -148,15 +148,8 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::ActivateWireframe()
 {
-	if (wireframe)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-
-	else
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
+	if (wireframe) { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
+	else { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
 }
 
 void ModuleRenderer3D::OnResize(int width, int height)

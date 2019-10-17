@@ -15,15 +15,11 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 {
-	//App->loader->Import("BakerHouse.fbx");  //REQUIREMENT 1
-	//App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
+	App->loader->Import("BakerHouse.fbx");  
+	App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
 
 	return true;
 }
-
-update_status ModuleScene::PreUpdate(float dt) { return UPDATE_CONTINUE; }
-update_status ModuleScene::Update(float dt) { return UPDATE_CONTINUE; }
-update_status ModuleScene::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 void ModuleScene::Draw()
 {
