@@ -32,7 +32,7 @@ update_status ModuleCamera3D::Update(float dt)
 	float wheel = 150.0f * dt;
 
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed = 8.0f * dt;
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) { LookAt(newPos); }
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) { LookAt(newPos); Position = Reference + 5.0f * Z; }
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -85,7 +85,7 @@ update_status ModuleCamera3D::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleCamera3D::Rotate() { this->Position += X * 0.20f; }	//TODO: It moves faster when closer to reference.
+void ModuleCamera3D::Rotate() { this->Position += X * 0.20f; LOG("%d %d %d" , this->Position)}	//TODO: It moves faster when closer to reference.
 
 void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference)
 {
