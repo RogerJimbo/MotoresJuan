@@ -66,6 +66,18 @@ bool ModuleLoader::Import(const string& pFile)
 			memcpy(new_mesh->vertices, mesh->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
 			LOG("New mesh with %d vertices", new_mesh->num_vertices);
 
+			if (mesh->HasTextureCoords(0))
+			{
+				new_mesh->texture_coords = new float[mesh->mNumVertices * 2];
+
+				for (uint j = 0; j < mesh->mNumVertices; j += 2)
+				{
+					new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
+					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
+				}
+				new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
+			}
+
 			if (mesh->HasFaces())
 			{
 				new_mesh->num_indices = mesh->mNumFaces * 3;
@@ -74,7 +86,7 @@ bool ModuleLoader::Import(const string& pFile)
 				{
 					if (mesh->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
 					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
-				}				glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
+				}								glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
 				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices * 3, new_mesh->vertices, GL_STATIC_DRAW);
 
@@ -84,7 +96,7 @@ bool ModuleLoader::Import(const string& pFile)
 			}
 
 		 // Use scene->mNumMeshes to iterate on scene->mMeshes array
-		//	new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
+		
 		}
 	}
 	else { LOG("Error loading scene %s", pFile); }

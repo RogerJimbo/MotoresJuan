@@ -15,8 +15,8 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 {
-	App->loader->Import("BakerHouse.fbx");  
-	App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
+	//App->loader->Import("BakerHouse.fbx");  
+	//App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
 
 	return true;
 }
@@ -24,17 +24,25 @@ bool ModuleScene::Start()
 void ModuleScene::Draw()
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, (*item)->id_vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item)->id_indices);
+
+		glTexCoordPointer(2,GL_FLOAT, 0, (*item)->texture_coords);
+		glBindTexture(GL_TEXTURE_2D, (*item)->texture);
+
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		glDrawElements(GL_TRIANGLES, (*item)->num_indices, GL_UNSIGNED_INT, NULL);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	glDisableClientState(GL_VERTEX_ARRAY);	
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
 void ModuleScene::IndexCube()
