@@ -125,18 +125,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	int result = 0;
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &result);
-
 	App->modscene->Draw();
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 	ImGui::Render();
-
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &result);
-
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 

@@ -16,8 +16,6 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 {
 	App->loader->Import("BakerHouse.fbx");  
-	//uint width, height = 1024;
-	//texture = App->loader->Texturing("Baker_house.png", width, height);
 
 	return true;
 }
@@ -29,15 +27,11 @@ void ModuleScene::Draw()
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
-	//	glBindBuffer(GL_ARRAY_BUFFER, (*item)->id_vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item)->id_indices);
-
 		glVertexPointer(3, GL_FLOAT, 0, &(*item)->vertices[0]);
 		glBindTexture(GL_TEXTURE_2D, (*item)->texture);
 		glTexCoordPointer(2, GL_FLOAT, 0, &(*item)->texture_coords[0]);
-		
 		glDrawElements(GL_TRIANGLES, (*item)->num_indices, GL_UNSIGNED_INT, NULL);
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}

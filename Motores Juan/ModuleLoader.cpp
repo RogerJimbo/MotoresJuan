@@ -118,7 +118,8 @@ uint ModuleLoader::Texturing(const char* file_name, uint& texture_width, uint& t
 
 	if (ilLoadImage(file_name))
 	{
-		
+		ilEnable(IL_ORIGIN_SET);
+		ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
 		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 		iluGetImageInfo(&ImageInfo);
