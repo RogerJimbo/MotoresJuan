@@ -15,7 +15,7 @@ struct Mesh
 	uint* indices = nullptr;
 
 	//Normals
-	uint* normals = nullptr;		//TODO
+	uint* normals = nullptr;	
 	uint num_normals = 0;
 	uint id_normals = 0;
 
@@ -25,20 +25,16 @@ struct Mesh
 	float* vertices = nullptr;
 
 	// Textures
-
+	uint id_texcoords = 0;
 	uint texture = 0;
 	uint texture_width = 0;
 	uint texture_height = 0;
 	float* texture_coords = nullptr;
-
-	//Position
-
 };
 
 class ModuleLoader : public Module
 {
 public:
-
 	ModuleLoader(Application* app, bool start_enabled = true);
 	~ModuleLoader();
 

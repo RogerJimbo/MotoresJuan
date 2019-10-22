@@ -70,12 +70,14 @@ bool ModuleLoader::Import(const string& pFile)
 			{
 				new_mesh->texture_coords = new float[mesh->mNumVertices * 2];
 
-				for (uint j = 0; j < mesh->mNumVertices; j += 2)
+				for (uint j = 0; j < mesh->mNumVertices *2; j += 2)
 				{
 					new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
 					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
+				/*	LOG("%f %f", new_mesh->texture_coords[j], new_mesh->texture_coords[++j]);*/
 				}
-				new_mesh->texture = Texturing(pFile.c_str(), new_mesh->texture_width, new_mesh->texture_height);
+				uint w, h = 1024;
+				new_mesh->texture = Texturing("Baker_house.png", w, h);	//TODO
 			}
 
 			if (mesh->HasFaces())
@@ -86,16 +88,14 @@ bool ModuleLoader::Import(const string& pFile)
 				{
 					if (mesh->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
 					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
-				}								glGenBuffers(1, (GLuint*)&(new_mesh->id_vertices));
-				glBindBuffer(GL_ARRAY_BUFFER, new_mesh->id_vertices);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*new_mesh->num_vertices * 3, new_mesh->vertices, GL_STATIC_DRAW);
+				}
 
 				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				App->modscene->mesh.push_back(new_mesh);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
+				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
+				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);				App->modscene->mesh.push_back(new_mesh);
 			}
-
-		 // Use scene->mNumMeshes to iterate on scene->mMeshes array
 		
 		}
 	}
@@ -113,13 +113,16 @@ uint ModuleLoader::Texturing(const char* file_name, uint& texture_width, uint& t
 	ILenum error;
 	ILinfo ImageInfo;
 
-	iluGetImageInfo(&ImageInfo);
 	ilGenImages(1, &imageID); 		
 	ilBindImage(imageID); 			
 
 	if (ilLoadImage(file_name))
 	{
-		LOG("Texture loaded succesfuly!")
+		
+
+		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+		iluGetImageInfo(&ImageInfo);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 
@@ -130,7 +133,8 @@ uint ModuleLoader::Texturing(const char* file_name, uint& texture_width, uint& t
 
 		texture_width = ImageInfo.Width; texture_height = ImageInfo.Height;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
-
+		glBindTexture(GL_TEXTURE_2D, 0);
+		LOG("Texture loaded succesfuly!")
 	}
 	else 	while (error = ilGetError()) { LOG("Error %d: %s", error, iluErrorString(error)); }
 

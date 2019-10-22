@@ -33,5 +33,8 @@ public:
 	vector<uint> indices;
 	vector<vec3> vertexs;
 	vector<Mesh*> mesh;
+
+	uint texture;
+
 };
 #endif

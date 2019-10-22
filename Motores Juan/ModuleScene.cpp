@@ -15,8 +15,9 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 {
-	//App->loader->Import("BakerHouse.fbx");  
-	//App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds");
+	App->loader->Import("BakerHouse.fbx");  
+	//uint width, height = 1024;
+	//texture = App->loader->Texturing("Baker_house.png", width, height);
 
 	return true;
 }
@@ -28,15 +29,15 @@ void ModuleScene::Draw()
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, (*item)->id_vertices);
+	//	glBindBuffer(GL_ARRAY_BUFFER, (*item)->id_vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item)->id_indices);
 
-		glTexCoordPointer(2,GL_FLOAT, 0, (*item)->texture_coords);
+		glVertexPointer(3, GL_FLOAT, 0, &(*item)->vertices[0]);
 		glBindTexture(GL_TEXTURE_2D, (*item)->texture);
-
-		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glTexCoordPointer(2, GL_FLOAT, 0, &(*item)->texture_coords[0]);
+		
 		glDrawElements(GL_TRIANGLES, (*item)->num_indices, GL_UNSIGNED_INT, NULL);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
@@ -74,31 +75,7 @@ void ModuleScene::IndexCube()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexs.size(), &vertexs, GL_STATIC_DRAW);
 }
-void ModuleScene::IndexSphere()
-{
-	//GLuint plane = 0;
-	//GLuint k1, k2 = 0;
-	//indices = { 0, 1, 2, 0, 3, 2 };
-
-
-
-
-	//vertexs.push_back((1.0f, 0.0f, 0.0f));
-	//vertexs.push_back((0.0f, 1.0f, 0.0f));
-	//vertexs.push_back((0.0f, 0.0f, 0.0f));
-	//vertexs.push_back((1.0f, 1.0f, 0.0f));
-
-
-	//glGenBuffers(1, (GLuint*) & (plane));
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), &indices, GL_STATIC_DRAW);
-
-
-
-
-
-
-}
+void ModuleScene::IndexSphere() {}
 
 void ModuleScene::ArraySphere()
 {
@@ -127,48 +104,71 @@ void ModuleScene::ArraySphere()
 		{
 			sectorAngle = j+0.5f * sectorStep;           
 
-		
 			x = xy * cosf(sectorAngle);             
 			y = xy * sinf(sectorAngle);       
 
 			glVertex3f(x, y, z);			
-
 		}
 	}
 	glEnd();
 }
+
 void ModuleScene::ArrayCube(float x, float y, float z, float posx, float posy, float posz)
 {
+
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	glColor3f(1.0, 1.0, 1.0);
 
 	//Front
-	glVertex3f(posx+x, posz, posy);	glVertex3f(posx, posz+z, posy);			glVertex3f(posx, posz, posy);
-	glVertex3f(posx+x, posz, posy);	glVertex3f(posx+x, posz + z, posy);		glVertex3f(posx, posz + z, posy);
+	//glVertex3f(posx+x, posz, posy);	glVertex3f(posx, posz+z, posy);			glVertex3f(posx, posz, posy);
+	//glVertex3f(posx+x, posz, posy);	glVertex3f(posx+x, posz + z, posy);		glVertex3f(posx, posz + z, posy);
 
-	//Right
-	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, posy);				glVertex3f(posx + x, posz, -posy - y);
-	glVertex3f(posx + x, posz + z, -posy-y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, -posy - y);
+	////Right
+	//glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, posy);				glVertex3f(posx + x, posz, -posy - y);
+	//glVertex3f(posx + x, posz + z, -posy-y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, -posy - y);
 
-	//Left
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz + z, posy);
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx, posz, posy);
+	////Left
+	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz + z, posy);
+	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx, posz, posy);
 
-	//Back
-	glVertex3f(posx + x, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz + z, -posy - y);
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz, -posy - y);
+	////Back
+	//glVertex3f(posx + x, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz + z, -posy - y);
+	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz, -posy - y);
 
-	//Top
-	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz + z, posy);
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz + z, -posy - y);
+	////Top
+	//glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz + z, posy);
+	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz + z, -posy - y);
 
-	//Bot
-	glVertex3f(posx + x, posz, posy);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz, -posy - y);
-	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx + x, posz, posy);
+	////Bot
+	//glVertex3f(posx + x, posz, posy);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz, -posy - y);
+	//glVertex3f(posx, posz, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx + x, posz, posy);
+
+
+	
+
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
+
 
 	glEnd();
 }
+
 void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float posz)
 {
 	glBegin(GL_TRIANGLES);
