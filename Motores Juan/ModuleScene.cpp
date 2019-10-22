@@ -27,6 +27,7 @@ void ModuleScene::Draw()
 
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
+		glColor3f(1.0, 1.0, 1.0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item)->id_indices);
 		glVertexPointer(3, GL_FLOAT, 0, &(*item)->vertices[0]);
 		glBindTexture(GL_TEXTURE_2D, (*item)->texture);
@@ -109,56 +110,33 @@ void ModuleScene::ArraySphere()
 
 void ModuleScene::ArrayCube(float x, float y, float z, float posx, float posy, float posz)
 {
-
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	glColor3f(1.0, 1.0, 1.0);
 
 	//Front
-	//glVertex3f(posx+x, posz, posy);	glVertex3f(posx, posz+z, posy);			glVertex3f(posx, posz, posy);
-	//glVertex3f(posx+x, posz, posy);	glVertex3f(posx+x, posz + z, posy);		glVertex3f(posx, posz + z, posy);
+	glVertex3f(posx+x, posz, posy);	glVertex3f(posx, posz+z, posy);			glVertex3f(posx, posz, posy);
+	glVertex3f(posx+x, posz, posy);	glVertex3f(posx+x, posz + z, posy);		glVertex3f(posx, posz + z, posy);
 
-	////Right
-	//glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, posy);				glVertex3f(posx + x, posz, -posy - y);
-	//glVertex3f(posx + x, posz + z, -posy-y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, -posy - y);
+	//Right
+	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, posy);				glVertex3f(posx + x, posz, -posy - y);
+	glVertex3f(posx + x, posz + z, -posy-y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, -posy - y);
 
-	////Left
-	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz + z, posy);
-	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx, posz, posy);
+	//Left
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz + z, posy);
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx, posz, posy);
 
-	////Back
-	//glVertex3f(posx + x, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz + z, -posy - y);
-	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz, -posy - y);
+	//Back
+	glVertex3f(posx + x, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz + z, -posy - y);
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz, -posy - y);
 
-	////Top
-	//glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz + z, posy);
-	//glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz + z, -posy - y);
+	//Top
+	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz + z, posy);
+	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz + z, -posy - y);
 
-	////Bot
-	//glVertex3f(posx + x, posz, posy);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz, -posy - y);
-	//glVertex3f(posx, posz, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx + x, posz, posy);
-
-
-	
-
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);
-
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-
+	//Bot
+	glVertex3f(posx + x, posz, posy);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz, -posy - y);
+	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx + x, posz, posy);
 
 	glEnd();
 }
