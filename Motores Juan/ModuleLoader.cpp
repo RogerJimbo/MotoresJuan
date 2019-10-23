@@ -134,8 +134,6 @@ uint ModuleLoader::Texturing(const char* file_name)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 		glBindTexture(GL_TEXTURE_2D, 0);
 		LOG("Texture loaded succesfuly!")
-
-
 	}
 	else 	while (error = ilGetError()) { LOG("Error %d: %s", error, iluErrorString(error)); }
 

@@ -63,7 +63,6 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 		
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
-		glEnable(GL_TEXTURE_2D);
 	}
 
 	glewInit();
@@ -93,7 +92,7 @@ update_status ModuleRenderer3D::Update(float dt)
 	if (lightning) { lights[0].Active(true); } else lights[0].Active(false);
 	if (!backface) { glEnable(GL_CULL_FACE); } else { glDisable(GL_CULL_FACE); }		
 	if (!lights_on) { glEnable(GL_LIGHTING); }	else { glDisable(GL_LIGHTING); }
-
+	if (textured) { glEnable(GL_TEXTURE_2D); } else {glDisable(GL_TEXTURE_2D); }
 	return UPDATE_CONTINUE;
 }
 

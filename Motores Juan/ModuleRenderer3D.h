@@ -40,6 +40,7 @@ public:
 	bool backface = true;
 	bool lights_on = false;
 	bool wireframe = false;
+	bool textured = true;
 
 	list<Mesh*> meshes;
 };

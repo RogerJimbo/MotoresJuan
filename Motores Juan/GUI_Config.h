@@ -10,6 +10,9 @@ public:
 
 	void Draw(bool* open);
 
+	void Save_Config(JSON_Object& config) const;
+	void Load_Config(JSON_Object& config);
+
 private:
 	bool fullscreen = false;
 	bool resizable = false;

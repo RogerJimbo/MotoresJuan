@@ -76,10 +76,10 @@ void GUI_Config::Draw(bool* open)
 			ImGui::Checkbox("Lighting", &App->renderer3D->lightning);
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
 			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);
+			ImGui::Checkbox("Textured", &App->renderer3D->textured);
 
 			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) { App->renderer3D->ActivateWireframe(); }
 
-			ImGui::Checkbox("Texture", &none);
 			ImGui::Checkbox("Bounding Box", &none);
 			ImGui::Checkbox("Triangle Normals", &none);
 			ImGui::Checkbox("Face Normals", &none);
@@ -90,3 +90,29 @@ void GUI_Config::Draw(bool* open)
 		ImGui::End();
 	}
 }	
+
+void GUI_Config::Save_Config(JSON_Object& config) const
+{
+	json_object_set_boolean(&config, "Axis Active", App->scene->active_axis);
+	json_object_set_boolean(&config, "Grid Active", App->scene->active_grid);
+	json_object_set_boolean(&config, "Lightning", App->renderer3D->lightning);
+	json_object_set_boolean(&config, "Lights Abled", App->renderer3D->lights_on);
+	json_object_set_boolean(&config, "Backface Culling", App->renderer3D->backface);
+	json_object_set_boolean(&config, "Textured", App->renderer3D->textured);
+	json_object_set_boolean(&config, "Wireframe", App->renderer3D->wireframe);
+
+	json_object_set_number(&config, "Grid Size", App->scene->grid_size);
+}
+
+void GUI_Config::Load_Config(JSON_Object& config)
+{
+	App->scene->active_axis = json_object_get_boolean(&config, "Axis Active");
+	App->scene->active_grid = json_object_get_boolean(&config, "Grid Active");
+	App->renderer3D->lightning = json_object_get_boolean(&config, "Lightning");
+	App->renderer3D->lights_on = json_object_get_boolean(&config, "Lights Abled");
+	App->renderer3D->backface = json_object_get_boolean(&config, "Backface Culling");
+	App->renderer3D->textured = json_object_get_boolean(&config, "Textured");
+	App->renderer3D->wireframe = json_object_get_boolean(&config, "Wireframe");
+	App->scene->grid_size = json_object_get_number(&config, "Grid Size");
+
+}

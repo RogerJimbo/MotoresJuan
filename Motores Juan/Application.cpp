@@ -114,6 +114,13 @@ void Application::SaveConfigToFile()
 		json_object_set_value(json_object(config), (*iter)->module_name.c_str(), module_config);
 	}
 
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
+	{
+		JSON_Value* element_config = json_value_init_object();
+		(*iter)->Save_Config(*json_object(element_config));
+		json_object_set_value(json_object(config), (*iter)->elem_name.c_str(), element_config);
+	}
+
 	if (config == NULL) { LOG("Error opening config file."); }
 	else { LOG("Sucess opening config file."); }
 
@@ -125,9 +132,13 @@ void Application::LoadConfigFromFile()
 {
 	JSON_Object* config = json_value_get_object(json_parse_file(config_name.c_str()));
 
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
+		(*iter)->Load_Config(*json_object_get_object(config, config_name.c_str()));
+
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end(); iter++)
 		(*iter)->Load_Config(*json_object_get_object(config, config_name.c_str()));
 
-	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end(); iter++)
-		(*iter)->Load_Config(*json_object_get_object(config, config_name.c_str()));
+
+	if (config == NULL) { LOG("Error opening config file."); }
+	else { LOG("Sucess opening config file."); }
 }
