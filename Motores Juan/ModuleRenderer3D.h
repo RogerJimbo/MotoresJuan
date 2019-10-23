@@ -21,7 +21,6 @@ public:
 	update_status PostUpdate(float dt);
 
 	bool CleanUp();
-	void ChangeMeshTexture(const char* path);
 	void OnResize(int width, int height);
 	void ActivateWireframe();
 

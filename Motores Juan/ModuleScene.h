@@ -29,12 +29,12 @@ public:
 	void ArrayCube(float x, float y, float z, float posx, float posy, float posz);
 	void ArrayPlane(float x, float y, float posx, float posy, float posz);
 
+	uint texture;
 	string config_name;
+	
 	vector<uint> indices;
 	vector<vec3> vertexs;
 	vector<Mesh*> mesh;
-
-	uint texture;
-
+	
 };
 #endif

@@ -22,23 +22,26 @@ bool ModuleScene::Start()
 
 void ModuleScene::Draw()
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
 	for (auto item = mesh.begin(); item != mesh.end(); item++)
 	{
 		glColor3f(1.0, 1.0, 1.0);
+
+		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item)->id_indices);
 		glVertexPointer(3, GL_FLOAT, 0, &(*item)->vertices[0]);
+
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, (*item)->texture);
 		glTexCoordPointer(2, GL_FLOAT, 0, &(*item)->texture_coords[0]);
+
 		glDrawElements(GL_TRIANGLES, (*item)->num_indices, GL_UNSIGNED_INT, NULL);
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
-	}
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
 }
 
 void ModuleScene::IndexCube()

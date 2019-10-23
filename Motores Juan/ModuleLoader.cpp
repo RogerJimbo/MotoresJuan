@@ -74,10 +74,9 @@ bool ModuleLoader::Import(const string& pFile)
 				{
 					new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
 					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
-				/*	LOG("%f %f", new_mesh->texture_coords[j], new_mesh->texture_coords[++j]);*/
 				}
-				uint w, h = 1024;
-				new_mesh->texture = Texturing("Baker_house.png", w, h);	//TODO
+
+				new_mesh->texture = Texturing("Baker_house.png");
 			}
 
 			if (mesh->HasFaces())
@@ -96,7 +95,6 @@ bool ModuleLoader::Import(const string& pFile)
 				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
 				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);				App->modscene->mesh.push_back(new_mesh);
 			}
-		
 		}
 	}
 	else { LOG("Error loading scene %s", pFile); }
@@ -106,7 +104,7 @@ bool ModuleLoader::Import(const string& pFile)
 	return true;	
 }
 
-uint ModuleLoader::Texturing(const char* file_name, uint& texture_width, uint& texture_height)
+uint ModuleLoader::Texturing(const char* file_name)
 {
 	ILuint imageID = 0;
 	GLuint textureID = 0;
@@ -132,17 +130,18 @@ uint ModuleLoader::Texturing(const char* file_name, uint& texture_width, uint& t
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-		texture_width = ImageInfo.Width; texture_height = ImageInfo.Height;
+		uint texture_width = ImageInfo.Width; uint texture_height = ImageInfo.Height;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 		glBindTexture(GL_TEXTURE_2D, 0);
 		LOG("Texture loaded succesfuly!")
+
+
 	}
 	else 	while (error = ilGetError()) { LOG("Error %d: %s", error, iluErrorString(error)); }
 
 	ilDeleteImages(1, &imageID);
 	return textureID;
 }
-
 
 bool ModuleLoader::CleanUp() 
 {

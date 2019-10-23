@@ -77,7 +77,7 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::BeginMenu("File")) 
 		{ 
 			ImGui::MenuItem("New Scene", false, true);	//Todo Create new scene
-			if (ImGui::MenuItem("Load Texture")) { App->renderer3D->ChangeMeshTexture("Baker_House_DDS.dds"); }
+			if (ImGui::MenuItem("Load Texture")) { App->loader->Texturing("Baker_House_DDS.dds"); }
 			if (ImGui::BeginMenu("Load Model")) 
 			{
 				if(ImGui::MenuItem("Warrior.fbx")) App->loader->Import("warrior.fbx");  
