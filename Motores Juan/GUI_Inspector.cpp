@@ -12,7 +12,7 @@ void GUI_Inspector::Draw(bool* open)
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{
 		static bool foo = false;
-		static bool transformation = true;
+		static bool transform = true;
 
 		static char bufpass[64] = "Game Object Name";
 		ImGui::Checkbox("Active", &foo); ImGui::SameLine();
@@ -21,16 +21,16 @@ void GUI_Inspector::Draw(bool* open)
 		
 		if ((ImGui::CollapsingHeader("Transform")) )
 		{
-			ImGui::Checkbox("Active2", &transformation); 
+			ImGui::Checkbox("Active", &transform);
 			static int vecpos[3] = { 0, 0, 0 }, vecrot[3] = { 0, 0, 0 }, vecscale[3] = { 1, 1, 1 };
 
-			ImGui::Text("X         Y         Z");
 			ImGui::DragInt3("Position", vecpos, 0.25f);
 			ImGui::SliderInt3("Rotation", vecrot, 0.0f, 360.0f);
 			ImGui::DragInt3("Scale", vecscale, 0.25f, 1.0f, 1000.0f);
 
+			ImGuiIO& io = ImGui::GetIO();
 
-
+			io.WantCaptureKeyboard;
 
 			//ImGui::ShowStyleEditor();
 

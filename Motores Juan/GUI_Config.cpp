@@ -67,16 +67,13 @@ void GUI_Config::Draw(bool* open)
 			if (ImGui::Checkbox("Borderless", &borderless)) { borderless ? App->window->SetBorderless(true) : App->window->SetBorderless(false); } ImGui::SameLine();
 			if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }
 		
-
-		
-		
 		}
 
 		if (ImGui::CollapsingHeader("Renderer")) 
 		{
 			ImGui::Checkbox("Axis Active", &App->scene->active_axis);
 			ImGui::Checkbox("Grid Active", &App->scene->active_grid);
-			ImGui::SliderInt("Grid Size", &App->scene->grid_size, 0, 100);
+			
 			ImGui::Checkbox("Lighting", &App->renderer3D->lightning);
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
 			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);
@@ -87,6 +84,8 @@ void GUI_Config::Draw(bool* open)
 			ImGui::Checkbox("Bounding Box", &none);
 			ImGui::Checkbox("Triangle Normals", &none);
 			ImGui::Checkbox("Face Normals", &none);
+
+			ImGui::SliderInt("Grid Size", &App->scene->grid_size, 0, 100);
 		}
 
 		if (ImGui::CollapsingHeader("Input Info")) { ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY()); }
