@@ -35,8 +35,6 @@ void GUI_Config::Draw(bool* open)
 				else { ms[i] = App->milliseconds;}
 			}
 			//App Name and Organitzation
-			static char app_name[30] = "Motores Juan";
-			static char org[30] = "UPC CITM";
 
 			ImGui::InputText("App Name", app_name, sizeof(app_name));
 			ImGui::InputText("Organitzation", org, sizeof(org));

@@ -10,6 +10,7 @@
 #include "ModuleGui.h"
 #include "ModuleScene.h"
 #include "ModuleLoader.h"
+#include "ModuleFileSystem.h"
 
 #include "GUI_Element.h"
 #include "GUI_Config.h"
@@ -35,6 +36,7 @@ public:
 	ModuleGui* modulegui;
 	ModuleScene* modscene;
 	ModuleLoader* loader;
+	ModuleFileSystem* filesystem;
 
 	GUI_Config* configuration = nullptr;
 	GUI_Hierarchy* hierarchy = nullptr;

@@ -18,6 +18,10 @@ void log(const char file[], int line, const char* format, ...);
 #define HAVE_M_PI
 #define RELEASE(x){ if(x != NULL) {delete x; x = NULL;}}
 
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x ) { if( x != NULL ) {delete[] x; x = NULL;}}
+
+
 typedef unsigned int uint;
 enum update_status{ UPDATE_CONTINUE = 1, UPDATE_STOP, UPDATE_ERROR};
 
@@ -31,3 +35,9 @@ enum update_status{ UPDATE_CONTINUE = 1, UPDATE_STOP, UPDATE_ERROR};
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "Motores Juan"
+
+//FILE
+#define SETTINGS_FOLDER "/Settings/"
+#define ASSETS_FOLDER "/Assets/"
+#define MODELS_FOLDER "/Assets/Models/"
+#define TEXTURES_FOLDER "/Assets/Textures/"

@@ -13,6 +13,9 @@ public:
 	void Save_Config(JSON_Object& config) const;
 	void Load_Config(JSON_Object& config);
 
+	char app_name[30] = "Motores Juan";
+	char org[30] = "UPC CITM";
+
 private:
 	bool fullscreen = false;
 	bool resizable = false;
