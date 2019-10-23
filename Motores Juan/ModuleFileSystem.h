@@ -21,7 +21,7 @@ public:
 	~ModuleFileSystem();
 
 	// Called before render is available
-	bool Init(JSON_Object* config) /*override*/;
+	bool Init(const JSON_Object& config) override;
 
 	// Called before quitting
 	bool CleanUp() override;
