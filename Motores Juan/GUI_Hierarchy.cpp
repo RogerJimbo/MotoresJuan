@@ -33,9 +33,9 @@ void GUI_Hierarchy::Draw(bool* open)
 			ImGui::DragFloat("Y", Y, .025f, .0f, 1000.0f, "%.2f", 1.25f);
 			ImGui::DragFloat("Z", Z, .025f, .0f, 1000.0f, "%.2f", 1.25f);
 			ImGui::Text("Position:");
-			ImGui::DragFloat("X ", posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Y ", posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Z ", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("X##foo1", posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("Y##foo1", posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("Z##foo1", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
 
 			if (createCube) { App->modscene->ArrayCube(X[1], Y[1], Z[1], posx[1], posy[1], posz[1]); }
 		}
@@ -52,9 +52,9 @@ void GUI_Hierarchy::Draw(bool* open)
 			static float X = 2.0f, Y = 2.0f, posx[1] = { 0.0f }, posy[1] = { 0.0f }, posz[1] = { 0.0f }; 
 			ImGui::DragFloatRange2(" ", &X, &Y, .25f, 0.0f, 1000.0f, "X: %.1f ", "Y: %.1f ");
 			ImGui::Text("Position:");
-			ImGui::DragFloat("X  ", posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Y  ", posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Z  ", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("X##foo2", posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("Y##foo2", posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("Z##foo2", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
 
 			if (createPlane) { App->modscene->ArrayPlane(X, Y, posx[1], posy[1], posz[1]); }
 		}

@@ -14,7 +14,7 @@ GUI_Console::~GUI_Console() {}
 
 void GUI_Console::Draw(bool* open)
 {
-	ImGui::Begin("Console", open);
+	ImGui::Begin(elem_name.c_str(), open);
 	if (ImGui::Button("Clear")) { buffer.clear(); } ImGui::SameLine();
 	if (ImGui::Button("Copy")) { ImGui::LogToClipboard(); }
 

@@ -10,5 +10,7 @@ public:
 
 	void Draw(bool* open);
 
+
+
 };
 

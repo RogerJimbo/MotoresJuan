@@ -30,6 +30,7 @@ bool ModuleGui::Init(const JSON_Object& config)
 	io->ConfigFlags |= ImGuiConfigFlags_DockingEnable, ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui::StyleColorsDark();
 
+	io->Fonts->AddFontFromFileTTF("comicsans.ttf", 17);
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 	SDL_GL_CreateContext(App->window->window);

@@ -15,7 +15,7 @@ GUI_Config::~GUI_Config() {}
 
 void GUI_Config::Draw(bool* open)
 {
-	ImGui::Begin("Configuration", open);
+	ImGui::Begin(elem_name.c_str(), open);
 	{
 		if (ImGui::CollapsingHeader("Application"))		//Application Configuration
 		{
@@ -66,6 +66,10 @@ void GUI_Config::Draw(bool* open)
 			if (ImGui::Checkbox("Resizable", &resizable)) { resizable ? App->window->SetResizable(true) : App->window->SetResizable(false); }
 			if (ImGui::Checkbox("Borderless", &borderless)) { borderless ? App->window->SetBorderless(true) : App->window->SetBorderless(false); } ImGui::SameLine();
 			if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }
+		
+
+		
+		
 		}
 
 		if (ImGui::CollapsingHeader("Renderer")) 
@@ -104,7 +108,7 @@ void GUI_Config::Save_Config(JSON_Object& config) const
 	json_object_set_number(&config, "Grid Size", App->scene->grid_size);
 }
 
-void GUI_Config::Load_Config(JSON_Object& config)
+void GUI_Config::Load_Config(JSON_Object& config)	//roger todo
 {
 	App->scene->active_axis = json_object_get_boolean(&config, "Axis Active");
 	App->scene->active_grid = json_object_get_boolean(&config, "Grid Active");
