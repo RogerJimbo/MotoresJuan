@@ -15,6 +15,6 @@ public:
 	bool active_grid = true;
 	bool active_axis = true;
 
-	float grid_size;
+	int grid_size = 20;
 };
 
