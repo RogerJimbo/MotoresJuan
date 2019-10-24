@@ -64,8 +64,8 @@ update_status ModuleCamera3D::Update(float dt)
 			if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); }
 		}
 
-		//	Position = Reference + Z * length(Position);
-		Position = Z * length(Position);
+		Position = Reference + Z * length(Position);
+
 	}
 
 	if (App->input->GetMouseZ() != 0)	//	Wheel
