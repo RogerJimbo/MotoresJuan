@@ -49,6 +49,9 @@
     <Filter Include="Sources\Tools\DevIL">
       <UniqueIdentifier>{f40a3426-06bb-4cfe-9e60-fb96a28f4058}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\GLFW">
+      <UniqueIdentifier>{264fc20e-651b-4dae-9fae-e328c73c5c95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -466,6 +469,12 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GLFW\glfw3.h">
+      <Filter>Sources\Tools\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="GLFW\glfw3native.h">
+      <Filter>Sources\Tools\GLFW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">

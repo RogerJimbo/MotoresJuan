@@ -1,6 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
+#include "GLFW/includes/glfw3.h"
+#include <math.h>
+
+#pragma comment (lib, "GLFW/libx86/glfw3.lib")
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -13,6 +17,18 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 	Rotation = vec3(0.0f, 0.0f, 0.0f);
+
+	cameraPos = vec3(0.0f, 0.0f, 3.0f);
+
+	vec3 cameraTarget = vec3(0.0f, 0.0f, 0.0f);
+	vec3 up = vec3(0.0f, 1.0f, 0.0f);
+
+	vec3 cameraDirection = normalize(cameraPos - cameraTarget);
+	vec3 cameraRight = normalize(cross(up, cameraDirection));
+	vec3 cameraUp = cross(cameraDirection, cameraRight);
+
+	Camera_view = At(cameraRight, cameraUp, cameraDirection);
+
 }
 
 ModuleCamera3D::~ModuleCamera3D() {}
@@ -64,7 +80,7 @@ update_status ModuleCamera3D::Update(float dt)
 			if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); }
 		}
 
-		Position = Reference + Z * length(Position);
+		Position = Z * length(Position);
 
 	}
 
@@ -81,11 +97,19 @@ update_status ModuleCamera3D::Update(float dt)
 	Move(newPos);
 	Look(Position, Camera_view.translation());
 
-	CalculateViewMatrix();
+	//CalculateViewMatrix();
 	return UPDATE_CONTINUE;
 }
 
-void ModuleCamera3D::Rotate() { this->Position += X * 0.20f; LOG("%d %d %d" , this->Position)}	//TODO: It moves faster when closer to reference.
+void ModuleCamera3D::Rotate() //{ this->Position += X * 0.20f; }	//TODO: It moves faster when closer to reference.
+{
+	float radius = 10.0f;
+	//float camX = sin(glfwGetTime()) * radius; float camZ = cos(glfwGetTime()) * radius;
+
+
+	//Camera_view = At(vec3(camX, 0.0, camZ), vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
+
+}
 
 void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference)
 {
@@ -103,11 +127,20 @@ void ModuleCamera3D::LookAt( const vec3 &Spot)
 {
 	Reference = Spot;
 
+
 	Z = normalize(Position - Reference);
 	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
 	Y = cross(Z, X);
 
 	CalculateViewMatrix();
+}
+
+mat4x4 ModuleCamera3D::At(const vec3 &right, const vec3 &up, const vec3 &dir)
+{
+	mat4x4 matrix_1 = { right.x, right.y, right.z, 0, up.x, up.y, up.z, 0, dir.x, dir.y, dir.z, 0, 0, 0, 0, 1 };
+	mat4x4 matrix_2 = { X.x, X.y, X.z, -cameraPos.x, Y.x, Y.y, Y.z, -cameraPos.y, Z.x, Z.y, Z.z, -cameraPos.z, 0, 0, 0, 1 };
+
+	return matrix_1*matrix_2;
 }
 
 void ModuleCamera3D::Move(const vec3 &Movement)
