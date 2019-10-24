@@ -82,36 +82,40 @@ bool ModuleRenderer3D::Init(const JSON_Object& config)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, buffer_tex, 0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCREEN_WIDTH, SCREEN_HEIGHT);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return ret;
 }
 
 update_status ModuleRenderer3D::Update(float dt)
 {
 	if (lightning) { lights[0].Active(true); } else lights[0].Active(false);
-	if (!backface) { glEnable(GL_CULL_FACE); } else { glDisable(GL_CULL_FACE); }		
+	if (backface) { glEnable(GL_CULL_FACE); } else { glDisable(GL_CULL_FACE); }		
 	if (!lights_on) { glEnable(GL_LIGHTING); }	else { glDisable(GL_LIGHTING); }
 	if (textured) { glEnable(GL_TEXTURE_2D); } else {glDisable(GL_TEXTURE_2D); }
+
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glBindTexture(GL_TEXTURE_2D, buffer_tex);
+
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-
 	for(uint i = 0; i < MAX_LIGHTS; ++i) lights[i].Render();
 		
 	return UPDATE_CONTINUE;
@@ -121,9 +125,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	int result = 0;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &result);
 	App->modscene->Draw();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	ImGui::Render();
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &result);
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
