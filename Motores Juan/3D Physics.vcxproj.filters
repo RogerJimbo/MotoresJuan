@@ -469,10 +469,10 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GLFW\glfw3.h">
+    <ClInclude Include="GLFW\includes\glfw3.h">
       <Filter>Sources\Tools\GLFW</Filter>
     </ClInclude>
-    <ClInclude Include="GLFW\glfw3native.h">
+    <ClInclude Include="GLFW\includes\glfw3native.h">
       <Filter>Sources\Tools\GLFW</Filter>
     </ClInclude>
   </ItemGroup>
