@@ -6,6 +6,9 @@ ComponentMesh::ComponentMesh()
 {
 }
 
+ComponentMesh::ComponentMesh(GameObject* parent)
+{
+}
 
 ComponentMesh::~ComponentMesh()
 {

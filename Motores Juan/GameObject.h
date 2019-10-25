@@ -24,6 +24,9 @@ public:
 	~GameObject();
 
 	Component* CreateComponent(Component_Type comp_type);
+	uint GetUID() const;
+	const GameObject* GetChild(string name);
+	Component* GetComponent(Component_Type comp_type);
 
 private:
 	string name;

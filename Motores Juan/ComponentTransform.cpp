@@ -6,6 +6,9 @@ ComponentTransform::ComponentTransform()
 {
 }
 
+ComponentTransform::ComponentTransform(GameObject* parent)
+{
+}
 
 ComponentTransform::~ComponentTransform()
 {
