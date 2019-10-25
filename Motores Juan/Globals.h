@@ -25,6 +25,8 @@ void log(const char file[], int line, const char* format, ...);
 typedef unsigned int uint;
 enum update_status{ UPDATE_CONTINUE = 1, UPDATE_STOP, UPDATE_ERROR};
 
+enum Component_Type{ NO_TYPE, MESH, MATERIAL, TRANSFORM };
+
 // Configuration 
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 720
