@@ -16,7 +16,6 @@ public:
 	bool CleanUp();
 
 	void Look(const vec3 &Position, const vec3 &Reference);
-	void Rotate();
 	void LookAt(const vec3 &Spot);
 
 	mat4x4 At(const vec3 &right, const vec3 &up, const vec3 &direction);
@@ -47,7 +46,5 @@ private:
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 
 	Timer timer;
-
-	float Sensitivity;
 
 };

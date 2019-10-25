@@ -143,9 +143,10 @@ void ModuleGui::CreateControlsWindow(bool* open)
 	if (ImGui::BeginPopupModal("Controls"))
 	{
 		ImGui::Text("Use 'Right Click +WASD' to move arround the scene."), ImGui::Separator();
-		ImGui::Text("Use 'Both Right & Left Click' to rotate the object."), ImGui::Separator();
+		ImGui::Text("Use 'Q' to move upwards and 'E' to move downwards."), ImGui::Separator();
+		ImGui::Text("Use 'Both Right & Left Click' to orbit arround the object."), ImGui::Separator();
 		ImGui::Text("Use 'Mouse Wheel' to zoom In and Out."); ImGui::Separator();
-		ImGui::Text("Use 'Alt+Left Click' to orbit arround the object."); ImGui::Separator();
+		ImGui::Text("Use Mouse Middle Button to zoom In and Out."); ImGui::Separator();
 		ImGui::Text("Use 'F' to focus the camera on the object."); ImGui::Separator();
 		ImGui::Text("Use 'Shift' to duplicate movement speed."); ImGui::Separator();
 
