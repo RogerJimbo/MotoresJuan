@@ -46,9 +46,3 @@ enum Component_Type{ NO_TYPE, MESH, MATERIAL, TRANSFORM };
 #define ASSETS_FOLDER "/Assets/"
 #define MODELS_FOLDER "/Assets/Models/"
 #define TEXTURES_FOLDER "/Assets/Textures/"
-
-uint GenerateUID()
-{
-	pcg32_random_t rng_num;
-	return pcg32_random_r(&rng_num);
-}

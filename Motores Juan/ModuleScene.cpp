@@ -3,6 +3,9 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 
+#include "Component.h"
+#include "ComponentMesh.h"
+
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -14,33 +17,42 @@ ModuleScene::~ModuleScene() {}
 bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
-{
-	App->loader->Import("BakerHouse.fbx");  
+{ 
+	root = new GameObject(nullptr, "Root");
+	App->loader->Import("BakerHouse.fbx");
 
 	return true;
 }
 
 void ModuleScene::Draw()
 {
-	for (auto item = mesh.begin(); item != mesh.end(); item++)
+	for (auto item = gameobjects.begin(); item != gameobjects.end(); item++)
 	{
-		glColor3f(1.0, 1.0, 1.0);
+		for (auto iter = (*item)->components.begin(); iter != (*item)->components.end(); ++iter)
+		{
+			if ((*iter)->c_type == MESH)
+			{
+				ComponentMesh* mesh = (ComponentMesh*)(*iter);
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item)->id_indices);
-		glVertexPointer(3, GL_FLOAT, 0, &(*item)->vertices[0]);
+				glColor3f(1.0, 1.0, 1.0);
 
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindTexture(GL_TEXTURE_2D, (*item)->texture);
-		glTexCoordPointer(2, GL_FLOAT, 0, &(*item)->texture_coords[0]);
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
+				glVertexPointer(3, GL_FLOAT, 0, &mesh->vertices[0]);
 
-		glDrawElements(GL_TRIANGLES, (*item)->num_indices, GL_UNSIGNED_INT, NULL);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glBindTexture(GL_TEXTURE_2D, mesh->texture);
+				glTexCoordPointer(2, GL_FLOAT, 0, &mesh->texture_coords[0]);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+				glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+				glBindTexture(GL_TEXTURE_2D, 0);
+
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);
+			}
+		}
 	}
 }
 

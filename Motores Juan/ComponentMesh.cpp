@@ -6,7 +6,7 @@ ComponentMesh::ComponentMesh()
 {
 }
 
-ComponentMesh::ComponentMesh(GameObject* parent)
+ComponentMesh::ComponentMesh(Component_Type type, GameObject* parent) : Component(type, parent)
 {
 }
 

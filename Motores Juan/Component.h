@@ -13,13 +13,12 @@ public:
 	~Component();
 
 	Component_Type GetCompType();
-	uint GetUID();
 
-private:
 	virtual void ComponentUpdate();
 
 public:
-	uint uid = 0;
 	Component_Type c_type;
+
+	GameObject* parent;
 };
 #endif // !__COMPONENT_H__

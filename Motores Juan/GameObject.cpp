@@ -11,7 +11,6 @@ GameObject::GameObject()
 
 GameObject::GameObject(GameObject* parent, string name)
 {
-	uid = GenerateUID();
 	this->parent = parent;
 	this->name = name;
 }
@@ -22,13 +21,25 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-	for (auto item = components.begin; item > components.end(); item++)
+	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
+}
+
+GameObject * GameObject::AddChildren(std::string name)
+{
+	GameObject* ret = new GameObject(this, name);
+	children.push_back(ret);
+	return ret;
+}
+
+void GameObject::AddParent(GameObject* newparent, GameObject* child)
+{
+	if (newparent != parent)
 	{
-		(*item).ComponentUpdate();
+		child->parent = newparent;
 	}
 }
 
-Component* GameObject::CreateComponent(Component_Type comp_type)
+Component* GameObject::AddComponent(Component_Type comp_type)
 {
 	Component* ret;
 
@@ -38,34 +49,29 @@ Component* GameObject::CreateComponent(Component_Type comp_type)
 		break;
 
 	case MESH:
-		ret = new ComponentMesh(this);
+		ret = new ComponentMesh(comp_type, this);
+		components.push_back(ret);
 		break;
 
 	case MATERIAL:
 		ret = new ComponentMaterial(this);
+		components.push_back(ret);
 		break;
 
 	case TRANSFORM:
 		ret = new ComponentTransform(this);
+		components.push_back(ret);
 		break;
 	}
 
 	return ret;
 }
 
-uint GameObject::GetUID() const
+void GameObject::GetChild(vector<GameObject*> children)
 {
-	return uid;
-}
-
-const GameObject* GameObject::GetChild(string name)
-{
-	for (vector<GameObject*>::iterator item = children.begin(); item != children.end(); item++)
+	for (auto item = children.begin(); item != children.end(); item++)
 	{
-		if ((*item)->name.compare(name) == 0)
-		{
-			return *item;
-		}
+		children.push_back(this);
 	}
 }
 
@@ -77,3 +83,4 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 			return (*item);
 	}
 }
+

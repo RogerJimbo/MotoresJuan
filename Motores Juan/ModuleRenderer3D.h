@@ -42,5 +42,4 @@ public:
 	bool wireframe = false;
 	bool textured = true;
 
-	list<Mesh*> meshes;
 };

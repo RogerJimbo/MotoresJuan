@@ -4,6 +4,7 @@
 #include <vector>
 #include "ModuleLoader.h"
 #include "Module.h"
+#include "GameObject.h"
 
 #define GRIDSIZE 50
 
@@ -35,6 +36,9 @@ public:
 	vector<uint> indices;
 	vector<vec3> vertexs;
 	vector<Mesh*> mesh;
+
+	GameObject* root;
+	vector<GameObject*> gameobjects;
 	
 };
 #endif
