@@ -1,6 +1,4 @@
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
-
+#pragma once
 #include "Globals.h"
 
 class GameObject;
@@ -20,5 +18,3 @@ public:
 	uint uid = 0;
 	Component_Type c_type;
 };
-
-#endif // !__COMPONENT_H__
