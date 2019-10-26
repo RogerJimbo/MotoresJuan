@@ -1,11 +1,11 @@
 #ifndef __GAMEOBJECT_H__
 #define __GAMEOBJECT_H__
 
+#include "Globals.h"
 #include <list>
 #include <string>
 #include <vector>
 #include <map>
-#include "Globals.h"
 
 struct Mesh;
 
@@ -27,7 +27,8 @@ public:
 	Component* AddComponent(Component_Type comp_type);
 	GameObject* AddChildren(std::string name);
 
-	void GetChild(vector<GameObject*> children);
+	void Update();
+
 	Component* GetComponent(Component_Type comp_type);
 
 public:
@@ -37,8 +38,6 @@ public:
 
 	list<Component*> components;
 	vector<GameObject*> children;
-
-private:
-	void Update();
 };
+
 #endif 

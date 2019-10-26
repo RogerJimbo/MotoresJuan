@@ -1,6 +1,4 @@
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
-
+#pragma once
 #include "Globals.h"
 
 class GameObject;
@@ -21,4 +19,3 @@ public:
 
 	GameObject* parent;
 };
-#endif // !__COMPONENT_H__

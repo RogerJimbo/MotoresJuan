@@ -38,13 +38,9 @@ public:
 	vec3 cameraDirection;
 	vec3 cameraRight;
 	vec3 cameraUp;
-
 	vec3 newPos;
-
 
 private:
 	mat4x4 ViewMatrix, ViewMatrixInverse;
-
 	Timer timer;
-
 };

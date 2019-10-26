@@ -2,6 +2,7 @@
 
 This is a 3D Engine created by [Ivan Drofiak](https://github.com/FurryGhoul) and [Roger Sanchez](https://github.com/RogerJimbo) students of the Bachelor’s Degree in Video Games by UPC at CITM.
 
+Our Repository: https://github.com/RogerJimbo/MotoresJuan
 
 ## Libraries Used
 - SDL.
@@ -9,6 +10,50 @@ This is a 3D Engine created by [Ivan Drofiak](https://github.com/FurryGhoul) and
 - ImGui.
 - OpenGL.
 - MathGeoLib.
+- DevIL.
+- Assimp.
+- Glew.
+- Parson.
+
+
+## Guide of use
+
+In the scene window, the movement controls is as follows:
+
+- Use 'Right Click +WASD' to move arround the scene.
+- Use 'Q' to move upwards and 'E' to move downwards
+- Use 'Alt' & Left Click to orbit arround the object.
+- Use 'Mouse Wheel' to zoom In and Out.
+- Use Mouse Middle Button to move the camera.
+- Use 'F' to focus the camera on the object.
+- Use 'Shift' to duplicate movement speed.
+
+The Hierarchy window is still in progress, so far it suports creating basic primitives, plane and cube and modify its size and position. 
+The Console window shows info about the actions done by the application.
+The Configuration window has the following submenus:
+
+- Application: This section displays the info about the engine as well as some data.
+- Window: This section allows the user to configure some window options.
+- Renderer: This section configures render options in the scene window.
+- Input Info: So far this section only shows the mouse position, but will feature more options in further versions.	
+
+From the menu, the user can:
+
+# File
+- Import predifined meshes.
+- Save and load configuration options.
+- Close the application.
+
+# Help
+- About: A short descrption of the engine and link to the libraries used. 
+- Hardware Info: Information about the technical aspects of the engine.
+- GitHub: A link to the repository where the source code can be found.
+- Controls: A window that displays the controls for the scene window.
+
+# Windows
+
+This section allows the user to activate/desactivate the windows displayed on screen. 
+The windows can be moved freely arround and organized as the user rathers using docking.
 
 ## License
 

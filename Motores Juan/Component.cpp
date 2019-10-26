@@ -1,10 +1,7 @@
 #include "Component.h"
+#include "GameObject.h"
 
-
-
-Component::Component()
-{
-}
+Component::Component() {}
 
 Component::Component(Component_Type type, GameObject* parent)
 {
@@ -12,15 +9,9 @@ Component::Component(Component_Type type, GameObject* parent)
 	this->parent = parent;
 }
 
-Component::~Component()
-{
-}
+Component::~Component() {}
 
-Component_Type Component::GetCompType()
-{
-	return c_type;
-}
+Component_Type Component::GetCompType() { return c_type; }
 
-void Component::ComponentUpdate()
-{
-}
+void Component::ComponentUpdate() {}
+

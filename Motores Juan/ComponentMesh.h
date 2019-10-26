@@ -1,12 +1,16 @@
+#pragma once
 #include "Component.h"
+#include "GameObject.h"
 
 class ComponentMaterial;
 
 class ComponentMesh : public Component
 {
 public:
+
 	ComponentMesh();
 	ComponentMesh(Component_Type type, GameObject* parent);
+
 	~ComponentMesh();
 
 public:
@@ -33,4 +37,3 @@ public:
 	float* texture_coords = nullptr;
 
 };
-

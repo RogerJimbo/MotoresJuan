@@ -4,10 +4,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
 
-
-GameObject::GameObject()
-{
-}
+GameObject::GameObject() {}
 
 GameObject::GameObject(GameObject* parent, string name)
 {
@@ -15,13 +12,14 @@ GameObject::GameObject(GameObject* parent, string name)
 	this->name = name;
 }
 
-GameObject::~GameObject()
-{
-}
+GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
+	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) 
+	{ 
+		(*iter)->ComponentUpdate(); 
+	}
 }
 
 GameObject * GameObject::AddChildren(std::string name)
@@ -67,20 +65,9 @@ Component* GameObject::AddComponent(Component_Type comp_type)
 	return ret;
 }
 
-void GameObject::GetChild(vector<GameObject*> children)
-{
-	for (auto item = children.begin(); item != children.end(); item++)
-	{
-		children.push_back(this);
-	}
-}
-
 Component* GameObject::GetComponent(Component_Type comp_type)
 {
 	for (auto item = components.begin(); item != components.end(); item++)
-	{
-		if ((*item)->GetCompType() == comp_type)
-			return (*item);
-	}
+		if ((*item)->GetCompType() == comp_type) return (*item);	
 }
 
