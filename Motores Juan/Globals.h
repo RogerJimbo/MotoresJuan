@@ -9,7 +9,7 @@
 
 #include "PCG/include/pcg_variants.h"
 #include "PCG/extras/entropy.h"
-
+ 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
 void log(const char file[], int line, const char* format, ...);
@@ -47,8 +47,3 @@ enum Component_Type{ NO_TYPE, MESH, MATERIAL, TRANSFORM };
 #define MODELS_FOLDER "/Assets/Models/"
 #define TEXTURES_FOLDER "/Assets/Textures/"
 
-uint GenerateUID()
-{
-	pcg32_random_t rng_num;
-	return pcg32_random_r(&rng_num);
-}

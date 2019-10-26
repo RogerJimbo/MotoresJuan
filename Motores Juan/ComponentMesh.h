@@ -5,7 +5,6 @@ class ComponentMaterial;
 class ComponentMesh : public Component
 {
 public:
-	ComponentMesh();
 	ComponentMesh(GameObject* parent);
 	~ComponentMesh();
 
@@ -20,6 +19,4 @@ public:
 	uint id_texCoords = 0;
 	uint num_texCoords = 0;
 	float* texCoords = nullptr;
-
 };
-

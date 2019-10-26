@@ -4,28 +4,18 @@
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
 
-
-GameObject::GameObject()
-{
-}
-
 GameObject::GameObject(GameObject* parent, string name)
 {
-	uid = GenerateUID();
+	//uid = GenerateUID();
 	this->parent = parent;
 	this->name = name;
 }
 
-GameObject::~GameObject()
-{
-}
+GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-	for (auto item = components.begin; item > components.end(); item++)
-	{
-		(*item).ComponentUpdate();
-	}
+	for(list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
 }
 
 Component* GameObject::CreateComponent(Component_Type comp_type)
@@ -53,27 +43,16 @@ Component* GameObject::CreateComponent(Component_Type comp_type)
 	return ret;
 }
 
-uint GameObject::GetUID() const
-{
-	return uid;
-}
+uint GameObject::GetUID() const { return uid; }
 
 const GameObject* GameObject::GetChild(string name)
 {
 	for (vector<GameObject*>::iterator item = children.begin(); item != children.end(); item++)
-	{
-		if ((*item)->name.compare(name) == 0)
-		{
-			return *item;
-		}
-	}
+		if ((*item)->name.compare(name) == 0) { return *item; }
 }
 
 Component* GameObject::GetComponent(Component_Type comp_type)
 {
 	for (auto item = components.begin(); item != components.end(); item++)
-	{
-		if ((*item)->GetCompType() == comp_type)
-			return (*item);
-	}
+		if ((*item)->GetCompType() == comp_type) return (*item);	
 }
