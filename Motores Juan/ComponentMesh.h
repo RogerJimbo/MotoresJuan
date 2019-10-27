@@ -3,11 +3,9 @@
 #include "GameObject.h"
 
 class ComponentMaterial;
-
 class ComponentMesh : public Component
 {
 public:
-
 	ComponentMesh();
 	ComponentMesh(Component_Type type, GameObject* parent);
 
@@ -35,5 +33,4 @@ public:
 	uint texture_width = 0;
 	uint texture_height = 0;
 	float* texture_coords = nullptr;
-
 };
