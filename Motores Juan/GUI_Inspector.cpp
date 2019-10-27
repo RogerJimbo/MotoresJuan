@@ -57,10 +57,10 @@ void GUI_Inspector::Draw(bool* open)
 					ImGui::Text("Number of children: %d", selectedGO->children.size());
 				}
 
-				if ((ImGui::CollapsingHeader("Material")))
+				if ((ImGui::CollapsingHeader("Texture")))
 				{
-					ImGui::Text("Texture Width: %f", App->loader->TextureSize.x);
-					ImGui::Text("Texture Height: %f", App->loader->TextureSize.y);
+					ImGui::Text("Texture Width: %.01f", App->loader->TextureSize.x);
+					ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);
 					ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
 				}
 			}
@@ -92,7 +92,7 @@ void GUI_Inspector::Draw(bool* open)
 					ImGui::Text("Number of children: %d", selectedGO->children.size());
 				}
 
-				if ((ImGui::CollapsingHeader("Material")))
+				if ((ImGui::CollapsingHeader("Texture")))
 				{
 					ImGui::Text("Texture Width: %.01f", App->loader->TextureSize.x);
 					ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);

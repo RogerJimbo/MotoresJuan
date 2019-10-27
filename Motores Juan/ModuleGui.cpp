@@ -12,7 +12,9 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl2.h"
 
+#include "Devil/includes/il.h"
 #include "Parson/parson.h"
+#include "Assimp/include/version.h"
 
 #include "GUI_Config.h"
 #include "GUI_Console.h"
@@ -174,6 +176,7 @@ void ModuleGui::CreateAboutWindow(bool* open)
 		if (ImGui::Button("DevIL")) App->RequestBrowser("http://openil.sourceforge.net/"); ImGui::SameLine();
 		if (ImGui::Button("Glew")) App->RequestBrowser("http://glew.sourceforge.net/"); ImGui::SameLine();
 		if (ImGui::Button("Assimp")) App->RequestBrowser("http://www.assimp.org/"); 	ImGui::Separator();
+		if (ImGui::Button("ParShapes")) App->RequestBrowser("https://github.com/prideout/par"); 	ImGui::Separator();
 		if (ImGui::Button("Close")) { ImGui::CloseCurrentPopup(); about_open = false; }
 		ImGui::EndPopup();
 	}		
@@ -206,10 +209,19 @@ void ModuleGui::CreateHardwareWindow(bool* open)
 		static bool active = false;
 		ImGui::Checkbox("Active", &active);
 
-		//SDL Version
-		SDL_version ver;
+		//Versions
+		float mathgeolibversion = 2.0f;
+		SDL_version ver; 
 		SDL_GetVersion(&ver);
+
+
 		ImGui::Text("SDL Version: %d.%d.%d", ver.major, ver.minor, ver.patch);
+		ImGui::Text("Assimp Version: %i", aiGetVersionMajor());
+		ImGui::Text("Open GL Version: %s", glGetString(GL_VERSION));
+		ImGui::Text("DevIL Version: %i", IL_VERSION);
+		ImGui::Text("MathGeoLib Version: %.02f", mathgeolibversion);
+		ImGui::Text("Glew Version: %s", glewGetString(GLEW_VERSION));
+
 		ImGui::Separator();
 
 		//CPU Caché

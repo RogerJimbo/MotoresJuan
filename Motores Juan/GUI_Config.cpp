@@ -63,26 +63,19 @@ void GUI_Config::Draw(bool* open)
 			if (ImGui::Checkbox("FullScreen", &fullscreen)) { fullscreen ? App->window->SetFullscreen(true) : App->window->SetFullscreen(false); } 	ImGui::SameLine();
 			if (ImGui::Checkbox("Resizable", &resizable)) { resizable ? App->window->SetResizable(true) : App->window->SetResizable(false); }
 			if (ImGui::Checkbox("Borderless", &borderless)) { borderless ? App->window->SetBorderless(true) : App->window->SetBorderless(false); } ImGui::SameLine();
-			if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }
-		
+			if (ImGui::Checkbox("Full Desktop", &fulldesktop)) { fulldesktop ? App->window->SetFullDesktop(true) : App->window->SetFullDesktop(false); }	
 		}
 
 		if (ImGui::CollapsingHeader("Renderer")) 
 		{
 			ImGui::Checkbox("Axis Active", &App->scene->active_axis);
 			ImGui::Checkbox("Grid Active", &App->scene->active_grid);
-			
 			ImGui::Checkbox("Lighting", &App->renderer3D->lightning);
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
 			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);
 			ImGui::Checkbox("Textured", &App->renderer3D->textured);
 
 			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) { App->renderer3D->ActivateWireframe(); }
-
-			ImGui::Checkbox("Bounding Box", &none);
-			ImGui::Checkbox("Triangle Normals", &none);
-			ImGui::Checkbox("Face Normals", &none);
-
 			ImGui::SliderInt("Grid Size", &App->scene->grid_size, 0, 100);
 		}
 
