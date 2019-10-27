@@ -1,5 +1,5 @@
 #include "ComponentMaterial.h"
 
-ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent) {}
+ComponentMaterial::ComponentMaterial(GameObject* parent) {}
 
 ComponentMaterial::~ComponentMaterial() {}

@@ -19,19 +19,20 @@ using namespace std;
 class GameObject
 {
 public:
+	GameObject();
 	GameObject(GameObject* parent, string name);
 	~GameObject();
 
+	void AddParent(GameObject* newparent, GameObject* child);
+	Component* AddComponent(Component_Type comp_type);
+	GameObject* AddChildren(std::string name);
+
 	void Update();
 
-	Component* CreateComponent(Component_Type comp_type);
-	uint GetUID() const;
-	const GameObject* GetChild(string name);
 	Component* GetComponent(Component_Type comp_type);
 
-private:
+public:
 	string name;
-	uint uid = 0;
 
 	GameObject* parent;
 
