@@ -1,6 +1,9 @@
 #pragma once
 #include "GUI_Element.h"
 
+class GameObject;
+class ComponentMesh;
+
 class GUI_Inspector : public GUI_Element
 {
 public:
@@ -10,7 +13,11 @@ public:
 
 	void Draw(bool* open);
 
+public:
+	GameObject* selectedGO = nullptr;
+	ComponentMesh* meshes = nullptr;
 
+	int numChildren = 0;
 
 };
 
