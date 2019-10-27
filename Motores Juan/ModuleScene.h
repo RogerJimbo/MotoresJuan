@@ -8,6 +8,8 @@
 
 #define GRIDSIZE 50
 
+struct par_shapes_mesh_s;
+
 using namespace std;
 
 class ModuleScene : public Module
@@ -25,6 +27,8 @@ public:
 
 	void IndexCube();
 	void IndexSphere();
+
+	void CreatePrimitives(par_shapes_mesh_s* data, char* type);
 
 	void ArraySphere();
 	void ArrayCube(float x, float y, float z, float posx, float posy, float posz);

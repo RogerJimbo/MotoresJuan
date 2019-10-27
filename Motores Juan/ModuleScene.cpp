@@ -8,7 +8,6 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 
-#define PAR_SHAPES_IMPLEMENTATION
 #include "ParShapes/par_shapes.h"
 
 #include "Glew/include/glew.h"
@@ -25,6 +24,7 @@ bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
 	App->loader->Import("BakerHouse.fbx");
+
 
 	return true;
 }
@@ -194,13 +194,30 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 	glEnd();
 }
 
-void CreatePrimitives(par_shapes_mesh_s* data, char* type)
+void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 {
 	GameObject* gameobject = App->modscene->root->AddChildren(type);
-	ComponentMesh* primitive = (ComponentMesh*)gameobject->AddComponent(MESH);
-	ComponentMaterial* material = (ComponentMaterial*)gameobject->AddComponent(MATERIAL);
 
+	ComponentMesh* primitive = (ComponentMesh*)gameobject->AddComponent(MESH);
+	primitive->num_vertices = data->npoints * 3;
+	primitive->vertices = new float[primitive->num_vertices * 3];
+	for (int i = 0; i < primitive->num_vertices; ++i) primitive->vertices[i] = data->points[i];
 	
+	primitive->num_indices = data->ntriangles * 3; 
+	primitive->indices = new uint[primitive->num_indices]; 
+	for (int i = 0; i < primitive->num_indices; i++) primitive->indices[i] = (uint)data->triangles[i];
+
+	LOG("%s Primitive created with %d vertices and %d indices.", type, primitive->num_vertices, primitive->num_vertices);
+
+	glGenBuffers(1, (GLuint*) & (primitive->id_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, primitive->id_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * primitive->num_indices, primitive->indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, (GLuint*) & (primitive->id_texcoords));
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, primitive->id_texcoords);
+	glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * primitive->num_vertices * 2, primitive->texture_coords, GL_STATIC_DRAW);
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 }
 
 bool ModuleScene::CleanUp() { return true; }

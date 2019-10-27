@@ -16,10 +16,7 @@ GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) 
-	{ 
-		(*iter)->ComponentUpdate(); 
-	}
+	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
 }
 
 GameObject * GameObject::AddChildren(std::string name)
@@ -31,10 +28,7 @@ GameObject * GameObject::AddChildren(std::string name)
 
 void GameObject::AddParent(GameObject* newparent, GameObject* child)
 {
-	if (newparent != parent)
-	{
-		child->parent = newparent;
-	}
+	if (newparent != parent) child->parent = newparent;
 }
 
 Component* GameObject::AddComponent(Component_Type comp_type)

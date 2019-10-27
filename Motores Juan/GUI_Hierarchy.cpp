@@ -9,10 +9,14 @@
 #include "GameObject.h"
 #include "ImGui/imgui_internal.h"
 
+#define PAR_SHAPES_IMPLEMENTATION
+#include "ParShapes/par_shapes.h"
+
 #include <iostream>
 #include <vector>
 #include <iterator>
 #include <algorithm>
+
 using namespace std;
 
 GUI_Hierarchy::GUI_Hierarchy(Application* app, bool start_enabled) : GUI_Element(app, start_enabled) { elem_name = "Hierarchy"; }
@@ -44,32 +48,25 @@ void GUI_Hierarchy::Draw(bool* open)
 		}
 
 		ImGui::Separator();
-		
-		if (ImGui::CollapsingHeader("Create Cube"))
+		static int slices = 30; static int stacks = 30;
+
+		if (ImGui::CollapsingHeader("Create Primitives"))
 		{
-			if (ImGui::Button("Cube")) { createCube = true; ++numberPrimitives; prim_name = "Cube"; }
-			ImGui::SameLine(); if (ImGui::Button("Delete")) { createCube = false; }
+			par_shapes_mesh* cube = par_shapes_create_cube();
+			if (ImGui::Button("Create Cube"))
+				App->modscene->CreatePrimitives(cube, "Cube");
+			par_shapes_free_mesh(cube);
 
-			static float X[1] = { 2.0f }, Y[1] = { 2.0f }, Z[1] = { 2.0f }, posx[1] = { 0.0f }, posy[1] = { 0.0f }, posz[1] = { 0.0f };
-			ImGui::Text("Size:");
-			ImGui::DragFloat("X", X, .025f, .0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Y", Y, .025f, .0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Z", Z, .025f, .0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::Text("Position:");
-			ImGui::DragFloat("X##foo1", posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Y##foo1", posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Z##foo1", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			if (ImGui::Button("Create Plane"))
+				App->modscene->CreatePrimitives(par_shapes_create_plane(50, 50), "Plane");
 
-			if (createCube) { App->modscene->ArrayCube(X[1], Y[1], Z[1], posx[1], posy[1], posz[1]); }
+			if (ImGui::Button("Create Sphere"))
+				App->modscene->CreatePrimitives(par_shapes_create_parametric_sphere(50, 50), "Sphere");
 
-
+			if (ImGui::Button("Create Cone"))
+				App->modscene->CreatePrimitives(par_shapes_create_cone(50, 50), "Cone");
 		}
-		if (ImGui::CollapsingHeader("Create Sphere"))
-		{
-			if (ImGui::Button("Sphere")) { createSphere = true; ++numberPrimitives; prim_name = "Sphere"; }
-			ImGui::SameLine(); if (ImGui::Button("Delete")) { createSphere = false; }
-		}
-		if (ImGui::CollapsingHeader("Create Plane"))
+		/*if (ImGui::CollapsingHeader("Old Primitives Code"))
 		{
 			if (ImGui::Button("Plane")) { createPlane = true; ++numberPrimitives; prim_name = "Plane"; }
 			ImGui::SameLine(); if (ImGui::Button("Delete")) { createPlane = false; }
@@ -82,7 +79,7 @@ void GUI_Hierarchy::Draw(bool* open)
 			ImGui::DragFloat("Z##foo2", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
 
 			if (createPlane) { App->modscene->ArrayPlane(X, Y, posx[1], posy[1], posz[1]); }
-		}
+		}*/
 	}
 	ImGui::End();
 }
