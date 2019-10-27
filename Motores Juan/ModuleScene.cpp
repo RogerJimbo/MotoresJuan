@@ -21,7 +21,7 @@ ModuleScene::~ModuleScene() {}
 bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
-{ 
+{
 	root = new GameObject(nullptr, "Root");
 	App->loader->Import("BakerHouse.fbx");
 
@@ -83,7 +83,7 @@ void ModuleScene::Draw()
 
 void ModuleScene::IndexCube()
 {
-	GLuint ibo, vbo = 0;		
+	GLuint ibo, vbo = 0;
 
 	indices = { 0, 1, 2, 0, 3, 2,			//FRONT
 					 3, 0, 4, 5, 3, 4,			//RIGHT
@@ -91,7 +91,7 @@ void ModuleScene::IndexCube()
 				     5, 4, 6, 6, 4, 7,			//BACK
 					 3, 6, 1, 6, 3, 5,			//TOP
 					 0, 2, 7, 7, 4, 0 };		//BOT
-	
+
 	vertexs.push_back((1.0f, 0.0f, 0.0f));
 	vertexs.push_back((0.0f, 1.0f, 0.0f));
 	vertexs.push_back((0.0f, 0.0f, 0.0f));
@@ -114,7 +114,7 @@ void ModuleScene::IndexSphere() {}
 
 void ModuleScene::ArraySphere()
 {
-	glLineWidth(2.0f);	
+	glLineWidth(2.0f);
 	glBegin(GL_POLYGON_BIT);
 	glColor3f(1.0, 1.0, 1.0);
 
@@ -128,21 +128,21 @@ void ModuleScene::ArraySphere()
 	float sectorStep = 2 * PI / sectorCount;
 	float stackStep = PI / stackCount;
 	float sectorAngle, stackAngle;
-	
+
 	for (int i = 0; i <= stackCount; ++i)
 	{
-		stackAngle = PI / 2 - i * stackStep;        
-		xy = radius * cosf(stackAngle);             
-		z = radius * sinf(stackAngle);              
+		stackAngle = PI / 2 - i * stackStep;
+		xy = radius * cosf(stackAngle);
+		z = radius * sinf(stackAngle);
 
 		for (int j = 0; j <= sectorCount; ++j)
 		{
-			sectorAngle = j+0.5f * sectorStep;           
+			sectorAngle = j+0.5f * sectorStep;
 
-			x = xy * cosf(sectorAngle);             
-			y = xy * sinf(sectorAngle);       
+			x = xy * cosf(sectorAngle);
+			y = xy * sinf(sectorAngle);
 
-			glVertex3f(x, y, z);			
+			glVertex3f(x, y, z);
 		}
 	}
 	glEnd();
@@ -207,9 +207,9 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	primitive->num_vertices = data->npoints * 3;
 	primitive->vertices = new float[primitive->num_vertices * 3];
 	for (int i = 0; i < primitive->num_vertices; ++i) primitive->vertices[i] = data->points[i];
-	
-	primitive->num_indices = data->ntriangles * 3; 
-	primitive->indices = new uint[primitive->num_indices]; 
+
+	primitive->num_indices = data->ntriangles * 3;
+	primitive->indices = new uint[primitive->num_indices];
 	for (int i = 0; i < primitive->num_indices; i++) primitive->indices[i] = (uint)data->triangles[i];
 
 	LOG("%s Primitive created with %d vertices and %d indices.", type, primitive->num_vertices, primitive->num_vertices);
