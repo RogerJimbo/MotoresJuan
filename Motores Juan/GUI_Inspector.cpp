@@ -21,7 +21,9 @@ void GUI_Inspector::Draw(bool* open)
 			if ((*item)->selected) { name = (*item)->name.c_str(); } 
 		
 		ImGui::Text(name);  
+		ImGui::Separator();
 		ImGui::Checkbox("Active", &foo); 
+
 
 		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
 		{
@@ -92,8 +94,8 @@ void GUI_Inspector::Draw(bool* open)
 
 				if ((ImGui::CollapsingHeader("Material")))
 				{
-					ImGui::Text("Texture Width: %f", App->loader->TextureSize.x);
-					ImGui::Text("Texture Height: %f", App->loader->TextureSize.y);
+					ImGui::Text("Texture Width: %.01f", App->loader->TextureSize.x);
+					ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);
 					ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
 				}
 			}
