@@ -71,6 +71,10 @@ update_status Application::Update()
 	for (list<Module*>::iterator iter = list_modules.begin(); iter != list_modules.end() && ret == UPDATE_CONTINUE; iter++)	
 		ret = (*iter)->PostUpdate(dt);
 
+	//GUI Elements Update
+	for (list<GUI_Element*>::iterator iter = list_guielems.begin(); iter != list_guielems.end() && ret == UPDATE_CONTINUE; iter++)
+		ret = (*iter)->Update(dt);
+
 	PostUpdate();
 
 	return ret;

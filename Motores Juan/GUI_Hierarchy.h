@@ -10,6 +10,8 @@ public:
 	GUI_Hierarchy(Application* app, bool start_enabled = true);
 	~GUI_Hierarchy();
 
+	update_status Update(float dt);
+
 	void Draw(bool* open);
 
 public:
@@ -20,7 +22,12 @@ public:
 	GameObject* selectedGO = nullptr;
 
 private:
+
 	int numberPrimitives = 0;
 	const char* prim_name;
+
+	int prim_posx, prim_posy, prim_posz;
+	int prim_sizeX, prim_sizeY;
+
 };
 

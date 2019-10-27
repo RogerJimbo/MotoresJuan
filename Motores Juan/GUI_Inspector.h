@@ -19,5 +19,6 @@ public:
 
 	int numChildren = 0;
 
+	int meshPos[3] = { 0, 0, 0 };
 };
 

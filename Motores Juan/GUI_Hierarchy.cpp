@@ -6,11 +6,11 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
-#include "GameObject.h"
-#include "ImGui/imgui_internal.h"
-
 #define PAR_SHAPES_IMPLEMENTATION
 #include "ParShapes/par_shapes.h"
+
+#include "GameObject.h"
+#include "ImGui/imgui_internal.h"
 
 #include <iostream>
 #include <vector>
@@ -19,9 +19,27 @@
 
 using namespace std;
 
-GUI_Hierarchy::GUI_Hierarchy(Application* app, bool start_enabled) : GUI_Element(app, start_enabled) { elem_name = "Hierarchy"; }
+par_shapes_mesh* cube = par_shapes_create_cube();
+
+GUI_Hierarchy::GUI_Hierarchy(Application* app, bool start_enabled) : GUI_Element(app, start_enabled) 
+{
+	elem_name = "Hierarchy"; 
+	prim_posx = 0.0f; prim_posy = 0.0f; prim_posz = 0.0f;
+	prim_sizeX = 100; prim_sizeY = 100;
+}
 
 GUI_Hierarchy::~GUI_Hierarchy() {}
+
+update_status GUI_Hierarchy::Update(float dt)
+{
+	prim_posx = App->inspector->meshPos[0];
+	prim_posy = App->inspector->meshPos[1];
+	prim_posz = App->inspector->meshPos[2];
+	par_shapes_translate(cube, prim_posx, prim_posy, prim_posz);
+	
+	return UPDATE_CONTINUE;
+}
+
 
 void GUI_Hierarchy::Draw(bool* open)
 {
@@ -51,34 +69,19 @@ void GUI_Hierarchy::Draw(bool* open)
 
 		if (ImGui::CollapsingHeader("Create Primitives"))
 		{
-			ImGui::Text("Size:");
-			static int X = 100, Y = 100;
-			ImGui::DragIntRange2(" ", &X, &Y, .25f, 0, 1000, "X: %.1i ", "Y: %.1i ");
-
-			ImGui::Text("Position:");
-			static float posx = 0.0f , posy = 0.0f , posz = 0.0f;
-			ImGui::DragFloat("X##foo1", &posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Y##foo1", &posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Z##foo1", &posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-
-			
 			ImGui::Separator();
 
-			par_shapes_mesh* cube = par_shapes_create_cube();
 			if (ImGui::Button("Create Cube"))
 				App->modscene->CreatePrimitives(cube, "Cube");
-
-			par_shapes_translate(cube, posx, posy, posz);
-
-
+			
 			if (ImGui::Button("Create Plane"))
-				App->modscene->CreatePrimitives(par_shapes_create_plane(X, Y), "Plane");
+				App->modscene->CreatePrimitives(par_shapes_create_plane(prim_sizeX, prim_sizeY), "Plane");
 
 			if (ImGui::Button("Create Sphere"))
-				App->modscene->CreatePrimitives(par_shapes_create_parametric_sphere(50, 50), "Sphere");
+				App->modscene->CreatePrimitives(par_shapes_create_parametric_sphere(prim_sizeX, prim_sizeY), "Sphere");
 
 			if (ImGui::Button("Create Cone"))
-				App->modscene->CreatePrimitives(par_shapes_create_cone(50, 50), "Cone");
+				App->modscene->CreatePrimitives(par_shapes_create_cone(prim_sizeX, prim_sizeY), "Cone");
 		}
 	}
 	ImGui::End();

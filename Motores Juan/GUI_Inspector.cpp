@@ -75,6 +75,8 @@ void GUI_Inspector::Draw(bool* open)
 					ImGui::DragInt3("Position", vecpos, 0.25f);
 					ImGui::SliderInt3("Rotation", vecrot, 0.0f, 360.0f);
 					ImGui::DragInt3("Scale", vecscale, 0.25f, 1.0f, 1000.0f);
+					
+					for(int i = 0; i <3; ++i) { meshPos[i] = vecpos[i]; }
 
 					ImGuiIO& io = ImGui::GetIO();
 					io.WantCaptureKeyboard;
