@@ -2,6 +2,8 @@
 #include "GUI_Element.h"
 #include "SDL/include/SDL.h"
 
+class GameObject;
+
 class GUI_Hierarchy : public GUI_Element
 {
 public:
@@ -18,5 +20,6 @@ public:
 private:
 	int numberPrimitives = 0;
 	const char* prim_name;
+	GameObject * selectedGO = nullptr;
 };
 

@@ -57,16 +57,24 @@ update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 bool ModuleLoader::Import(const string& pFile)
 {
 	const aiScene* scene = aiImportFile(pFile.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiNode* node = scene->mRootNode;
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		GameObject* GO = new GameObject();
+		GO->name = node->mName.C_Str();
 		App->modscene->root->children.push_back(GO);
+		App->modscene->gameobjects.push_back(GO);
 
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
-			ComponentMesh* new_mesh = (ComponentMesh*)GO->AddComponent(MESH);
+
+			GameObject* newGO = new GameObject();
+			newGO->name = mesh->mName.C_Str();
+			GO->children.push_back(newGO);
+
+			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
 
 			new_mesh->num_vertices = mesh->mNumVertices;
 			new_mesh->vertices = new float[new_mesh->num_vertices * 3];
@@ -114,8 +122,7 @@ bool ModuleLoader::Import(const string& pFile)
 				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
 				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 				
-				
-				App->modscene->gameobjects.push_back(GO);
+				App->modscene->gameobjects.push_back(newGO);
 			}
 		}
 	}
