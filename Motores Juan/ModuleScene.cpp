@@ -23,7 +23,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
-	App->loader->Import("BakerHouse.fbx");
+	//App->loader->Import("BakerHouse.fbx");
 
 
 	return true;
@@ -197,6 +197,11 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 {
 	GameObject* gameobject = App->modscene->root->AddChildren(type);
+	App->modscene->gameobjects.push_back(gameobject);
+
+	//GameObject* newGO = new GameObject();
+	gameobject->name = type;
+	//gameobject->children.push_back(newGO);
 
 	ComponentMesh* primitive = (ComponentMesh*)gameobject->AddComponent(MESH);
 	primitive->num_vertices = data->npoints * 3;
@@ -218,6 +223,8 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, primitive->id_texcoords);
 	glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * primitive->num_vertices * 2, primitive->texture_coords, GL_STATIC_DRAW);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+
+	//App->modscene->gameobjects.push_back(newGO);
 }
 
 bool ModuleScene::CleanUp() { return true; }
