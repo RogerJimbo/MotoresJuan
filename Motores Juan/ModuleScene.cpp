@@ -23,7 +23,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
-	//App->loader->Import("BakerHouse.fbx");
+	App->loader->Import("BakerHouse.fbx");
 
 
 	return true;

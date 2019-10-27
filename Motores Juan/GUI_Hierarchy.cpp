@@ -46,19 +46,33 @@ void GUI_Hierarchy::Draw(bool* open)
 				}
 			}
 		}
-
 		ImGui::Separator();
 		static int slices = 30; static int stacks = 30;
 
 		if (ImGui::CollapsingHeader("Create Primitives"))
 		{
+			ImGui::Text("Size:");
+			static int X = 100, Y = 100;
+			ImGui::DragIntRange2(" ", &X, &Y, .25f, 0, 1000, "X: %.1i ", "Y: %.1i ");
+
+			ImGui::Text("Position:");
+			static float posx = 0.0f , posy = 0.0f , posz = 0.0f;
+			ImGui::DragFloat("X##foo1", &posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("Y##foo1", &posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+			ImGui::DragFloat("Z##foo1", &posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
+
+			
+			ImGui::Separator();
+
 			par_shapes_mesh* cube = par_shapes_create_cube();
 			if (ImGui::Button("Create Cube"))
 				App->modscene->CreatePrimitives(cube, "Cube");
-			par_shapes_free_mesh(cube);
+
+			par_shapes_translate(cube, posx, posy, posz);
+
 
 			if (ImGui::Button("Create Plane"))
-				App->modscene->CreatePrimitives(par_shapes_create_plane(50, 50), "Plane");
+				App->modscene->CreatePrimitives(par_shapes_create_plane(X, Y), "Plane");
 
 			if (ImGui::Button("Create Sphere"))
 				App->modscene->CreatePrimitives(par_shapes_create_parametric_sphere(50, 50), "Sphere");
@@ -66,20 +80,6 @@ void GUI_Hierarchy::Draw(bool* open)
 			if (ImGui::Button("Create Cone"))
 				App->modscene->CreatePrimitives(par_shapes_create_cone(50, 50), "Cone");
 		}
-		/*if (ImGui::CollapsingHeader("Old Primitives Code"))
-		{
-			if (ImGui::Button("Plane")) { createPlane = true; ++numberPrimitives; prim_name = "Plane"; }
-			ImGui::SameLine(); if (ImGui::Button("Delete")) { createPlane = false; }
-			ImGui::Text("Size:");
-			static float X = 2.0f, Y = 2.0f, posx[1] = { 0.0f }, posy[1] = { 0.0f }, posz[1] = { 0.0f }; 
-			ImGui::DragFloatRange2(" ", &X, &Y, .25f, 0.0f, 1000.0f, "X: %.1f ", "Y: %.1f ");
-			ImGui::Text("Position:");
-			ImGui::DragFloat("X##foo2", posx, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Y##foo2", posy, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-			ImGui::DragFloat("Z##foo2", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
-
-			if (createPlane) { App->modscene->ArrayPlane(X, Y, posx[1], posy[1], posz[1]); }
-		}*/
 	}
 	ImGui::End();
 }
