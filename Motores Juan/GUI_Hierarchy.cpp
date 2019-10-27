@@ -7,7 +7,6 @@
 #include "ModuleRenderer3D.h"
 
 #include "GameObject.h"
-
 #include "ImGui/imgui_internal.h"
 
 #include <iostream>
@@ -34,25 +33,16 @@ void GUI_Hierarchy::Draw(bool* open)
 					if (selectedGO != nullptr)
 					{
 						selectedGO->selected = false;
-
-						for (int i = 0; i < selectedGO->children.size(); ++i)
-						{
-							selectedGO->children[i]->selected = false;
-						}
+						for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = false; }
 					}
-
 					selectedGO = (*item);
-
 					selectedGO->selected = true;
-					
-					for (int i = 0; i < selectedGO->children.size(); ++i)
-					{
-						selectedGO->children[i]->selected = true;
-					}
+					for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = true; }
 				}
-
 			}
 		}
+
+		ImGui::Separator();
 		
 		if (ImGui::CollapsingHeader("Create Cube"))
 		{
@@ -70,6 +60,8 @@ void GUI_Hierarchy::Draw(bool* open)
 			ImGui::DragFloat("Z##foo1", posz, .025f, -1000.0f, 1000.0f, "%.2f", 1.25f);
 
 			if (createCube) { App->modscene->ArrayCube(X[1], Y[1], Z[1], posx[1], posy[1], posz[1]); }
+
+
 		}
 		if (ImGui::CollapsingHeader("Create Sphere"))
 		{
