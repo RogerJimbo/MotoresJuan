@@ -3,8 +3,13 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 
+#include "GameObject.h"
 #include "Component.h"
 #include "ComponentMesh.h"
+#include "ComponentMaterial.h"
+
+#define PAR_SHAPES_IMPLEMENTATION
+#include "ParShapes/par_shapes.h"
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -169,8 +174,14 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 	glEnd();
 }
 
+void CreatePrimitives(par_shapes_mesh_s* data, char* type)
+{
+	GameObject* gameobject = App->modscene->root->AddChildren(type);
+	ComponentMesh* primitive = (ComponentMesh*)gameobject->AddComponent(MESH);
+	ComponentMaterial* material = (ComponentMaterial*)gameobject->AddComponent(MATERIAL);
+
+	
+}
+
 bool ModuleScene::CleanUp() { return true; }
 void ModuleScene::Save_Config(JSON_Object& config) const { }
-
-
-

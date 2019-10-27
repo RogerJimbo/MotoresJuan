@@ -56,7 +56,8 @@ update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
 bool ModuleLoader::Import(const string& pFile)
 {
-	const aiScene* scene = aiImportFile(pFile.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	string file_path = pFile;
+	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -81,12 +82,7 @@ bool ModuleLoader::Import(const string& pFile)
 				{
 					new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
 					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
-				}
-
-				if(pFile == "BakerHouse.fbx") new_mesh->texture = Texturing("Baker_house.png");
-				if (pFile == "Sword.fbx") new_mesh->texture = Texturing("Sword.png");
-				if (pFile == "House.fbx") new_mesh->texture = Texturing("House.jpg");
-				
+				}	
 			}
 
 			if (mesh->HasFaces())
@@ -99,15 +95,27 @@ bool ModuleLoader::Import(const string& pFile)
 					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
 				}
 
-			
-				aiString path;
-				string currentpath = path.C_Str();
-				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-					
-				material->Get(AI_MATKEY_NAME, path);
-				material->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &path, NULL, NULL, NULL, NULL, NULL);
-			
-	
+				aiString material_path;
+				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];			
+				material->GetTexture(aiTextureType_DIFFUSE, 0, &material_path);
+				string material_name = material_path.C_Str();
+
+				for (int i = file_path.size() - 1; i >= 0; i--)
+				{
+					if (file_path[i] == '/' || file_path[i] == '\\') break;
+					else file_path.pop_back();	
+				}
+
+				file_path += material_name;
+				new_mesh->texture = Texturing(file_path.c_str());
+
+				if (new_mesh->texture == 0) 
+				{
+					file_path = "Assets/Textures/" + material_name;
+					new_mesh->texture = Texturing(file_path.c_str());
+					LOG("%s", file_path);
+				}
+
 				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
@@ -119,7 +127,7 @@ bool ModuleLoader::Import(const string& pFile)
 			}
 		}
 	}
-	else { LOG("Error loading scene %s", pFile); }
+	else { LOG("Error loading scene %s", file_path); }
 
 	aiReleaseImport(scene);
 

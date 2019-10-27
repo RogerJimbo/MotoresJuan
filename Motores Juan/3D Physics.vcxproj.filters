@@ -55,6 +55,9 @@
     <Filter Include="Sources\GameObject\Components">
       <UniqueIdentifier>{5ce67b4b-1677-4181-8d03-fee0ccea0cd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ParShapes">
+      <UniqueIdentifier>{9d23c3ae-2e0c-48a3-a8a6-756d792761d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -485,6 +488,9 @@
     </ClInclude>
     <ClInclude Include="ComponentTransform.h">
       <Filter>Sources\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ParShapes\par_shapes.h">
+      <Filter>Sources\Tools\ParShapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
