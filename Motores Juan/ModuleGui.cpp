@@ -6,6 +6,7 @@
 
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/MathGeoLib.h"
+#include "Glew/include/glew.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -231,7 +232,10 @@ void ModuleGui::CreateHardwareWindow(bool* open)
 		SDL_bool SDL_HasSSE42();	 if (SDL_HasSSE42) { SSE42 = "SSE42"; }
 
 		ImGui::Text("Caps: %s, %s, %s, %s, %s, %s, %s, %s", RDTSC, MMX, AVX, SSE, SSE2, SSE3, SSE41, SSE42);
-		IDirect3DDevice9* glGetString();	//GPU
+
+		ImGui::Separator();
+		ImGui::Text("GPU Vendor: "); ImGui::SameLine(); ImGui::Text((char*)glGetString(GL_VENDOR));
+		ImGui::Text("GPU Model: "); ImGui::SameLine(); ImGui::Text((char*)glGetString(GL_RENDERER));
 
 		if (ImGui::Button("Close")) { ImGui::CloseCurrentPopup(); hardware_open = false; }
 
