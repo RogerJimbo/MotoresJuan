@@ -76,7 +76,10 @@ bool ModuleLoader::Import(const string& pFile)
 					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
 				}
 
-				new_mesh->texture = Texturing("Baker_house.png");
+				if(pFile == "BakerHouse.fbx") new_mesh->texture = Texturing("Baker_house.png");
+				if (pFile == "Sword.fbx") new_mesh->texture = Texturing("Sword.png");
+				if (pFile == "House.fbx") new_mesh->texture = Texturing("House.jpg");
+				
 			}
 
 			if (mesh->HasFaces())
@@ -89,6 +92,15 @@ bool ModuleLoader::Import(const string& pFile)
 					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
 				}
 
+			
+				aiString path;
+				string currentpath = path.C_Str();
+				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+					
+				material->Get(AI_MATKEY_NAME, path);
+				material->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &path, NULL, NULL, NULL, NULL, NULL);
+			
+	
 				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));

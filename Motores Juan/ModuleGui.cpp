@@ -60,7 +60,7 @@ update_status ModuleGui::PreUpdate(float dt)
 update_status ModuleGui::Update(float dt)
 {
 	Docking();
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	//Engine Windows
 	if (scene_open)				App->scene->Draw(&scene_open);
@@ -83,7 +83,8 @@ update_status ModuleGui::Update(float dt)
 			{
 				if(ImGui::MenuItem("Warrior.fbx")) App->loader->Import("warrior.fbx");  
 				if (ImGui::MenuItem("BakerHouse.fbx")) App->loader->Import("BakerHouse.fbx");
-				if (ImGui::MenuItem("Cop.fbx")) App->loader->Import("Cop.fbx");	
+				if (ImGui::MenuItem("House.fbx")) App->loader->Import("House.fbx");	
+				if (ImGui::MenuItem("Sword.fbx")) App->loader->Import("Sword.fbx"); 
 				ImGui::EndMenu();
 			}
 			if (ImGui::MenuItem("Save Config", false, true)) { App->Save_Config(); }		//Save data JSON
