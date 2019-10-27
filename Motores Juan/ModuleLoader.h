@@ -26,4 +26,7 @@ public:
 	uint Texturing(const char* file_name);
 
 	string module_name;
+	string path;
+
+	vec2 TextureSize;
 };

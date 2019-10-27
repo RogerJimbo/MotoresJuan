@@ -57,6 +57,7 @@ update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 bool ModuleLoader::Import(const string& pFile)
 {
 	string file_path = pFile;
+	path = pFile.c_str();
 	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	const aiNode* node = scene->mRootNode;
 
@@ -171,6 +172,8 @@ uint ModuleLoader::Texturing(const char* file_name)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 		glBindTexture(GL_TEXTURE_2D, 0);
 		LOG("Texture loaded succesfuly!")
+
+		TextureSize = { (float)texture_width, (float)texture_height };
 	}
 	else 	while (error = ilGetError()) { LOG("Error %d: %s", error, iluErrorString(error)); }
 
