@@ -31,10 +31,10 @@
 typedef unsigned int uint;
 using namespace Assimp;
 
-ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, start_enabled) 
-{ 
+ModuleLoader::ModuleLoader(Application* app, bool start_enabled) : Module(app, start_enabled)
+{
 	module_name = "Loader";
-	struct aiLogStream stream;	
+	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
@@ -58,16 +58,24 @@ bool ModuleLoader::Import(const string& pFile)
 {
 	string file_path = pFile;
 	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiNode* node = scene->mRootNode;
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		GameObject* GO = new GameObject();
+		GO->name = node->mName.C_Str();
 		App->modscene->root->children.push_back(GO);
+		App->modscene->gameobjects.push_back(GO);
 
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
-			ComponentMesh* new_mesh = (ComponentMesh*)GO->AddComponent(MESH);
+
+			GameObject* newGO = new GameObject();
+			newGO->name = mesh->mName.C_Str();
+			GO->children.push_back(newGO);
+
+			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
 
 			new_mesh->num_vertices = mesh->mNumVertices;
 			new_mesh->vertices = new float[new_mesh->num_vertices * 3];
@@ -82,7 +90,7 @@ bool ModuleLoader::Import(const string& pFile)
 				{
 					new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
 					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
-				}	
+				}
 			}
 
 			if (mesh->HasFaces())
@@ -96,20 +104,20 @@ bool ModuleLoader::Import(const string& pFile)
 				}
 
 				aiString material_path;
-				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];			
+				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 				material->GetTexture(aiTextureType_DIFFUSE, 0, &material_path);
 				string material_name = material_path.C_Str();
 
 				for (int i = file_path.size() - 1; i >= 0; i--)
 				{
 					if (file_path[i] == '/' || file_path[i] == '\\') break;
-					else file_path.pop_back();	
+					else file_path.pop_back();
 				}
 
 				file_path += material_name;
 				new_mesh->texture = Texturing(file_path.c_str());
 
-				if (new_mesh->texture == 0) 
+				if (new_mesh->texture == 0)
 				{
 					file_path = "Assets/Textures/" + material_name;
 					new_mesh->texture = Texturing(file_path.c_str());
@@ -121,9 +129,8 @@ bool ModuleLoader::Import(const string& pFile)
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
 				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
 				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-				
-				
-				App->modscene->gameobjects.push_back(GO);
+
+				App->modscene->gameobjects.push_back(newGO);
 			}
 		}
 	}
@@ -131,7 +138,7 @@ bool ModuleLoader::Import(const string& pFile)
 
 	aiReleaseImport(scene);
 
-	return true;	
+	return true;
 }
 
 uint ModuleLoader::Texturing(const char* file_name)
@@ -141,8 +148,8 @@ uint ModuleLoader::Texturing(const char* file_name)
 	ILenum error;
 	ILinfo ImageInfo;
 
-	ilGenImages(1, &imageID); 		
-	ilBindImage(imageID); 			
+	ilGenImages(1, &imageID);
+	ilBindImage(imageID);
 
 	if (ilLoadImage(file_name))
 	{
@@ -171,8 +178,8 @@ uint ModuleLoader::Texturing(const char* file_name)
 	return textureID;
 }
 
-bool ModuleLoader::CleanUp() 
+bool ModuleLoader::CleanUp()
 {
-	aiDetachAllLogStreams();	 
-	return true; 
+	aiDetachAllLogStreams();
+	return true;
 }

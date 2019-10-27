@@ -35,9 +35,12 @@ public:
 	string name;
 
 	GameObject* parent;
+	
 
 	list<Component*> components;
 	vector<GameObject*> children;
+
+	bool selected = false;
 };
 
 #endif 

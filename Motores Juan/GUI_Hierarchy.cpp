@@ -6,6 +6,8 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
+#include "GameObject.h"
+
 #include "ImGui/imgui_internal.h"
 
 #include <iostream>
@@ -22,6 +24,35 @@ void GUI_Hierarchy::Draw(bool* open)
 {
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{	
+		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
+		{
+			ImGui::Text((*item)->name.c_str());
+			if (ImGui::IsItemClicked(0))
+			{
+				if (selectedGO != (*item))
+				{
+					if (selectedGO != nullptr)
+					{
+						selectedGO->selected = false;
+
+						for (int i = 0; i < selectedGO->children.size(); ++i)
+						{
+							selectedGO->children[i]->selected = false;
+						}
+					}
+
+					selectedGO = (*item);
+
+					selectedGO->selected = true;
+					
+					for (int i = 0; i < selectedGO->children.size(); ++i)
+					{
+						selectedGO->children[i]->selected = true;
+					}
+				}
+
+			}
+		}
 		
 		if (ImGui::CollapsingHeader("Create Cube"))
 		{
