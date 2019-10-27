@@ -15,10 +15,13 @@ void GUI_Inspector::Draw(bool* open)
 	{
 		static bool foo = false;
 		static bool transform = true;
+		const char* name = "";
 
-		static char bufpass[64] = "Game Object Name";
-		ImGui::Checkbox("Active", &foo); ImGui::SameLine();
-		ImGui::InputText(" ", bufpass, 64, ImGuiInputTextFlags_CharsNoBlank);
+		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
+			if ((*item)->selected) { name = (*item)->name.c_str(); } 
+		
+		ImGui::Text(name);  
+		ImGui::Checkbox("Active", &foo); 
 
 		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
 		{
@@ -36,11 +39,7 @@ void GUI_Inspector::Draw(bool* open)
 					ImGui::DragInt3("Scale", vecscale, 0.25f, 1.0f, 1000.0f);
 
 					ImGuiIO& io = ImGui::GetIO();
-
 					io.WantCaptureKeyboard;
-
-					//ImGui::ShowStyleEditor();
-
 				}
 
 				if ((ImGui::CollapsingHeader("Mesh")))

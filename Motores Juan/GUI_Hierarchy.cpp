@@ -26,6 +26,7 @@ void GUI_Hierarchy::Draw(bool* open)
 		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
 		{
 			ImGui::Text((*item)->name.c_str());
+
 			if (ImGui::IsItemClicked(0))
 			{
 				if (selectedGO != (*item))

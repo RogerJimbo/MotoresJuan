@@ -17,9 +17,10 @@ public:
 	bool createSphere = false;
 	bool createPlane = false;
 
+	GameObject* selectedGO = nullptr;
+
 private:
 	int numberPrimitives = 0;
 	const char* prim_name;
-	GameObject * selectedGO = nullptr;
 };
 

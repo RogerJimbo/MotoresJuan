@@ -82,7 +82,6 @@ update_status ModuleGui::Update(float dt)
 
 			if (ImGui::BeginMenu("Load Model")) 
 			{
-				if(ImGui::MenuItem("Warrior.fbx")) App->loader->Import("warrior.fbx");  
 				if (ImGui::MenuItem("BakerHouse.fbx")) App->loader->Import("BakerHouse.fbx");
 				if (ImGui::MenuItem("House.fbx")) App->loader->Import("House.fbx");	
 				if (ImGui::MenuItem("Medieval House.fbx")) App->loader->Import("medieval_house.fbx"); 

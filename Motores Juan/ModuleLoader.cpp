@@ -63,7 +63,7 @@ bool ModuleLoader::Import(const string& pFile)
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		GameObject* GO = new GameObject();
-		GO->name = node->mName.C_Str();
+		GO->name = pFile.c_str();
 		App->modscene->root->children.push_back(GO);
 		App->modscene->gameobjects.push_back(GO);
 
