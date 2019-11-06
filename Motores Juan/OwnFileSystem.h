@@ -14,6 +14,7 @@ public:
 
 
 	void CreateMyDirectory(const char* path);
+	void CopyContent(const char* source_file, const char* destination_file);
 
 
 };

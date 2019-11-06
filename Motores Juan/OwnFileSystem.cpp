@@ -15,7 +15,9 @@ OwnFileSystem::OwnFileSystem()
 }
 
 OwnFileSystem::~OwnFileSystem() 
-{}
+{
+	PHYSFS_deinit();
+}
 
 void OwnFileSystem::CreateMyDirectory(const char* path)
 {
@@ -41,4 +43,31 @@ void OwnFileSystem::CreateMyDirectory(const char* path)
 
 
 	//ERROR_ALREADY_EXISTS == GetLastError()
+}
+
+void OwnFileSystem::CopyContent(const char* source_file, const char* destination_file)
+{
+	PHYSFS_File* source = PHYSFS_openRead(source_file);
+	PHYSFS_File* destination = PHYSFS_openWrite(destination_file);
+
+	char* buffer = new char[PHYSFS_fileLength(source)];
+
+	int read_lenght = PHYSFS_read(source, buffer, 1, PHYSFS_fileLength(source));
+
+	if (PHYSFS_exists(source_file) && PHYSFS_exists(destination_file))
+	{
+		PHYSFS_read(source, buffer, 1, PHYSFS_fileLength(source));
+
+		for (int i = 0; i < read_lenght; ++i)
+		{
+			PHYSFS_write(destination, buffer, 1, PHYSFS_fileLength(destination));
+		}
+	}
+
+	LOG("Copied content from %s to %s", source, destination);
+	   
+	PHYSFS_close(source);
+	PHYSFS_close(destination);
+
+
 }

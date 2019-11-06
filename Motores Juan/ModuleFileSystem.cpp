@@ -158,7 +158,7 @@ bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * de
 
 bool ModuleFileSystem::Copy(const char * source, const char * destination)
 {
-	bool ret = false;
+	bool ret = false;	
 
 	char buf[8192];
 
