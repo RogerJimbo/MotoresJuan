@@ -54,7 +54,7 @@ update_status ModuleLoader::PreUpdate(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::Update(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
 
-bool ModuleLoader::Import(const string& pFile)
+bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 {
 	string file_path = pFile;
 	path = pFile.c_str();
@@ -65,8 +65,14 @@ bool ModuleLoader::Import(const string& pFile)
 	{
 		GameObject* GO = new GameObject();
 		GO->name = pFile.c_str();
-		App->modscene->root->children.push_back(GO);
+		GO->parent = parent;
+		//App->modscene->root->children.push_back(GO);
 		App->modscene->gameobjects.push_back(GO);
+
+		if (parent != nullptr)
+		{
+			parent->children.push_back(GO);
+		}
 
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
@@ -130,6 +136,11 @@ bool ModuleLoader::Import(const string& pFile)
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
 				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
 				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+
+				if (scene->mNumMeshes > 1)
+				{
+					newGO->parent = GO;
+				}
 
 				App->modscene->gameobjects.push_back(newGO);
 			}

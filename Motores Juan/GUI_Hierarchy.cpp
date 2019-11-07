@@ -47,8 +47,18 @@ void GUI_Hierarchy::Draw(bool* open)
 	{	
 		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
 		{
-			ImGui::Text((*item)->name.c_str());
+			//ImGui::Text((*item)->name.c_str());
 
+			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+			
+			bool opened = ImGui::TreeNodeEx((*item)->name.c_str(), node_flags);
+			
+			if(opened)
+			{	
+				ImGui::TreePop();
+			}
+			
+			
 			if (ImGui::IsItemClicked(0))
 			{
 				if (selectedGO != (*item))

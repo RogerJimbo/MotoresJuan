@@ -136,7 +136,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			string dropped_file = event.drop.file;
 			size_t i = dropped_file.rfind('.', dropped_file.length());
 			if (i != string::npos) { dropped_file = dropped_file.substr(i + 1, dropped_file.length() - i); }
-			if (dropped_file == "fbx" || dropped_file == "FBX") {App->loader->Import(event.drop.file); }
+			if (dropped_file == "fbx" || dropped_file == "FBX") {App->loader->Import(event.drop.file, nullptr); }
 			else if (dropped_file == "png" || dropped_file == "dds") {App->loader->Texturing(event.drop.file); }
 			else { LOG("Unsupported file format"); }
 

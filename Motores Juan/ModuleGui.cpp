@@ -84,9 +84,9 @@ update_status ModuleGui::Update(float dt)
 
 			if (ImGui::BeginMenu("Load Model")) 
 			{
-				if (ImGui::MenuItem("BakerHouse.fbx")) App->loader->Import("BakerHouse.fbx");
-				if (ImGui::MenuItem("House.fbx")) App->loader->Import("House.fbx");	
-				if (ImGui::MenuItem("Medieval House.fbx")) App->loader->Import("medieval_house.fbx"); 
+				if (ImGui::MenuItem("BakerHouse.fbx")) App->loader->Import("BakerHouse.fbx", nullptr);
+				if (ImGui::MenuItem("House.fbx")) App->loader->Import("House.fbx", nullptr);
+				if (ImGui::MenuItem("Medieval House.fbx")) App->loader->Import("medieval_house.fbx", nullptr);
 				ImGui::EndMenu();
 			}
 			if (ImGui::MenuItem("Save Config", false, true)) { App->Save_Config(); }		//Save data JSON

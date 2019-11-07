@@ -5,6 +5,7 @@
 #include <list>
 
 class Application;
+class GameObject;
 using namespace std;
 
 class ModuleLoader : public Module
@@ -21,7 +22,7 @@ public:
 	update_status PostUpdate(float dt);
 
 	bool CleanUp();
-	bool Import(const string& pFile);
+	bool Import(const string& pFile, GameObject* parent);
 
 	uint Texturing(const char* file_name);
 
