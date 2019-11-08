@@ -14,8 +14,8 @@ public:
 
 	bool Start();
 
-	void CreateMyDirectory(string path);
-	void CreateEmptyFile(const char* path);
+	static void CreateMyDirectory(string path);
+	void CreateEmptyFile(string path);
 	void DestroyFile(const char* name);
 	void CopyContent(const char* source_file, const char* destination_file);
 
@@ -25,4 +25,3 @@ public:
 
 
 };
-

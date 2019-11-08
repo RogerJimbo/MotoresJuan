@@ -27,9 +27,6 @@ bool ModuleScene::Start()
 	root = new GameObject(nullptr, "Root");
 	App->loader->Import("BakerHouse.fbx", nullptr);
 
-	
-	App->filesystem->CreateMyDirectory("Library");
-
 	return true;
 }
 

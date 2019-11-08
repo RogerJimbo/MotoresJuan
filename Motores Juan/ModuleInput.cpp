@@ -27,9 +27,6 @@ bool ModuleInput::Init(const JSON_Object& config)
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0) { LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError()); ret = false; }
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) { fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError()); 	exit(1); }
 
-	if (SDL_NumJoysticks() < 1) { LOG("Warning: No joysticks connected!\n"); }
-	else { controller = SDL_GameControllerOpen(0); }
-
 	return ret;
 }
 
