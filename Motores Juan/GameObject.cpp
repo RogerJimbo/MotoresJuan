@@ -4,6 +4,13 @@
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
 
+#include "Globals.h"
+#include "Application.h"
+
+#include "ModuleGui.h"
+#include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
+
 GameObject::GameObject() {}
 
 GameObject::GameObject(GameObject* parent, string name)
@@ -63,5 +70,41 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 {
 	for (auto item = components.begin(); item != components.end(); item++)
 		if ((*item)->GetCompType() == comp_type) return (*item);	
+}
+
+void GameObject::RecursiveHierarchy()
+{
+	for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
+	{
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+
+		if (selectedGO == (*item))
+		{
+			node_flags |= ImGuiTreeNodeFlags_Selected;
+		}
+
+		bool opened = ImGui::TreeNodeEx((*item)->name.c_str(), node_flags);
+
+		if (ImGui::IsItemClicked(0))
+		{
+			if (selectedGO != (*item))
+			{
+				if (selectedGO != nullptr)
+				{
+					selectedGO->selected = false;
+					for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = false; }
+				}
+				selectedGO = (*item);
+				selectedGO->selected = true;
+				for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = true; }
+			}
+		}
+
+		if (opened)
+		{
+			(*item)->RecursiveHierarchy();
+			ImGui::TreePop();
+		}
+	}
 }
 

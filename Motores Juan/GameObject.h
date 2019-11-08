@@ -31,11 +31,13 @@ public:
 
 	Component* GetComponent(Component_Type comp_type);
 
+	void RecursiveHierarchy();
+
 public:
 	string name;
 
 	GameObject* parent;
-	
+	GameObject* selectedGO = nullptr;
 
 	list<Component*> components;
 	vector<GameObject*> children;

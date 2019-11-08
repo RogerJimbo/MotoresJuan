@@ -45,35 +45,8 @@ void GUI_Hierarchy::Draw(bool* open)
 {
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{	
-		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
-		{
-			//ImGui::Text((*item)->name.c_str());
+		App->modscene->root->RecursiveHierarchy();
 
-			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-			
-			bool opened = ImGui::TreeNodeEx((*item)->name.c_str(), node_flags);
-			
-			if(opened)
-			{	
-				ImGui::TreePop();
-			}
-			
-			
-			if (ImGui::IsItemClicked(0))
-			{
-				if (selectedGO != (*item))
-				{
-					if (selectedGO != nullptr)
-					{
-						selectedGO->selected = false;
-						for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = false; }
-					}
-					selectedGO = (*item);
-					selectedGO->selected = true;
-					for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = true; }
-				}
-			}
-		}
 		ImGui::Separator();
 		static int slices = 30; static int stacks = 30;
 

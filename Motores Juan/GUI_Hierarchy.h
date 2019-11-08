@@ -19,8 +19,6 @@ public:
 	bool createSphere = false;
 	bool createPlane = false;
 
-	GameObject* selectedGO = nullptr;
-
 private:
 
 	int numberPrimitives = 0;
