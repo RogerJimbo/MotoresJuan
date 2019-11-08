@@ -25,7 +25,9 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
-	App->loader->Import("BakerHouse.fbx", nullptr);
+	//App->loader->Import("BakerHouse.fbx", nullptr);
+
+
 
 	return true;
 }
@@ -34,7 +36,6 @@ void ModuleScene::Draw()
 {
 	for (auto item = gameobjects.begin(); item != gameobjects.end(); item++)
 	{
-		
 			for (auto iter = (*item)->components.begin(); iter != (*item)->components.end(); ++iter)
 			{
 				if ((*iter)->c_type == MESH)
@@ -197,6 +198,20 @@ void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float pos
 	glEnd();
 }
 
+void ModuleScene::CreateCamera()
+{
+	GameObject* gameobject = App->modscene->root->AddChildren("Camera");
+	App->modscene->gameobjects.push_back(gameobject);
+	gameobject->name = "Camera";
+
+	ComponentCamera* camera = (ComponentCamera*)gameobject->AddComponent(CAMERA);
+	LOG("Game Object Camera Created.")
+
+	
+
+
+}
+
 void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 {
 	GameObject* gameobject = App->modscene->root->AddChildren(type);
@@ -229,6 +244,8 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 
 	//App->modscene->gameobjects.push_back(newGO);
 }
+
+
 
 bool ModuleScene::CleanUp() { return true; }
 void ModuleScene::Save_Config(JSON_Object& config) const { }

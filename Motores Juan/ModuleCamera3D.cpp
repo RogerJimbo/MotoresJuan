@@ -144,11 +144,17 @@ void ModuleCamera3D::CalculateViewMatrix()
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
 
-
 void ModuleCamera3D::CameraGuizmos()
 {
 
-	
+}
 
+void ModuleCamera3D::FieldOfView(float angle, float aspectRatio, float near_plane, float far_plane, float* camera)
+{
+	//Use this to handle FOV
+	//angle has to be GUI_Condig->FOV
+
+	
+	
 
 }

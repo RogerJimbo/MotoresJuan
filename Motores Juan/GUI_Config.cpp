@@ -74,9 +74,34 @@ void GUI_Config::Draw(bool* open)
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
 			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);
 			ImGui::Checkbox("Textured", &App->renderer3D->textured);
-
 			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) { App->renderer3D->ActivateWireframe(); }
+
+			ImGui::Separator();
 			ImGui::SliderInt("Grid Size", &App->scene->grid_size, 0, 100);
+		}
+
+		if (ImGui::CollapsingHeader("Global Camera"))
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			float aspect_ratio = io.DisplaySize.x / io.DisplaySize.y;
+
+			static int fov_slider = 0;
+			static int near_plane = 0.1f;
+			static int far_plane = 1000.0f;
+
+			if (ImGui::SliderInt("FOV", &fov_slider, 1, 100)) { /* Insert function to handle FOV*/ }
+			ImGui::SliderInt("Near Plane", &near_plane, 1, 100);
+			ImGui::SliderInt("Far Plane", &far_plane, 1, 1000);
+
+			ImGui::Text("Camera Position:");
+			ImGui::Text("X: "); ImGui::SameLine();
+			ImGui::Text(to_string(App->camera->cameraPos.x).c_str());
+			ImGui::Text("Y: "); ImGui::SameLine();
+			ImGui::Text(to_string(App->camera->cameraPos.y).c_str());
+			ImGui::Text("Z: "); ImGui::SameLine();
+			ImGui::Text(to_string(App->camera->cameraPos.z).c_str());
+
+			//App->camera->FieldOfView(fov_slider, aspect_ratio, 0.0f, 100.0f, );
 		}
 
 		if (ImGui::CollapsingHeader("Input Info")) { ImGui::Text("Mouse Position: X:%d , Y:%d ", App->input->GetMouseX(), App->input->GetMouseY()); }

@@ -29,6 +29,7 @@ public:
 	void IndexSphere();
 
 	void CreatePrimitives(par_shapes_mesh_s* data, char* type);
+	void CreateCamera();
 
 	void ArraySphere();
 	void ArrayCube(float x, float y, float z, float posx, float posy, float posz);

@@ -66,6 +66,12 @@ void GUI_Hierarchy::Draw(bool* open)
 			if (ImGui::Button("Create Cone"))
 				App->modscene->CreatePrimitives(par_shapes_create_cone(prim_sizeX, prim_sizeY), "Cone");
 		}
+
+		if (ImGui::CollapsingHeader("Create"))
+		{
+			if (ImGui::Button("Create Camera"))
+				App->modscene->CreateCamera();
+		}
 	}
 	ImGui::End();
 }

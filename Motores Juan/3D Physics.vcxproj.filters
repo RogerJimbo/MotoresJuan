@@ -507,6 +507,9 @@
     <ClInclude Include="ImGuizmos\ImSequencer.h">
       <Filter>Sources\Tools\ImGuizmos</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\GameObject\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -712,6 +715,9 @@
     </ClCompile>
     <ClCompile Include="ImGuizmos\ImSequencer.cpp">
       <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>Sources\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

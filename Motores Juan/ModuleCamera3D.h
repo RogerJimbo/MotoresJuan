@@ -11,7 +11,6 @@ public:
 	ModuleCamera3D(Application* app, bool start_enabled = true);
 	~ModuleCamera3D();
 
-	bool Init(JSON_Object* config);
 	update_status Update(float dt);
 	bool CleanUp();
 
@@ -24,6 +23,7 @@ public:
 	float* GetViewMatrix();
 
 	void CameraGuizmos();
+	void FieldOfView(float angle, float aspectRatio, float min, float max, float* camera);
 
 private:
 	void CalculateViewMatrix();

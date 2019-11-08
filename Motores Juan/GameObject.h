@@ -13,6 +13,7 @@ class Component;
 class ComponentTransform;
 class ComponentMesh;
 class ComponentMaterial;
+class ComponentCamera;
 
 using namespace std;
 

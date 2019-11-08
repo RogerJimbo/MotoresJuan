@@ -17,4 +17,3 @@ public:
 
 	int grid_size = 20;
 };
-

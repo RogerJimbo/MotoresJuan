@@ -42,7 +42,6 @@ bool ModuleGui::Init(const JSON_Object& config)
 
 	//ImGuizmo::BeginFrame();
 
-
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 
 	return true;
@@ -50,7 +49,6 @@ bool ModuleGui::Init(const JSON_Object& config)
 
 bool ModuleGui::Start()
 {
-
 	return true;
 }
 
@@ -316,5 +314,4 @@ void ModuleGui::Load_Config(JSON_Object& config)
 	active_engine_windows[CONSOLE] = json_object_get_boolean(&config, "console");
 	active_engine_windows[INSPECTOR] = json_object_get_boolean(&config, "inspector");	
 }
-
 

@@ -37,7 +37,6 @@ public:
 	void CreateAboutWindow(bool* open);
 	void CreateHardwareWindow(bool* open);
 	void CreateControlsWindow(bool* open);
-
 	void Docking();
 
 	float horizontalFactor = (float)SCREEN_WIDTH * SCREEN_SIZE / SCREEN_WIDTH;
