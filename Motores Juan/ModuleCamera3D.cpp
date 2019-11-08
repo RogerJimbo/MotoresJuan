@@ -3,6 +3,8 @@
 #include "ModuleCamera3D.h"
 #include <math.h>
 
+#include "ImGuizmos/ImGuizmo.h"
+
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	CalculateViewMatrix();
@@ -140,4 +142,13 @@ void ModuleCamera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, cameraPos), -dot(Y, cameraPos), -dot(Z, cameraPos), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
+}
+
+
+void ModuleCamera3D::CameraGuizmos()
+{
+
+	
+
+
 }

@@ -58,6 +58,9 @@
     <Filter Include="Sources\Tools\ParShapes">
       <UniqueIdentifier>{9d23c3ae-2e0c-48a3-a8a6-756d792761d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ImGuizmos">
+      <UniqueIdentifier>{2eca408a-c035-4fa7-abf3-ad186395b26e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -492,6 +495,18 @@
     <ClInclude Include="ModuleOwnFileSystem.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuizmos\ImCurveEdit.h">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmos\ImGradient.h">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmos\ImGuizmo.h">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmos\ImSequencer.h">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -685,6 +700,18 @@
     </ClCompile>
     <ClCompile Include="ModuleOwnFileSystem.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmos\ImCurveEdit.cpp">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmos\ImGradient.cpp">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmos\ImGuizmo.cpp">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmos\ImSequencer.cpp">
+      <Filter>Sources\Tools\ImGuizmos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

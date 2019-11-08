@@ -134,6 +134,10 @@
     <ClInclude Include="GUI_Hierarchy.h" />
     <ClInclude Include="GUI_Inspector.h" />
     <ClInclude Include="GUI_Scene.h" />
+    <ClInclude Include="ImGuizmos\ImCurveEdit.h" />
+    <ClInclude Include="ImGuizmos\ImGradient.h" />
+    <ClInclude Include="ImGuizmos\ImGuizmo.h" />
+    <ClInclude Include="ImGuizmos\ImSequencer.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
     <ClInclude Include="ImGui\imgui_impl_opengl2.h" />
@@ -234,6 +238,10 @@
     <ClCompile Include="GUI_Hierarchy.cpp" />
     <ClCompile Include="GUI_Inspector.cpp" />
     <ClCompile Include="GUI_Scene.cpp" />
+    <ClCompile Include="ImGuizmos\ImCurveEdit.cpp" />
+    <ClCompile Include="ImGuizmos\ImGradient.cpp" />
+    <ClCompile Include="ImGuizmos\ImGuizmo.cpp" />
+    <ClCompile Include="ImGuizmos\ImSequencer.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
     <ClCompile Include="ImGui\imgui_draw.cpp" />
