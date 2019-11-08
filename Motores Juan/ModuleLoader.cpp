@@ -66,7 +66,7 @@ bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 		GameObject* GO = new GameObject();
 		GO->name = pFile.c_str();
 		GO->parent = parent;
-		//App->modscene->root->children.push_back(GO);
+		App->modscene->root->children.push_back(GO);
 		App->modscene->gameobjects.push_back(GO);
 
 		if (parent != nullptr)

@@ -74,7 +74,7 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 
 void GameObject::RecursiveHierarchy()
 {
-	for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
+	for (auto item = children.begin(); item != children.end(); ++item)
 	{
 		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
