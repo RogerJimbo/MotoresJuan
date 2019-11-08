@@ -39,8 +39,14 @@ enum Component_Type{ NO_TYPE, MESH, MATERIAL, TRANSFORM };
 #define VSYNC true
 #define TITLE "Motores Juan"
 
-//FILE
+//Files
 #define SETTINGS_FOLDER "/Settings/"
+
 #define ASSETS_FOLDER "/Assets/"
 #define MODELS_FOLDER "/Assets/Models/"
-#define TEXTURES_FOLDER "/Assets/Textures/"
+
+#define LIBRARY_FOLDER "/Library/"
+#define MESHES_FOLDER "/Library/Meshes"
+#define TEXTURES_FOLDER "/Library/Textures"
+#define SCENES_FOLDER "/Library/Scenes"
+

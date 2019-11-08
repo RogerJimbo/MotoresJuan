@@ -15,7 +15,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-#include "OwnFileSystem.h"
+#include "ModuleOwnFileSystem.h"
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Scene"; }
 ModuleScene::~ModuleScene() {}
@@ -28,11 +28,7 @@ bool ModuleScene::Start()
 	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	
-	//Creates directory called Library
-	OwnFileSystem filesystem;
-	filesystem.CreateMyDirectory("Library");
-
-	
+	App->filesystem->CreateMyDirectory("Library");
 
 	return true;
 }

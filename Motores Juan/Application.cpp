@@ -10,7 +10,7 @@ Application::Application()
 	AddModule(modulegui = new ModuleGui(this));
 	AddModule(modscene = new ModuleScene(this));
 	AddModule(loader = new ModuleLoader(this));
-	AddModule(filesystem = new ModuleFileSystem(this));
+	AddModule(filesystem = new ModuleOwnFileSystem(this));
 	AddModule(renderer3D = new ModuleRenderer3D(this)); // Renderer last!
 
 	//Main Gui Elements

@@ -471,9 +471,6 @@
     <ClInclude Include="GUI_Inspector.h">
       <Filter>Sources\ImGui Elements</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleFileSystem.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Sources\GameObject</Filter>
     </ClInclude>
@@ -491,6 +488,9 @@
     </ClInclude>
     <ClInclude Include="ParShapes\par_shapes.h">
       <Filter>Sources\Tools\ParShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleOwnFileSystem.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -668,9 +668,6 @@
     <ClCompile Include="GUI_Inspector.cpp">
       <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleFileSystem.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\GameObject</Filter>
     </ClCompile>
@@ -685,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
       <Filter>Sources\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleOwnFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
