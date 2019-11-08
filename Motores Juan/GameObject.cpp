@@ -97,12 +97,12 @@ void GameObject::RecursiveHierarchy()
 			{
 				if (selectedGO != nullptr)
 				{
-					selectedGO->selected = false;
-					for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = false; }
+					selectedGO->is_selected = false;
+					for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->is_selected = false; }
 				}
 				selectedGO = (*item);
-				selectedGO->selected = true;
-				for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->selected = true; }
+				selectedGO->is_selected = true;
+				for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->is_selected = true; }
 			}
 		}
 
@@ -113,4 +113,3 @@ void GameObject::RecursiveHierarchy()
 		}
 	}
 }
-

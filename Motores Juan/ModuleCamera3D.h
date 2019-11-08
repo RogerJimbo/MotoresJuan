@@ -25,6 +25,8 @@ public:
 	void CameraGuizmos();
 	void FieldOfView(float angle, float aspectRatio, float min, float max, float* camera);
 
+	GameObject* MousePicking();
+
 private:
 	void CalculateViewMatrix();
 

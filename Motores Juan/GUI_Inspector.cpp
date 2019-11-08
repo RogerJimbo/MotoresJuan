@@ -18,7 +18,7 @@ void GUI_Inspector::Draw(bool* open)
 		const char* name = "";
 
 		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
-			if ((*item)->selected) { name = (*item)->name.c_str(); } 
+			if ((*item)->is_selected) { name = (*item)->name.c_str(); } 
 		
 		ImGui::Text(name);  
 		ImGui::Separator();
@@ -27,7 +27,7 @@ void GUI_Inspector::Draw(bool* open)
 
 		for (auto item = App->modscene->gameobjects.begin(); item != App->modscene->gameobjects.end(); ++item)
 		{
-			if ((*item)->selected && (*item)->children.size() > 0)
+			if ((*item)->is_selected && (*item)->children.size() > 0)
 			{
 				selectedGO = (*item);
 
@@ -65,7 +65,7 @@ void GUI_Inspector::Draw(bool* open)
 				}
 			}
 
-			if ((*item)->selected && (*item)->children.size() == 0)
+			if ((*item)->is_selected && (*item)->children.size() == 0)
 			{
 				selectedGO = (*item);
 

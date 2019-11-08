@@ -6,6 +6,8 @@
 #include "Module.h"
 #include "GameObject.h"
 
+#include "ImGuizmos/ImGuizmo.h"
+
 #define GRIDSIZE 50
 
 struct par_shapes_mesh_s;
@@ -30,6 +32,10 @@ public:
 
 	void CreatePrimitives(par_shapes_mesh_s* data, char* type);
 	void CreateCamera();
+	void CreateEmpty();
+
+	void Guizmos(ImGuizmo::OPERATION operation);
+	void SelectGameObject(GameObject* gameobject);
 
 	void ArraySphere();
 	void ArrayCube(float x, float y, float z, float posx, float posy, float posz);
@@ -43,7 +49,11 @@ public:
 	vector<Mesh*> mesh;
 
 	GameObject* root;
+	GameObject* object_selected = nullptr;
+
+	ImGuizmo::OPERATION operation = ImGuizmo::NOPERATION;
+	ImGuizmo::MODE mode = ImGuizmo::LOCAL;
+
 	vector<GameObject*> gameobjects;
-	
 };
 #endif

@@ -60,7 +60,7 @@ void ModuleScene::Draw()
 					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 					glDisableClientState(GL_VERTEX_ARRAY);
 
-					if ((*item)->selected)
+					if ((*item)->is_selected)
 					{
 						glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -207,9 +207,16 @@ void ModuleScene::CreateCamera()
 	ComponentCamera* camera = (ComponentCamera*)gameobject->AddComponent(CAMERA);
 	LOG("Game Object Camera Created.")
 
-	
+}
 
+void ModuleScene::CreateEmpty()
+{
+	GameObject* gameobject = App->modscene->root->AddChildren("Game Object");
+	App->modscene->gameobjects.push_back(gameobject);
+	gameobject->name = "Game Object";
 
+	ComponentTransform* empty = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
+	LOG("New Empty Game Object.")
 }
 
 void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
@@ -245,7 +252,32 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	//App->modscene->gameobjects.push_back(newGO);
 }
 
+void ModuleScene::SelectGameObject(GameObject* gameobject)
+{
+	object_selected = gameobject;
+	if (gameobject != nullptr) { gameobject->is_selected = true; }
+}
 
+void ModuleScene::Guizmos(ImGuizmo::OPERATION operation)
+{
+	ComponentTransform* transform = (ComponentTransform*) 
+	App->modscene->object_selected->GetComponent(TRANSFORM);
+
+	if (transform)
+	{
+		ImGuizmo::Enable(object_selected);
+		if (operation == ImGuizmo::NOPERATION) { ImGuizmo::Enable(false); }
+
+		if (App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) { operation = ImGuizmo::TRANSLATE; }
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) { operation = ImGuizmo::ROTATE; }
+			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT) { operation = ImGuizmo::SCALE; }
+		}
+
+		ImGuizmo::SetOrthographic(false);
+	}
+}
 
 bool ModuleScene::CleanUp() { return true; }
 void ModuleScene::Save_Config(JSON_Object& config) const { }

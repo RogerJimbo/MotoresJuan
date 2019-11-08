@@ -43,7 +43,7 @@ public:
 	list<Component*> components;
 	vector<GameObject*> children;
 
-	bool selected = false;
+	bool is_selected = false;
 };
 
 #endif 

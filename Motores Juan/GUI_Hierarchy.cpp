@@ -69,8 +69,10 @@ void GUI_Hierarchy::Draw(bool* open)
 
 		if (ImGui::CollapsingHeader("Create"))
 		{
-			if (ImGui::Button("Create Camera"))
+			if (ImGui::Button("Camera"))
 				App->modscene->CreateCamera();
+			if (ImGui::Button("Empty Game Object"))
+				App->modscene->CreateEmpty();
 		}
 	}
 	ImGui::End();
