@@ -23,22 +23,21 @@ ModuleScene::~ModuleScene() {}
 bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
-{ 
+{
 	root = new GameObject(nullptr, "Root");
-	//App->loader->Import("BakerHouse.fbx", nullptr);
-
-
+	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	return true;
 }
 
 void ModuleScene::Draw()
 {
-	for (auto item = gameobjects.begin(); item != gameobjects.end(); item++)
+	vector<GameObject*> GOs = App->modscene->root->children;
+	for (auto item = GOs.begin(); item != GOs.end(); item++)
 	{
-		for (auto iter = (*item)->components.begin(); iter != (*item)->components.end(); ++iter)
+		for (auto child = (*item)->children.begin(); child != (*item)->children.end(); ++child)
 		{
-			if ((*iter)->c_type == MESH)
+			for (auto iter = (*child)->components.begin(); iter != (*child)->components.end(); ++iter)
 			{
 				ComponentMesh* mesh = (ComponentMesh*)(*iter);
 
@@ -133,9 +132,9 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	primitive->num_vertices = data->npoints * 3;
 	primitive->vertices = new float[primitive->num_vertices * 3];
 	for (int i = 0; i < primitive->num_vertices; ++i) primitive->vertices[i] = data->points[i];
-	
-	primitive->num_indices = data->ntriangles * 3; 
-	primitive->indices = new uint[primitive->num_indices]; 
+
+	primitive->num_indices = data->ntriangles * 3;
+	primitive->indices = new uint[primitive->num_indices];
 	for (int i = 0; i < primitive->num_indices; i++) primitive->indices[i] = (uint)data->triangles[i];
 
 	LOG("%s Primitive created with %d vertices and %d indices.", type, primitive->num_vertices, primitive->num_vertices);
@@ -175,7 +174,7 @@ void ModuleScene::Guizmos(ImGuizmo::OPERATION operation)
 
 		float window_size_X = ImGui::GetWindowSize().x;
 		float window_size_Y = ImGui::GetWindowSize().y;
-		
+
 		ImGuizmo::SetRect(mouse_position_X, mouse_position_Y, window_size_X, window_size_Y);
 
 		if (App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
