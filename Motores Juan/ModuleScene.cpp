@@ -104,9 +104,6 @@ void ModuleScene::CreateCamera()
 	ComponentTransform* transformations = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
 
 	LOG("Game Object Camera Created.");
-
-	SelectGameObject(gameobject);	//Roger
-
 }
 
 void ModuleScene::CreateEmpty()
@@ -150,8 +147,6 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 
 	//App->modscene->gameobjects.push_back(newGO);
-
-	SelectGameObject(gameobject);	//Roger
 }
 
 void ModuleScene::SelectGameObject(GameObject* gameobject)

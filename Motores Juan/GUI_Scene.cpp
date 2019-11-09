@@ -33,6 +33,8 @@ void GUI_Scene::Draw(bool* open)
 
 		if (App->modscene->object_selected) { App->modscene->Guizmos(App->modscene->operation); }
 
+
+		ImGui::SetCursorPos({ 0,0 });
 	}
 	ImGui::End();
 }
