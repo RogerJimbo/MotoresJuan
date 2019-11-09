@@ -40,8 +40,6 @@ bool ModuleGui::Init(const JSON_Object& config)
 	ImGui_ImplOpenGL2_Init();
 	SDL_GL_CreateContext(App->window->window);
 
-	//ImGuizmo::BeginFrame();
-
 	for (int i = 0; i != NUM_ACT_WIN; i++) { active_engine_windows[i] = false; }
 
 	return true;

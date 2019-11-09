@@ -69,10 +69,7 @@ bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 		App->modscene->root->children.push_back(GO);
 		App->modscene->gameobjects.push_back(GO);
 
-		if (parent != nullptr)
-		{
-			parent->children.push_back(GO);
-		}
+		if (parent != nullptr) { parent->children.push_back(GO); }
 
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
@@ -137,10 +134,7 @@ bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
 				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 
-				if (scene->mNumMeshes > 1)
-				{
-					newGO->parent = GO;
-				}
+				if (scene->mNumMeshes > 1) { newGO->parent = GO; }
 
 				App->modscene->gameobjects.push_back(newGO);
 			}
@@ -182,7 +176,7 @@ uint ModuleLoader::Texturing(const char* file_name)
 		uint texture_width = ImageInfo.Width; uint texture_height = ImageInfo.Height;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 		glBindTexture(GL_TEXTURE_2D, 0);
-		LOG("Texture loaded succesfuly!")
+		LOG("Texture loaded succesfuly!");
 
 		TextureSize = { (float)texture_width, (float)texture_height };
 	}

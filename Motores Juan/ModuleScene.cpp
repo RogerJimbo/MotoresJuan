@@ -36,11 +36,33 @@ void ModuleScene::Draw()
 {
 	for (auto item = gameobjects.begin(); item != gameobjects.end(); item++)
 	{
-			for (auto iter = (*item)->components.begin(); iter != (*item)->components.end(); ++iter)
+		for (auto iter = (*item)->components.begin(); iter != (*item)->components.end(); ++iter)
+		{
+			if ((*iter)->c_type == MESH)
 			{
-				if ((*iter)->c_type == MESH)
+				ComponentMesh* mesh = (ComponentMesh*)(*iter);
+
+				glColor3f(1.0, 1.0, 1.0);
+
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
+				glVertexPointer(3, GL_FLOAT, 0, &mesh->vertices[0]);
+
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glBindTexture(GL_TEXTURE_2D, mesh->texture);
+				glTexCoordPointer(2, GL_FLOAT, 0, &mesh->texture_coords[0]);
+
+				glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+				glBindTexture(GL_TEXTURE_2D, 0);
+
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);
+
+				if ((*item)->is_selected)
 				{
-					ComponentMesh* mesh = (ComponentMesh*)(*iter);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 					glColor3f(1.0, 1.0, 1.0);
 
@@ -48,154 +70,29 @@ void ModuleScene::Draw()
 					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
 					glVertexPointer(3, GL_FLOAT, 0, &mesh->vertices[0]);
 
-					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-					glBindTexture(GL_TEXTURE_2D, mesh->texture);
-					glTexCoordPointer(2, GL_FLOAT, 0, &mesh->texture_coords[0]);
-
 					glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 
 					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-					glBindTexture(GL_TEXTURE_2D, 0);
 
 					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 					glDisableClientState(GL_VERTEX_ARRAY);
 
-					if ((*item)->is_selected)
-					{
-						glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-						glColor3f(1.0, 1.0, 1.0);
-
-						glEnableClientState(GL_VERTEX_ARRAY);
-						glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-						glVertexPointer(3, GL_FLOAT, 0, &mesh->vertices[0]);
-
-						glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
-
-						glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-						glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-						glDisableClientState(GL_VERTEX_ARRAY);
-
-						glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-					}
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 				}
 			}
-		
-	}
-}
-
-void ModuleScene::IndexCube()
-{
-	GLuint ibo, vbo = 0;		
-
-	indices = { 0, 1, 2, 0, 3, 2,			//FRONT
-					 3, 0, 4, 5, 3, 4,			//RIGHT
-					 6, 2, 1, 6, 7, 2,			//LEFT
-				     5, 4, 6, 6, 4, 7,			//BACK
-					 3, 6, 1, 6, 3, 5,			//TOP
-					 0, 2, 7, 7, 4, 0 };		//BOT
-	
-	vertexs.push_back((1.0f, 0.0f, 0.0f));
-	vertexs.push_back((0.0f, 1.0f, 0.0f));
-	vertexs.push_back((0.0f, 0.0f, 0.0f));
-	vertexs.push_back((1.0f, 1.0f, 0.0f));
-
-	vertexs.push_back((1.0f, 0.0f, -1.0f));
-	vertexs.push_back((1.0f, 1.0f, -1.0f));
-	vertexs.push_back((0.0f, 1.0f, -1.0f));
-	vertexs.push_back((0.0f, 0.0f, -1.0f));
-
-	glGenBuffers(1, (GLuint*) & (ibo));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), &indices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) & (vbo));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexs.size(), &vertexs, GL_STATIC_DRAW);
-}
-void ModuleScene::IndexSphere() {}
-
-void ModuleScene::ArraySphere()
-{
-	glLineWidth(2.0f);	
-	glBegin(GL_POLYGON_BIT);
-	glColor3f(1.0, 1.0, 1.0);
-
-	float radius = 1.5f;
-	float x, y, z, xy;
-
-	int stackCount = 32;
-	int sectorCount = 36;
-	#define PI 3.1415
-
-	float sectorStep = 2 * PI / sectorCount;
-	float stackStep = PI / stackCount;
-	float sectorAngle, stackAngle;
-	
-	for (int i = 0; i <= stackCount; ++i)
-	{
-		stackAngle = PI / 2 - i * stackStep;        
-		xy = radius * cosf(stackAngle);             
-		z = radius * sinf(stackAngle);              
-
-		for (int j = 0; j <= sectorCount; ++j)
-		{
-			sectorAngle = j+0.5f * sectorStep;           
-
-			x = xy * cosf(sectorAngle);             
-			y = xy * sinf(sectorAngle);       
-
-			glVertex3f(x, y, z);			
 		}
 	}
-	glEnd();
-}
 
-void ModuleScene::ArrayCube(float x, float y, float z, float posx, float posy, float posz)
-{
-	glLineWidth(2.0f);
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0, 1.0, 1.0);
-
-	//Front
-	glVertex3f(posx+x, posz, posy);	glVertex3f(posx, posz+z, posy);			glVertex3f(posx, posz, posy);
-	glVertex3f(posx+x, posz, posy);	glVertex3f(posx+x, posz + z, posy);		glVertex3f(posx, posz + z, posy);
-
-	//Right
-	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, posy);				glVertex3f(posx + x, posz, -posy - y);
-	glVertex3f(posx + x, posz + z, -posy-y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz, -posy - y);
-
-	//Left
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz + z, posy);
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx, posz, posy);
-
-	//Back
-	glVertex3f(posx + x, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz + z, -posy - y);
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx, posz, -posy - y);
-
-	//Top
-	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx, posz + z, posy);
-	glVertex3f(posx, posz + z, -posy - y);	glVertex3f(posx + x, posz + z, posy);		glVertex3f(posx + x, posz + z, -posy - y);
-
-	//Bot
-	glVertex3f(posx + x, posz, posy);	glVertex3f(posx, posz, posy);	glVertex3f(posx, posz, -posy - y);
-	glVertex3f(posx, posz, -posy - y);	glVertex3f(posx + x, posz, -posy - y);	glVertex3f(posx + x, posz, posy);
-
-	glEnd();
-}
-
-void ModuleScene::ArrayPlane(float x, float y, float posx, float posy, float posz)
-{
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0, 1.0, 1.0);
-
-	glEnable(GL_CULL_FACE); glCullFace(GL_FRONT); glFrontFace(GL_CCW);	//TODO
-
-	glVertex3f(x+ posx, posz, posy); glVertex3f(posx, posz, y+ posy); glVertex3f(posx, posz, posy);
-	glVertex3f(posx, posz, y+ posy); glVertex3f(x+ posx, posz, posy); glVertex3f(x+ posx, posz, y+ posy);
-
-	glEnd();
+	if (App->modscene->object_selected != nullptr)
+	{
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_IDLE)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) operation = ImGuizmo::STATIC;
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) operation = ImGuizmo::TRANSLATE;
+			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) operation = ImGuizmo::ROTATE;
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) operation = ImGuizmo::SCALE;
+		}
+	}
 }
 
 void ModuleScene::CreateCamera()
@@ -205,7 +102,11 @@ void ModuleScene::CreateCamera()
 	gameobject->name = "Camera";
 
 	ComponentCamera* camera = (ComponentCamera*)gameobject->AddComponent(CAMERA);
-	LOG("Game Object Camera Created.")
+	ComponentTransform* transformations = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
+
+	LOG("Game Object Camera Created.");
+
+	SelectGameObject(gameobject);	//Roger
 
 }
 
@@ -250,6 +151,8 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 
 	//App->modscene->gameobjects.push_back(newGO);
+
+	SelectGameObject(gameobject);	//Roger
 }
 
 void ModuleScene::SelectGameObject(GameObject* gameobject)
@@ -260,13 +163,20 @@ void ModuleScene::SelectGameObject(GameObject* gameobject)
 
 void ModuleScene::Guizmos(ImGuizmo::OPERATION operation)
 {
-	ComponentTransform* transform = (ComponentTransform*) 
-	App->modscene->object_selected->GetComponent(TRANSFORM);
+	ComponentTransform* transform = (ComponentTransform*)object_selected->GetComponent(TRANSFORM);
 
 	if (transform)
 	{
 		ImGuizmo::Enable(object_selected);
-		if (operation == ImGuizmo::NOPERATION) { ImGuizmo::Enable(false); }
+		if (operation == ImGuizmo::STATIC) { ImGuizmo::Enable(false); }
+
+		float mouse_position_X = App->input->GetMouseX();
+		float mouse_position_Y = App->input->GetMouseY();
+
+		float window_size_X = ImGui::GetWindowSize().x;
+		float window_size_Y = ImGui::GetWindowSize().y;
+		
+		ImGuizmo::SetRect(mouse_position_X, mouse_position_Y, window_size_X, window_size_Y);
 
 		if (App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
 		{

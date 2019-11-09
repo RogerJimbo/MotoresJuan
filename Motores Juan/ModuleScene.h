@@ -27,19 +27,12 @@ public:
 	void Save_Config(JSON_Object& config) const;
 	void Draw();
 
-	void IndexCube();
-	void IndexSphere();
-
 	void CreatePrimitives(par_shapes_mesh_s* data, char* type);
 	void CreateCamera();
 	void CreateEmpty();
 
 	void Guizmos(ImGuizmo::OPERATION operation);
 	void SelectGameObject(GameObject* gameobject);
-
-	void ArraySphere();
-	void ArrayCube(float x, float y, float z, float posx, float posy, float posz);
-	void ArrayPlane(float x, float y, float posx, float posy, float posz);
 
 	uint texture;
 	string config_name;
@@ -51,7 +44,7 @@ public:
 	GameObject* root;
 	GameObject* object_selected = nullptr;
 
-	ImGuizmo::OPERATION operation = ImGuizmo::NOPERATION;
+	ImGuizmo::OPERATION operation = ImGuizmo::STATIC;
 	ImGuizmo::MODE mode = ImGuizmo::LOCAL;
 
 	vector<GameObject*> gameobjects;
