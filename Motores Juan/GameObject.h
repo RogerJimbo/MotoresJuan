@@ -30,6 +30,10 @@ public:
 
 	void Update();
 
+	void Draw();
+
+	void SelectChildren(bool selected);
+
 	Component* GetComponent(Component_Type comp_type);
 
 	void RecursiveHierarchy();
