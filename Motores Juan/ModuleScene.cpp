@@ -25,18 +25,19 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
-	//App->loader->Import("BakerHouse.fbx", nullptr);
-
-
+	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	return true;
 }
 
 void ModuleScene::Draw()
 {
-	for (auto item = gameobjects.begin(); item != gameobjects.end(); item++)
+	vector<GameObject*> GOs = App->modscene->root->children;
+	for (auto item = GOs.begin(); item != GOs.end(); item++)
 	{
-			for (auto iter = (*item)->components.begin(); iter != (*item)->components.end(); ++iter)
+		for (auto child = (*item)->children.begin(); child != (*item)->children.end(); ++child)
+		{
+			for (auto iter = (*child)->components.begin(); iter != (*child)->components.end(); ++iter)
 			{
 				if ((*iter)->c_type == MESH)
 				{
@@ -81,7 +82,7 @@ void ModuleScene::Draw()
 					}
 				}
 			}
-		
+		}
 	}
 }
 

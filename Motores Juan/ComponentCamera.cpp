@@ -13,7 +13,7 @@ ComponentCamera::~ComponentCamera()
 
 bool ComponentCamera::Update()
 {
-
+	return true;
 }
 
 void ComponentCamera::CreateFrustrum()
