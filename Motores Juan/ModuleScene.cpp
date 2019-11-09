@@ -24,7 +24,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 { 
-	root = new GameObject(nullptr, "Root");
+	//root = new GameObject(nullptr, "Root");
 	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	return true;
@@ -32,57 +32,9 @@ bool ModuleScene::Start()
 
 void ModuleScene::Draw()
 {
-	vector<GameObject*> GOs = App->modscene->root->children;
-	for (auto item = GOs.begin(); item != GOs.end(); item++)
+	if (root)
 	{
-		for (auto child = (*item)->children.begin(); child != (*item)->children.end(); ++child)
-		{
-			for (auto iter = (*child)->components.begin(); iter != (*child)->components.end(); ++iter)
-			{
-				if ((*iter)->c_type == MESH)
-				{
-					ComponentMesh* mesh = (ComponentMesh*)(*iter);
-
-					glColor3f(1.0, 1.0, 1.0);
-
-					glEnableClientState(GL_VERTEX_ARRAY);
-					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-					glVertexPointer(3, GL_FLOAT, 0, &mesh->vertices[0]);
-
-					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-					glBindTexture(GL_TEXTURE_2D, mesh->texture);
-					glTexCoordPointer(2, GL_FLOAT, 0, &mesh->texture_coords[0]);
-
-					glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
-
-					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-					glBindTexture(GL_TEXTURE_2D, 0);
-
-					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-					glDisableClientState(GL_VERTEX_ARRAY);
-
-					if ((*item)->is_selected)
-					{
-						glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-						glColor3f(1.0, 1.0, 1.0);
-
-						glEnableClientState(GL_VERTEX_ARRAY);
-						glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_indices);
-						glVertexPointer(3, GL_FLOAT, 0, &mesh->vertices[0]);
-
-						glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
-
-						glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-						glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-						glDisableClientState(GL_VERTEX_ARRAY);
-
-						glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-					}
-				}
-			}
-		}
+		root->Draw();
 	}
 }
 

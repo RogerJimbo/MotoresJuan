@@ -61,7 +61,7 @@ bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 
 	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	aiNode* node = scene->mRootNode;
-	LoadGameObject(scene, node, App->modscene->root, file_path);
+	App->modscene->root = LoadGameObject(scene, node, nullptr, file_path);
 	aiReleaseImport(scene);
 
 	return true;
@@ -73,7 +73,7 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		GO->name = path_file.c_str();
+		GO->name = node->mName.C_Str();
 		GO->parent = parent;
 
 		if (parent != nullptr)
@@ -81,9 +81,9 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 		parent->children.push_back(GO);
 		}
 
-		for (int i = 0; i < scene->mNumMeshes; ++i)
+		for (int i = 0; i < node->mNumMeshes; ++i)
 		{
-			const aiMesh* mesh = scene->mMeshes[i];
+			const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 
 			GameObject* newGO = new GameObject();
 			newGO->name = mesh->mName.C_Str();
@@ -144,16 +144,15 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
 				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
 				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);		
-
-				if (node->mNumChildren > 1)
+			}
+		}
+		if (node->mNumChildren > 1)
+		{
+			for (uint i = 0; i < node->mNumChildren; i++)
+			{
+				if (node->mChildren[i] != nullptr)
 				{
-					for (uint i = 0; i < node->mNumChildren; i++)
-					{
-						if (node->mChildren[i] != nullptr)
-						{
-							LoadGameObject(scene, node->mChildren[i], newGO, path_file);
-						}
-					}
+					GameObject* child = LoadGameObject(scene, node->mChildren[i], GO, path_file);
 				}
 			}
 		}
