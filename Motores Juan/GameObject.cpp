@@ -21,6 +21,7 @@ GameObject::GameObject() {}
 
 GameObject::GameObject(GameObject* parent, string name)
 {
+	BoundingBox = AABB({ 0,0,0 }, { 0,0,0 });
 	this->parent = parent;
 	this->name = name;
 }
@@ -29,6 +30,9 @@ GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
+	//todo roger
+	if (App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
+
 	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
 }
 
@@ -80,11 +84,55 @@ void GameObject::Draw()
 		}
 	}
 
-	for (auto iter = children.begin(); iter != children.end(); ++iter)
-	{
-		(*iter)->Draw();
-	}
-	
+	for (auto iter = children.begin(); iter != children.end(); ++iter) { (*iter)->Draw(); }
+}
+
+void GameObject::DrawBoundingBox(const AABB& boundingbox)
+{
+	glLineWidth(2.f);
+	glColor3f(255,255, 255);
+
+	glBegin(GL_LINES);
+
+	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
+	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
+
+	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
+	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
+
+	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
+	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
+
+	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
+	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
+
+	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
+	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
+
+	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
+	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
+
+	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
+	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
+
+	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
+	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
+
+	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
+	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
+
+	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
+	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
+
+	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
+	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
+
+	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
+	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
+
+	glEnd();
+	glColor3f(1, 1, 1);
+	glLineWidth(1.0f);
 }
 
 void GameObject::SelectChildren(bool selected)
@@ -149,13 +197,9 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 
 void GameObject::RecursiveHierarchy()
 {
-	
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
-	if (selectedGO == this)
-	{
-		node_flags |= ImGuiTreeNodeFlags_Selected;
-	}
+	if (selectedGO == this) { node_flags |= ImGuiTreeNodeFlags_Selected; }
 
 	bool opened = ImGui::TreeNodeEx(this->name.c_str(), node_flags);
 
@@ -176,13 +220,7 @@ void GameObject::RecursiveHierarchy()
 
 	if (opened)
 	{
-		for (auto item = children.begin(); item != children.end(); ++item)
-		{
-			(*item)->RecursiveHierarchy();
-		}
+		for (auto item = children.begin(); item != children.end(); ++item) { (*item)->RecursiveHierarchy(); }
 		ImGui::TreePop();
 	}
-	
-
-	
 }

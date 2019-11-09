@@ -75,10 +75,7 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 {
 	GameObject* gameobject = App->modscene->root->AddChildren(type);
 	App->modscene->gameobjects.push_back(gameobject);
-
-	//GameObject* newGO = new GameObject();
 	gameobject->name = type;
-	//gameobject->children.push_back(newGO);
 
 	ComponentMesh* primitive = (ComponentMesh*)gameobject->AddComponent(MESH);
 	primitive->num_vertices = data->npoints * 3;
@@ -88,6 +85,9 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	primitive->num_indices = data->ntriangles * 3;
 	primitive->indices = new uint[primitive->num_indices];
 	for (int i = 0; i < primitive->num_indices; i++) primitive->indices[i] = (uint)data->triangles[i];
+
+	//todo roger
+	gameobject->DrawBoundingBox(gameobject->BoundingBox);
 
 	LOG("%s Primitive created with %d vertices and %d indices.", type, primitive->num_vertices, primitive->num_vertices);
 
@@ -101,7 +101,7 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * primitive->num_vertices * 2, primitive->texture_coords, GL_STATIC_DRAW);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 
-	//App->modscene->gameobjects.push_back(newGO);
+
 }
 
 void ModuleScene::SelectGameObject(GameObject* gameobject)

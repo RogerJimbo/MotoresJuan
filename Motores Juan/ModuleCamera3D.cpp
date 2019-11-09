@@ -122,6 +122,8 @@ GameObject* ModuleCamera3D::MousePicking()
 	vec3 MouseRay = normalize(vec3(rayWorld.x, rayWorld.y, rayWorld.z));
 
 	LOG("%d %d %d", MouseRay.x, MouseRay.y, MouseRay.z);
+
+	
 	
 	//llista de GO que han colisionat amb el ray
 	//ordenar x distancia llista de GO
@@ -130,8 +132,6 @@ GameObject* ModuleCamera3D::MousePicking()
 		//guardar el que esta mes aprop i passar als eguent semore mirant els triangles
 		//si el 2n GO la AABB esta tocant amb la del primer mirar si es sobreposant
 		//si el ray no toca cap triangle del mesh es descarta i comprobves el seguent triangle
-
-
 
 
 	return ret;

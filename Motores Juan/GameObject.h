@@ -7,6 +7,8 @@
 #include <vector>
 #include <map>
 
+#include "MathGeoLib/Geometry/AABB.h"
+
 struct Mesh;
 
 class Component;
@@ -31,7 +33,7 @@ public:
 	void Update();
 
 	void Draw();
-
+	void DrawBoundingBox(const AABB& BB);
 	void SelectChildren(bool selected);
 
 	Component* GetComponent(Component_Type comp_type);
@@ -43,6 +45,8 @@ public:
 
 	GameObject* parent;
 	GameObject* selectedGO = nullptr;
+
+	AABB BoundingBox;
 
 	list<Component*> components;
 	vector<GameObject*> children;

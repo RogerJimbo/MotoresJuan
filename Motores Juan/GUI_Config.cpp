@@ -74,6 +74,7 @@ void GUI_Config::Draw(bool* open)
 			ImGui::Checkbox("Lights Abled", &App->renderer3D->lights_on);
 			ImGui::Checkbox("Backface Culling", &App->renderer3D->backface);
 			ImGui::Checkbox("Textured", &App->renderer3D->textured);
+			ImGui::Checkbox("Bounding Box", &App->renderer3D->boundingbox);
 			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) { App->renderer3D->ActivateWireframe(); }
 
 			ImGui::Separator();

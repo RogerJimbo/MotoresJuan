@@ -41,5 +41,6 @@ public:
 	bool lights_on = false;
 	bool wireframe = false;
 	bool textured = true;
+	bool boundingbox = false;
 
 };
