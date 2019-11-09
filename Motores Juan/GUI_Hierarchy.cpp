@@ -40,7 +40,6 @@ update_status GUI_Hierarchy::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-
 void GUI_Hierarchy::Draw(bool* open)
 {
 	if (ImGui::Begin(elem_name.c_str(), open))
@@ -69,16 +68,10 @@ void GUI_Hierarchy::Draw(bool* open)
 
 		if (ImGui::CollapsingHeader("Create"))
 		{
-			if (ImGui::Button("Camera"))
-				App->modscene->CreateCamera();
-			if (ImGui::Button("Empty Game Object"))
-				App->modscene->CreateEmpty();
+			if (ImGui::Button("Camera")) App->modscene->CreateCamera();
+
+			if (ImGui::Button("Empty Game Object")) 	App->modscene->CreateEmpty();
 		}
 	}
 	ImGui::End();
 }
-
-
-
-
-

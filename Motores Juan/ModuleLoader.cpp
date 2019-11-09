@@ -76,10 +76,7 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 		GO->name = node->mName.C_Str();
 		GO->parent = parent;
 
-		if (parent != nullptr)
-		{
-		parent->children.push_back(GO);
-		}
+		if (parent != nullptr) { parent->children.push_back(GO); }
 
 		for (int i = 0; i < node->mNumMeshes; ++i)
 		{
@@ -191,7 +188,7 @@ uint ModuleLoader::Texturing(const char* file_name)
 		uint texture_width = ImageInfo.Width; uint texture_height = ImageInfo.Height;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 		glBindTexture(GL_TEXTURE_2D, 0);
-		LOG("Texture loaded succesfuly!")
+		LOG("Texture loaded succesfuly!");
 
 		TextureSize = { (float)texture_width, (float)texture_height };
 	}
