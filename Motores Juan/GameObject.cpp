@@ -197,30 +197,48 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 
 void GameObject::RecursiveHierarchy()
 {
+	
+
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
-	if (selectedGO == this) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+	if (App->modscene->object_selected == this) { node_flags |= ImGuiTreeNodeFlags_Selected; }
 
 	bool opened = ImGui::TreeNodeEx(this->name.c_str(), node_flags);
 
+	//if (ImGui::IsItemClicked())
+	//{
+	//	if (App->modscene->object_selected != nullptr)
+	//	{
+	//		App->modscene->object_selected->is_selected = false;
+	//		for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(App->modscene->object_selected->is_selected = false); }
+	//	}
+	//	App->modscene->object_selected = this;
+	//	App->modscene->object_selected->is_selected = true;
+	//	for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(App->modscene->object_selected->is_selected = true); }
+	//}
+
 	if (ImGui::IsItemClicked(0))
 	{
-		if (selectedGO != this)
-		{
-			if (selectedGO != nullptr)
-			{
-				selectedGO->is_selected = false;
-				for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->SelectChildren(false); }
-			}
-			selectedGO = this;
-			selectedGO->is_selected = true;
-			for (int i = 0; i < selectedGO->children.size(); ++i) { selectedGO->children[i]->SelectChildren(true); }
-		}
+	if (App->modscene->object_selected != this)
+	{
+	if (App->modscene->object_selected != nullptr)
+	{
+	App->modscene->object_selected->is_selected = false;
+	for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(false); }
+	}
+	App->modscene->object_selected = this;
+	App->modscene->object_selected->is_selected = true;
+	for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
+	}
 	}
 
 	if (opened)
 	{
-		for (auto item = children.begin(); item != children.end(); ++item) { (*item)->RecursiveHierarchy(); }
+		for (auto item = children.begin(); item != children.end(); ++item) 
+		{ 
+			(*item)->RecursiveHierarchy(); 
+			this->is_selected = false;
+		}
 		ImGui::TreePop();
 	}
 }
