@@ -29,8 +29,6 @@ GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-
-
 	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
 }
 
@@ -79,10 +77,15 @@ void GameObject::Draw()
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			
+				BoundingBox.SetNegativeInfinity();
+
 				BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);			
-				if (App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
+				if (!App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
 			}
 		}
+
+		for (auto iter = children.begin(); iter != children.end(); ++iter)
+			BoundingBox.Enclose((*iter)->BoundingBox);
 	}
 
 	for (auto iter = children.begin(); iter != children.end(); ++iter) { (*iter)->Draw(); }
