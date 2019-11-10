@@ -94,6 +94,7 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			memcpy(new_mesh->vertices, mesh->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
 			LOG("New mesh with %d vertices", new_mesh->num_vertices);
 
+
 			if (mesh->HasTextureCoords(0))
 			{
 				new_mesh->texture_coords = new float[mesh->mNumVertices * 2];

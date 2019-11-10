@@ -21,7 +21,6 @@ GameObject::GameObject() {}
 
 GameObject::GameObject(GameObject* parent, string name)
 {
-	BoundingBox = AABB({ 0,0,0 }, { 0,0,0 });
 	this->parent = parent;
 	this->name = name;
 }
@@ -30,8 +29,7 @@ GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-	//todo roger
-	if (App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
+
 
 	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
 }
@@ -80,6 +78,9 @@ void GameObject::Draw()
 				glDisableClientState(GL_VERTEX_ARRAY);
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			
+				BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);			
+				if (App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
 			}
 		}
 	}
