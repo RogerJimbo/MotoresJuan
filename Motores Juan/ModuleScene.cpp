@@ -32,10 +32,7 @@ bool ModuleScene::Start()
 
 void ModuleScene::Draw()
 {
-	if (root)
-	{
-		root->Draw();
-	}
+	if (root) { root->Draw(); }
 
 	if (App->modscene->object_selected != nullptr)
 	{
@@ -100,7 +97,6 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, primitive->id_texcoords);
 	glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * primitive->num_vertices * 2, primitive->texture_coords, GL_STATIC_DRAW);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-
 
 }
 

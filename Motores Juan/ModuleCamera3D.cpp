@@ -121,10 +121,9 @@ GameObject* ModuleCamera3D::MousePicking()
 	vec4 rayWorld = inverse(ViewMatrix) * eyeCoords;
 	vec3 MouseRay = normalize(vec3(rayWorld.x, rayWorld.y, rayWorld.z));
 
-	LOG("%d %d %d", MouseRay.x, MouseRay.y, MouseRay.z);
+	LOG("%f %f %f", MouseRay.x, MouseRay.y, MouseRay.z);
 
-	
-	
+
 	//llista de GO que han colisionat amb el ray
 	//ordenar x distancia llista de GO
 
