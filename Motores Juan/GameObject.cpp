@@ -209,40 +209,36 @@ void GameObject::RecursiveHierarchy()
 
 	bool opened = ImGui::TreeNodeEx(this->name.c_str(), node_flags);
 
-	//if (ImGui::IsItemClicked())
-	//{
-	//	if (App->modscene->object_selected != nullptr)
-	//	{
-	//		App->modscene->object_selected->is_selected = false;
-	//		for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(App->modscene->object_selected->is_selected = false); }
-	//	}
-	//	App->modscene->object_selected = this;
-	//	App->modscene->object_selected->is_selected = true;
-	//	for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(App->modscene->object_selected->is_selected = true); }
-	//}
-
-	if (ImGui::IsItemClicked(0))
-	{
-	if (App->modscene->object_selected != this)
-	{
-	if (App->modscene->object_selected != nullptr)
-	{
-	App->modscene->object_selected->is_selected = false;
-	for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(false); }
-	}
-	App->modscene->object_selected = this;
-	App->modscene->object_selected->is_selected = true;
-	for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
-	}
-	}
-
 	if (opened)
 	{
+		this->SelectGO();
 		for (auto item = children.begin(); item != children.end(); ++item) 
 		{ 
 			(*item)->RecursiveHierarchy(); 
-			this->is_selected = false;
 		}
 		ImGui::TreePop();
 	}
+}
+
+void GameObject::SelectGO()
+{
+	if (ImGui::IsItemClicked(0))
+	{
+		if (App->modscene->object_selected != this)
+		{
+			if (App->modscene->object_selected != nullptr)
+			{
+				App->modscene->object_selected->is_selected = false;
+				for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(false); }
+			}
+			App->modscene->object_selected = this;
+			App->modscene->object_selected->is_selected = true;
+			for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
+		}
+	}
+}
+
+void GameObject::DeselectGO()
+{
+
 }

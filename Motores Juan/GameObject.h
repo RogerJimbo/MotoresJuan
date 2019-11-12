@@ -40,6 +40,9 @@ public:
 
 	void RecursiveHierarchy();
 
+	void SelectGO();
+	void DeselectGO();
+
 public:
 	string name;
 
