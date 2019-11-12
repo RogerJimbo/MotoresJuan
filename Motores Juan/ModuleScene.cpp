@@ -11,6 +11,7 @@
 
 #include "ImGuizmos/ImGuizmo.h"
 #include "ParShapes/par_shapes.h"
+#include "MathGeoLib/Geometry/LineSegment.h"
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -18,6 +19,7 @@
 #include <gl/GLU.h>
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled) { config_name = "Scene"; }
+
 ModuleScene::~ModuleScene() {}
 
 bool ModuleScene::Init(const JSON_Object& config) { return true; }
@@ -39,6 +41,8 @@ void ModuleScene::Draw()
 			(*item)->Draw();
 		}
 	}
+
+	root->selectedGO = MousePicking();	//TO UPDATE
 
 	if (App->modscene->object_selected != nullptr)
 	{
@@ -110,6 +114,58 @@ void ModuleScene::SelectGameObject(GameObject* gameobject)
 {
 	object_selected = gameobject;
 	if (gameobject != nullptr) { gameobject->is_selected = true; }
+}
+
+
+GameObject* ModuleScene::MousePicking()
+{
+	GameObject* ret = nullptr;
+
+	//1st Calculate Mouse Position
+	float mouseX = App->input->GetMouseX();
+	float mouseY = App->input->GetMouseY();
+	//2nd Convert to OpenGL Coordinates Normalized
+	float windowX = App->window->window_width;
+	float windowY = App->window->window_height;
+	vec2 MouseCoords = vec2((mouseX * 2.0f / windowX - 1), -(mouseY * 2.0f / windowY - 1));
+	//3rd Convert to Clip Coords 
+	vec4 ClipCoords = vec4(MouseCoords.x, MouseCoords.y, -1.0f, 1.0f);
+	//4th Convert to Eye Space 
+	mat4x4 InvertedProjection = inverse(App->renderer3D->ProjectionMatrix);
+	vec4 eyeCoords = InvertedProjection * ClipCoords;
+	vec4 EyeSpace = vec4(eyeCoords.x, eyeCoords.y, -1.0f, 0.0f);
+	//5th Convert to World Space
+	vec4 rayWorld = inverse(ViewMatrix) * eyeCoords;
+	vec3 MouseRay = normalize(vec3(rayWorld.x, rayWorld.y, rayWorld.z));
+
+	float3 mouseray = float3(MouseRay.x, MouseRay.y, MouseRay.z);
+
+	float3 direction;	//Direction has to go acording to the camera
+
+	LOG("%f %f %f", MouseRay.x, MouseRay.y, MouseRay.z);
+	LOG("%f %f %f", mouseray.x, mouseray.y, mouseray.z);
+
+	Ray* ray;
+	Frustum* frustum;
+
+	list<GameObject*> IntersectedGO;
+
+	for (auto iter = gameobjects.begin(); iter != gameobjects.end(); iter++)
+	{
+
+		// if (ray.Intersects(App->modscene->root->BoundingBox)) {}
+		//Make a recursive function to call all the children and check their AABB
+
+
+	}
+
+	if (IntersectedGO.empty()) { return ret; }
+
+	//Check closer game objects 
+	//Check if it hits the mesh triangles
+
+
+	return ret;
 }
 
 void ModuleScene::Guizmos(ImGuizmo::OPERATION operation)

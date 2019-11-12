@@ -31,6 +31,8 @@ public:
 	void CreateCamera();
 	void CreateEmpty();
 
+	GameObject* MousePicking();
+
 	void Guizmos(ImGuizmo::OPERATION operation);
 	void SelectGameObject(GameObject* gameobject);
 
@@ -48,5 +50,7 @@ public:
 	ImGuizmo::MODE mode = ImGuizmo::LOCAL;
 
 	vector<GameObject*> gameobjects;
+private:
+	mat4x4 ViewMatrix;
 };
 #endif

@@ -74,10 +74,7 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		/*if(path_file.c_str() == NULL)
-		{
-			GO->name = node->mName.C_Str();
-		}*/
+		//if(path_file.c_str() == NULL) GO->name = node->mName.C_Str();
 
 		GO->name = node->mName.C_Str();
 		GO->parent = parent;
