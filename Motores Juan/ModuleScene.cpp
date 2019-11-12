@@ -24,7 +24,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 
 bool ModuleScene::Start()
 { 
-	//root = new GameObject(nullptr, "Root");
+	root = new GameObject(nullptr, "Root");
 	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	return true;
@@ -32,7 +32,13 @@ bool ModuleScene::Start()
 
 void ModuleScene::Draw()
 {
-	if (root) { root->Draw(); }
+	if (root) 
+	{ 
+		for (auto item = root->children.begin(); item != root->children.end(); ++item)
+		{
+			(*item)->Draw();
+		}
+	}
 
 	if (App->modscene->object_selected != nullptr)
 	{

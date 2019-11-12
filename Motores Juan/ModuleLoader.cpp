@@ -61,7 +61,8 @@ bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 
 	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	aiNode* node = scene->mRootNode;
-	App->modscene->root = LoadGameObject(scene, node, nullptr, file_path);
+	node->mName = file_path;
+	LoadGameObject(scene, node, App->modscene->root, file_path);
 	aiReleaseImport(scene);
 
 	return true;
@@ -73,6 +74,11 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
+		/*if(path_file.c_str() == NULL)
+		{
+			GO->name = node->mName.C_Str();
+		}*/
+
 		GO->name = node->mName.C_Str();
 		GO->parent = parent;
 
@@ -150,7 +156,7 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			{
 				if (node->mChildren[i] != nullptr)
 				{
-					GameObject* child = LoadGameObject(scene, node->mChildren[i], GO, path_file);
+					GameObject* child = LoadGameObject(scene, node->mChildren[i], GO, node->mName.C_Str());
 				}
 			}
 		}

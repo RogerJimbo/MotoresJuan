@@ -44,7 +44,13 @@ void GUI_Hierarchy::Draw(bool* open)
 {
 	if (ImGui::Begin(elem_name.c_str(), open))
 	{	
-		App->modscene->root->RecursiveHierarchy();
+		if (App->modscene->root)
+		{
+			for (auto item = App->modscene->root->children.begin(); item != App->modscene->root->children.end(); ++item)
+			{
+				(*item)->RecursiveHierarchy();
+			}
+		}
 
 		ImGui::Separator();
 		static int slices = 30; static int stacks = 30;
