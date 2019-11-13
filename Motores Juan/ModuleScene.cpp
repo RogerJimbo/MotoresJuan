@@ -8,10 +8,10 @@
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 
 #include "ImGuizmos/ImGuizmo.h"
 #include "ParShapes/par_shapes.h"
-#include "MathGeoLib/Geometry/LineSegment.h"
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -27,6 +27,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
+	camera = new ComponentCamera(nullptr);
 	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	return true;
@@ -54,6 +55,12 @@ void ModuleScene::Draw()
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) operation = ImGuizmo::SCALE;
 		}
 	}
+
+	for (auto item = gameobjects.begin(); item != gameobjects.end(); ++item)
+	{
+		(*item)->Update();
+	}
+
 }
 
 void ModuleScene::CreateCamera()
@@ -138,26 +145,39 @@ GameObject* ModuleScene::MousePicking()
 	vec4 rayWorld = inverse(ViewMatrix) * eyeCoords;
 	vec3 MouseRay = normalize(vec3(rayWorld.x, rayWorld.y, rayWorld.z));
 
-	float3 mouseray = float3(MouseRay.x, MouseRay.y, MouseRay.z);
+	mouseray = float3(MouseRay.x, MouseRay.y, MouseRay.z);
 
 	float3 direction;	//Direction has to go acording to the camera
 
 	LOG("%f %f %f", MouseRay.x, MouseRay.y, MouseRay.z);
 	LOG("%f %f %f", mouseray.x, mouseray.y, mouseray.z);
 
-	Ray* ray;
+	ray = camera->camera_frustum.UnProjectLineSegment(-MouseRay.x, -MouseRay.y);
+
+
+
+
+	if (ray.Intersects(root->BoundingBox))
+	{
+		LOG("victory");
+	}
+
+	camera->DrawFrustrum();
+	camera->DrawRay();
+
+
 	Frustum* frustum;
 
 	list<GameObject*> IntersectedGO;
 
-	for (auto iter = gameobjects.begin(); iter != gameobjects.end(); iter++)
-	{
+	//for (auto iter = gameobjects.begin(); iter != gameobjects.end(); iter++)
+	//{
 
-		// if (ray.Intersects(App->modscene->root->BoundingBox)) {}
-		//Make a recursive function to call all the children and check their AABB
+	//	// if (ray.Intersects(App->modscene->root->BoundingBox)) {}
+	//	//Make a recursive function to call all the children and check their AABB
 
 
-	}
+	//}
 
 	if (IntersectedGO.empty()) { return ret; }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "MathGeoLib/Geometry/Frustum.h"
 
 class ComponentCamera : public Component
 {
@@ -10,12 +11,14 @@ public:
 
 	bool Update();
 
-	void CreateFrustrum();
+	void DrawFrustrum();
+	void DrawRay();
 	void SetAspectRatio();
 
 public:
 
-	
+	Frustum camera_frustum;
+	float3 frustumpos;
 
 };
 

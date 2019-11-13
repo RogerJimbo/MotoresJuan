@@ -7,6 +7,7 @@
 #include "GameObject.h"
 
 #include "ImGuizmos/ImGuizmo.h"
+#include "MathGeoLib/Geometry/LineSegment.h"
 
 #define GRIDSIZE 50
 
@@ -45,11 +46,16 @@ public:
 
 	GameObject* root;
 	GameObject* object_selected = nullptr;
+	ComponentCamera* camera = nullptr;
 
 	ImGuizmo::OPERATION operation = ImGuizmo::STATIC;
 	ImGuizmo::MODE mode = ImGuizmo::LOCAL;
 
 	vector<GameObject*> gameobjects;
+
+	LineSegment ray;
+	float3 mouseray;
+
 private:
 	mat4x4 ViewMatrix;
 };

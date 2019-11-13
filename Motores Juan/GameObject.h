@@ -49,6 +49,9 @@ public:
 	GameObject* parent;
 	GameObject* selectedGO = nullptr;
 
+	ComponentCamera* camera = nullptr;
+
+
 	AABB BoundingBox;
 
 	list<Component*> components;

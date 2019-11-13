@@ -43,7 +43,6 @@ public:
 	vec3 newPos;
 
 	bool Clicked = false;
-
 private:
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	Timer timer;

@@ -3,9 +3,6 @@
 #include "ModuleCamera3D.h"
 #include <math.h>
 
-
-
-
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	CalculateViewMatrix();
@@ -95,6 +92,8 @@ update_status ModuleCamera3D::Update(float dt)
 
 	Move(newPos);
 	Camera_view = At(cameraPos, cameraPos + cameraFront, cameraUp);
+
+
 
 	return UPDATE_CONTINUE;
 }

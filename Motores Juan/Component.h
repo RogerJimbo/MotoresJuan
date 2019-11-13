@@ -12,7 +12,7 @@ public:
 
 	Component_Type GetCompType();
 
-	virtual void ComponentUpdate();
+	virtual bool Update();
 
 public:
 	Component_Type c_type;

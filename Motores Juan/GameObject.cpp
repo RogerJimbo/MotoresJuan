@@ -29,8 +29,8 @@ GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-
-	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->ComponentUpdate(); }
+	
+	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->Update(); }
 }
 
 void GameObject::Draw()
