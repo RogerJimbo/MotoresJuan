@@ -11,6 +11,7 @@ Application::Application()
 	AddModule(modscene = new ModuleScene(this));
 	AddModule(loader = new ModuleLoader(this));
 	AddModule(filesystem = new ModuleOwnFileSystem(this));
+	AddModule(moduletimer = new ModuleTimer(this));
 	AddModule(renderer3D = new ModuleRenderer3D(this)); // Renderer last!
 
 	//Main Gui Elements

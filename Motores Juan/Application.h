@@ -11,6 +11,7 @@
 #include "ModuleScene.h"
 #include "ModuleLoader.h"
 #include "ModuleOwnFileSystem.h"
+#include "ModuleTimer.h"
 
 #include "GUI_Element.h"
 #include "GUI_Config.h"
@@ -37,6 +38,7 @@ public:
 	ModuleScene* modscene;
 	ModuleLoader* loader;
 	ModuleOwnFileSystem* filesystem;
+	ModuleTimer* moduletimer;
 
 	GUI_Config* configuration = nullptr;
 	GUI_Hierarchy* hierarchy = nullptr;
