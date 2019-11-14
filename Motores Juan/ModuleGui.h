@@ -53,6 +53,7 @@ public:
 	bool console_open = true;
 	bool config_open = true;
 	bool inspector_open = true;
+	bool timer_open = true;
 
 	bool about_open = false;
 	bool hardware_open = false;
