@@ -15,7 +15,7 @@ public:
 
 public:
 	GameObject* selectedGO = nullptr;
-	ComponentMesh* meshes = nullptr;
+
 
 	int numChildren = 0;
 

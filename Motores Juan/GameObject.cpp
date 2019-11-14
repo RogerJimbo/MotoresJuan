@@ -213,8 +213,6 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 
 void GameObject::RecursiveHierarchy()
 {
-	
-
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
 	if (App->modscene->object_selected == this) { node_flags |= ImGuiTreeNodeFlags_Selected; }
@@ -244,6 +242,59 @@ void GameObject::RecursiveHierarchy()
 			(*item)->RecursiveHierarchy(); 
 		}
 		ImGui::TreePop();
+	}
+}
+
+void GameObject::RecursiveInspector()
+{
+	static bool transform = true;
+
+	for (auto item = this->children.begin(); item != this->children.end(); ++item)
+	{
+		if ((*item)->is_selected && (*item)->children.size() > 0)
+		{
+			selectedGO = (*item);
+
+			if ((ImGui::CollapsingHeader("Transform")))
+			{
+				ImGui::Checkbox("Active", &transform);
+				float pos[3] = { selectedGO->pos.x, selectedGO->pos.y, selectedGO->pos.z };
+				float rot[3] = { selectedGO->rot.x, selectedGO->rot.y, selectedGO->rot.z };
+				float scale[3] = { selectedGO->scale.x, selectedGO->scale.y, selectedGO->scale.z };
+
+				ImGui::DragFloat3("Position", pos, 0.25f);
+				ImGui::SliderFloat3("Rotation", rot, 0.0f, 360.0f);
+				ImGui::DragFloat3("Scale", scale, 0.25f, 1.0f, 1000.0f);
+
+				ImGuiIO& io = ImGui::GetIO();
+				io.WantCaptureKeyboard;
+			}
+
+			if ((ImGui::CollapsingHeader("Mesh")) && (*item)->components.size() > 0)
+			{
+				meshes = new ComponentMesh();
+				for (auto item = selectedGO->children.begin(); item != selectedGO->children.end(); ++item)
+				{
+					ComponentMesh*auxmesh = (ComponentMesh*)(*item)->GetComponent(MESH);
+					meshes->num_vertices += auxmesh->num_vertices;
+				}
+
+				ImGui::Text("Number of vertices: %d", meshes->num_vertices);
+				ImGui::Text("Number of children: %d", selectedGO->children.size());
+			}
+
+			if ((ImGui::CollapsingHeader("Texture")))
+			{
+				ImGui::Text("Texture Width: %.01f", App->loader->TextureSize.x);
+				ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);
+				ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
+			}
+		}
+
+		if ((*item)->children.size() > 1)
+		{
+			(*item)->RecursiveInspector();
+		}
 	}
 }
 

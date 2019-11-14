@@ -42,6 +42,7 @@ public:
 	AABB GetBoundingBox(GameObject* mesh);
 
 	void RecursiveHierarchy();
+	void RecursiveInspector();
 
 	void SelectGO();
 	void DeselectGO();
@@ -54,8 +55,10 @@ public:
 
 	ComponentCamera* camera = nullptr;
 
+	ComponentMesh* meshes = nullptr;
+
 	vec3 pos = { 0.0f, 0.0f, 0.0f };
-	vec3 scale = { 0.0f, 0.0f, 0.0f };
+	vec3 scale = { 1.0f, 1.0f, 1.0f };
 	Quat rot = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	AABB BoundingBox;
