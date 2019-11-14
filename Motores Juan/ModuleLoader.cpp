@@ -10,6 +10,8 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
+#include "MathGeoLib/MathGeoLib.h"
+
 #include <vector>
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -74,7 +76,15 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		//if(path_file.c_str() == NULL) GO->name = node->mName.C_Str();
+		aiVector3D position;
+		aiVector3D size;
+		aiQuaternion rotation;
+
+		node->mTransformation.Decompose(size, rotation, position);
+
+		vec3 pos = { position.x, position.y, position.z };
+		vec3 scale = { size.x, size.y, size.z };
+		Quat rot = { rotation.x, rotation.y, rotation.z, rotation.w };
 
 		GO->name = node->mName.C_Str();
 		GO->parent = parent;
@@ -89,6 +99,10 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			newGO->name = mesh->mName.C_Str();
 			newGO->parent = GO;
 			GO->children.push_back(newGO);
+
+			newGO->pos = pos;
+			newGO->scale = scale;
+			newGO->rot = rot;
 
 			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
 

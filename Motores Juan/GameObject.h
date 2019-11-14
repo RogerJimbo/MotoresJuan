@@ -6,7 +6,9 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "glmath.h"
 
+#include "MathGeoLib/MathGeoLib.h"
 #include "MathGeoLib/Geometry/AABB.h"
 
 struct Mesh;
@@ -37,6 +39,7 @@ public:
 	void SelectChildren(bool selected);
 
 	Component* GetComponent(Component_Type comp_type);
+	AABB GetBoundingBox(GameObject* mesh);
 
 	void RecursiveHierarchy();
 
@@ -51,8 +54,13 @@ public:
 
 	ComponentCamera* camera = nullptr;
 
+	vec3 pos = { 0.0f, 0.0f, 0.0f };
+	vec3 scale = { 0.0f, 0.0f, 0.0f };
+	Quat rot = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	AABB BoundingBox;
+	AABB obb;
+	AABB aabb;
 
 	list<Component*> components;
 	vector<GameObject*> children;

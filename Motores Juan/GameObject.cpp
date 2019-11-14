@@ -17,7 +17,10 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-GameObject::GameObject() {}
+GameObject::GameObject() 
+{
+
+}
 
 GameObject::GameObject(GameObject* parent, string name)
 {
@@ -79,8 +82,11 @@ void GameObject::Draw()
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			
 				BoundingBox.SetNegativeInfinity();
+				BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);	
 
-				BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);			
+				//obb = mesh->GetBoundingBox();
+				//obb.Transform(GetComponent<C_Transform>()->GetGlobalTransform());
+
 				if (!App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
 			}
 		}
@@ -138,6 +144,11 @@ void GameObject::DrawBoundingBox(const AABB& boundingbox)
 	glEnd();
 	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
+}
+
+AABB GameObject::GetBoundingBox(GameObject* mesh)
+{
+	return mesh->BoundingBox;
 }
 
 void GameObject::SelectChildren(bool selected)
@@ -210,9 +221,24 @@ void GameObject::RecursiveHierarchy()
 
 	bool opened = ImGui::TreeNodeEx(this->name.c_str(), node_flags);
 
+	if (ImGui::IsItemClicked(0))
+	{
+		if (App->modscene->object_selected != this)
+		{
+			if (App->modscene->object_selected != nullptr)
+			{
+				App->modscene->object_selected->is_selected = false;
+				for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(false); }
+			}
+			App->modscene->object_selected = this;
+			App->modscene->object_selected->is_selected = true;
+			for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
+		}
+	}
+
 	if (opened)
 	{
-		this->SelectGO();
+		/*this->SelectGO();*/
 		for (auto item = children.begin(); item != children.end(); ++item) 
 		{ 
 			(*item)->RecursiveHierarchy(); 
