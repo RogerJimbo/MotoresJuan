@@ -1,5 +1,6 @@
 #pragma once
 #include "Globals.h"
+#include "Module.h"
 #include "Timer.h"
 
 enum GameState { STOP, PAUSE, PLAY };
@@ -55,7 +56,7 @@ public:
 
 	float getRealTime() { return RealTime.ReadTime(); }
 	float getGameTime() { return GameTime.ReadTime(); }
-	float getGameTime() { return DeltaTimer.ReadTime(); }
+	float getGameDeltaTime() { return DeltaTimer.ReadTime(); }
 
 	float GetDeltaTime();
 	float GetGameDeltaTime() { return GameTime.ReadDeltaTime(); }
@@ -66,7 +67,6 @@ public:
 
 private:
 
-	void HandleContinue();
 	void HandlePlayMode();
 	void HandlePauseMode();
 	void HandleStopMode();
@@ -84,4 +84,3 @@ private:
 	float dt;
 
 };
-

@@ -87,7 +87,6 @@ update_status ModuleTimer::Update(float dt)
 		break;
 	}
 
-	HandleContinue();
 
 	GameTime.Update(); 
 
