@@ -61,7 +61,6 @@ public:
 	float GetDeltaTime();
 	float GetGameDeltaTime() { return GameTime.ReadDeltaTime(); }
 
-
 	int getFrameCount() { return framecounter; }
 	void setTimeScale(float scale) { GameTime.setScale(scale); }
 
@@ -82,5 +81,4 @@ private:
 	uint framecounter = 0;
 
 	float dt;
-
 };

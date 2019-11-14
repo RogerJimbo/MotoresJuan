@@ -14,14 +14,35 @@
 #include "ImGui\imgui_impl_sdl.h"
 #include "ImGui\imgui_impl_opengl2.h"
 
+#define MARGIN 85
+
 GUI_Scene::GUI_Scene(Application* app, bool start_enabled) : GUI_Element(app, start_enabled) { elem_name = "Scene"; }
 
 GUI_Scene::~GUI_Scene() {}
 
 void GUI_Scene::Draw(bool* open)
-{
-	if (ImGui::Begin(elem_name.c_str(), open, ImGuiWindowFlags_NoScrollbar))
+{	
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar;
+
+	if (ImGui::Begin(elem_name.c_str(), open, flags))
 	{
+		if (ImGui::BeginMenuBar())
+		{
+			ImGui::SetCursorPosX((ImGui::GetWindowWidth() - MARGIN) / 2);
+
+			if (ImGui::ArrowButton("play", ImGuiDir_Right)) 
+			{
+				if(App->moduletimer->GetGameState() == GameState::STOP) { App->moduletimer->Play(); }
+				else if (App->moduletimer->GetGameState() == GameState::PLAY) { App->moduletimer->Pause(); }
+			}
+
+			if (ImGui::ButtonEx("| |")) 
+			{
+				App->moduletimer->Stop();
+			}
+			ImGui::EndMenuBar();
+		}
+
 		vec2 win_size = (ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
 		vec2 screen_size = (App->window->window_width, App->window->window_height);
 		
@@ -34,7 +55,9 @@ void GUI_Scene::Draw(bool* open)
 		if (App->modscene->object_selected) { App->modscene->Guizmos(App->modscene->operation); }
 	
 		ImGui::SetCursorPos({ 0,0 });
+
 	}
+
 	ImGui::End();
 }
 
