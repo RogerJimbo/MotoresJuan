@@ -19,6 +19,7 @@
 #include "GUI_Hierarchy.h"
 #include "GUI_Scene.h"
 #include "GUI_Inspector.h"
+#include "GUI_TimerManager.h"
 
 #include "Parson\parson.h"
 
@@ -45,6 +46,7 @@ public:
 	GUI_Scene* scene = nullptr;
 	GUI_Console* console = nullptr;
 	GUI_Inspector* inspector = nullptr;
+	GUI_TimerManager* timermanag = nullptr;
 
 private:
 	Timer	ms_timer;
