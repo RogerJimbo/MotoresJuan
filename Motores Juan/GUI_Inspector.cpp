@@ -19,7 +19,10 @@ void GUI_Inspector::Draw(bool* open)
 		for (auto item = App->modscene->root->children.begin(); item != App->modscene->root->children.end(); ++item)
 			if ((*item)->is_selected) { name = (*item)->name.c_str(); }
 
-		App->modscene->root->RecursiveInspector();
+		if (App->modscene->object_selected)
+		{
+			App->modscene->object_selected->ShowInspectorInfo();
+		}
 
 		ImGui::Text(name);
 		ImGui::Separator();

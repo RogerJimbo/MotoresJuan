@@ -42,7 +42,7 @@ public:
 	AABB GetBoundingBox(GameObject* mesh);
 
 	void RecursiveHierarchy();
-	void RecursiveInspector();
+	void ShowInspectorInfo();
 
 	void SelectGO();
 	void DeselectGO();

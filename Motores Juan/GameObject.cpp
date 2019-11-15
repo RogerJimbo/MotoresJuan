@@ -32,7 +32,6 @@ GameObject::~GameObject() {}
 
 void GameObject::Update()
 {
-	
 	for (list<Component*>::iterator iter = components.begin(); iter != components.end(); ++iter) { (*iter)->Update(); }
 }
 
@@ -62,7 +61,7 @@ void GameObject::Draw()
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 			glDisableClientState(GL_VERTEX_ARRAY);
 
-			if (is_selected)
+			if (App->modscene->object_selected)
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -219,24 +218,13 @@ void GameObject::RecursiveHierarchy()
 
 	bool opened = ImGui::TreeNodeEx(this->name.c_str(), node_flags);
 
-	if (ImGui::IsItemClicked(0))
+	if (ImGui::IsItemClicked())
 	{
-		if (App->modscene->object_selected != this)
-		{
-			if (App->modscene->object_selected != nullptr)
-			{
-				App->modscene->object_selected->is_selected = false;
-				for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(false); }
-			}
-			App->modscene->object_selected = this;
-			App->modscene->object_selected->is_selected = true;
-			for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
-		}
+		App->modscene->object_selected = this;
 	}
 
 	if (opened)
 	{
-		/*this->SelectGO();*/
 		for (auto item = children.begin(); item != children.end(); ++item) 
 		{ 
 			(*item)->RecursiveHierarchy(); 
@@ -245,62 +233,46 @@ void GameObject::RecursiveHierarchy()
 	}
 }
 
-void GameObject::RecursiveInspector()
+void GameObject::ShowInspectorInfo()
 {
-	static bool transform = true;
-
-	for (auto item = this->children.begin(); item != this->children.end(); ++item)
+	if (ImGui::CollapsingHeader("Transform"))
 	{
-		if ((*item)->is_selected && (*item)->children.size() > 0)
+		float pos[3] = { this->pos.x, this->pos.y, this->pos.z };
+		float rot[3] = { this->rot.x, this->rot.y, this->rot.z };
+		float scale[3] = { this->scale.x, this->scale.y, this->scale.z };
+	
+		ImGui::DragFloat3("Position", pos, 0.25f);
+		ImGui::SliderFloat3("Rotation", rot, 0.0f, 360.0f);
+		ImGui::DragFloat3("Scale", scale, 0.25f, 1.0f, 1000.0f);
+	
+		ImGuiIO& io = ImGui::GetIO();
+		io.WantCaptureKeyboard;
+	}
+	
+	if (ImGui::CollapsingHeader("Mesh"))
+	{
+		meshes = new ComponentMesh();
+		for (auto iter = this->children.begin(); iter != this->children.end(); ++iter)
 		{
-			selectedGO = (*item);
-
-			if ((ImGui::CollapsingHeader("Transform")))
-			{
-				ImGui::Checkbox("Active", &transform);
-				float pos[3] = { selectedGO->pos.x, selectedGO->pos.y, selectedGO->pos.z };
-				float rot[3] = { selectedGO->rot.x, selectedGO->rot.y, selectedGO->rot.z };
-				float scale[3] = { selectedGO->scale.x, selectedGO->scale.y, selectedGO->scale.z };
-
-				ImGui::DragFloat3("Position", pos, 0.25f);
-				ImGui::SliderFloat3("Rotation", rot, 0.0f, 360.0f);
-				ImGui::DragFloat3("Scale", scale, 0.25f, 1.0f, 1000.0f);
-
-				ImGuiIO& io = ImGui::GetIO();
-				io.WantCaptureKeyboard;
-			}
-
-			if ((ImGui::CollapsingHeader("Mesh")) && (*item)->components.size() > 0)
-			{
-				meshes = new ComponentMesh();
-				for (auto item = selectedGO->children.begin(); item != selectedGO->children.end(); ++item)
-				{
-					ComponentMesh*auxmesh = (ComponentMesh*)(*item)->GetComponent(MESH);
-					meshes->num_vertices += auxmesh->num_vertices;
-				}
-
-				ImGui::Text("Number of vertices: %d", meshes->num_vertices);
-				ImGui::Text("Number of children: %d", selectedGO->children.size());
-			}
-
-			if ((ImGui::CollapsingHeader("Texture")))
-			{
-				ImGui::Text("Texture Width: %.01f", App->loader->TextureSize.x);
-				ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);
-				ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
-			}
+			ComponentMesh*auxmesh = (ComponentMesh*)this->GetComponent(MESH);
+			meshes->num_vertices += auxmesh->num_vertices;
 		}
-
-		if ((*item)->children.size() > 1)
-		{
-			(*item)->RecursiveInspector();
-		}
+	
+		ImGui::Text("Number of vertices: %d", meshes->num_vertices);
+		ImGui::Text("Number of children: %d", this->children.size());
+	}
+	
+	if (ImGui::CollapsingHeader("Texture"))
+	{
+		ImGui::Text("Texture Width: %.01f", App->loader->TextureSize.x);
+		ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);
+		ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
 	}
 }
 
 void GameObject::SelectGO()
 {
-	if (ImGui::IsItemClicked(0))
+	/*if (ImGui::IsItemClicked(0))
 	{
 		if (App->modscene->object_selected != this)
 		{
@@ -313,7 +285,7 @@ void GameObject::SelectGO()
 			App->modscene->object_selected->is_selected = true;
 			for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
 		}
-	}
+	}*/
 }
 
 void GameObject::DeselectGO()

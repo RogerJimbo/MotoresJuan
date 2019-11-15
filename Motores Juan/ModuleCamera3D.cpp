@@ -85,10 +85,10 @@ update_status ModuleCamera3D::Update(float dt)
 		if (mouse_y > 0)   cameraPos -= mspeed * rotate(Y, DeltaX, vec3(1.0f, 0.0f, 0.0f));
 	}
 
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
+	/*if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
 	{
 		if (ImGuizmo::IsOver() == false) { App->modscene->SelectGameObject(App->modscene->MousePicking()); }
-	}
+	}*/
 
 	Move(newPos);
 	Camera_view = At(cameraPos, cameraPos + cameraFront, cameraUp);
