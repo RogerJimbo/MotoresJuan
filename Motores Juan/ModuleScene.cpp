@@ -40,6 +40,10 @@ void ModuleScene::Draw()
 		for (auto item = root->children.begin(); item != root->children.end(); ++item)
 		{
 			(*item)->Draw();
+			if ((*item)->box)
+			{
+				App->renderer3D->DrawBoundingBox((*item)->GetBoundingBox());
+			}
 		}
 	}
 
@@ -101,7 +105,7 @@ void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 	for (int i = 0; i < primitive->num_indices; i++) primitive->indices[i] = (uint)data->triangles[i];
 
 	//todo roger
-	gameobject->DrawBoundingBox(gameobject->BoundingBox);
+	App->renderer3D->DrawBoundingBox(gameobject->BoundingBox);
 
 	LOG("%s Primitive created with %d vertices and %d indices.", type, primitive->num_vertices, primitive->num_vertices);
 

@@ -35,17 +35,16 @@ public:
 	void Update();
 
 	void Draw();
-	void DrawBoundingBox(const AABB& BB);
+	
 	void SelectChildren(bool selected);
 
 	Component* GetComponent(Component_Type comp_type);
-	AABB GetBoundingBox(GameObject* mesh);
+	AABB GetBoundingBox();
 
 	void RecursiveHierarchy();
 	void ShowInspectorInfo();
 
-	void SelectGO();
-	void DeselectGO();
+	void RecalculateAABB();
 
 public:
 	string name;
@@ -69,6 +68,8 @@ public:
 	vector<GameObject*> children;
 
 	bool is_selected = false;
+	bool active = true;
+	bool box = false;
 };
 
 #endif 

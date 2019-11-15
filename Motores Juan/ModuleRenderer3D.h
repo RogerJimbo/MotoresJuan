@@ -5,6 +5,9 @@
 #include "Light.h"
 #include "ModuleLoader.h"
 
+#include "MathGeoLib/MathGeoLib.h"
+#include "MathGeoLib/Geometry/AABB.h"
+
 #include <vector>
 
 #define MAX_LIGHTS 8
@@ -23,6 +26,7 @@ public:
 	bool CleanUp();
 	void OnResize(int width, int height);
 	void ActivateWireframe();
+	void DrawBoundingBox(const AABB& BB);
 
 public:
 

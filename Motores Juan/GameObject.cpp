@@ -19,13 +19,15 @@
 
 GameObject::GameObject() 
 {
-
+	BoundingBox.SetNegativeInfinity();
 }
 
 GameObject::GameObject(GameObject* parent, string name)
 {
 	this->parent = parent;
 	this->name = name;
+
+	BoundingBox.SetNegativeInfinity();
 }
 
 GameObject::~GameObject() {}
@@ -80,13 +82,15 @@ void GameObject::Draw()
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			
-				BoundingBox.SetNegativeInfinity();
-				BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);	
+				this->BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);	
 
 				//obb = mesh->GetBoundingBox();
 				//obb.Transform(GetComponent<C_Transform>()->GetGlobalTransform());
 
-				if (!App->renderer3D->boundingbox) { DrawBoundingBox(BoundingBox); }
+				if (!App->renderer3D->boundingbox) 
+				{
+					App->renderer3D->DrawBoundingBox(BoundingBox); 
+				}
 			}
 		}
 
@@ -97,57 +101,9 @@ void GameObject::Draw()
 	for (auto iter = children.begin(); iter != children.end(); ++iter) { (*iter)->Draw(); }
 }
 
-void GameObject::DrawBoundingBox(const AABB& boundingbox)
+AABB GameObject::GetBoundingBox()
 {
-	glLineWidth(2.f);
-	glColor3f(255,255, 255);
-
-	glBegin(GL_LINES);
-
-	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
-	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
-
-	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
-	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
-
-	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
-	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
-
-	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
-	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
-
-	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
-	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
-
-	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
-	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
-
-	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
-	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
-
-	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
-	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
-
-	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
-	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
-
-	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
-	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
-
-	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
-	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
-
-	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
-	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
-
-	glEnd();
-	glColor3f(1, 1, 1);
-	glLineWidth(1.0f);
-}
-
-AABB GameObject::GetBoundingBox(GameObject* mesh)
-{
-	return mesh->BoundingBox;
+	return this->BoundingBox;
 }
 
 void GameObject::SelectChildren(bool selected)
@@ -210,6 +166,18 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 		if ((*item)->GetCompType() == comp_type) return (*item);	
 }
 
+void GameObject::RecalculateAABB()
+{
+	if (ComponentMesh* mesh = (ComponentMesh*)GetComponent(MESH))
+	{
+		BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);
+	}
+	for (auto item = children.begin(); item != children.end(); item++)
+	{
+		BoundingBox.Enclose((*item)->BoundingBox);
+	}
+}
+
 void GameObject::RecursiveHierarchy()
 {
 	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
@@ -235,6 +203,10 @@ void GameObject::RecursiveHierarchy()
 
 void GameObject::ShowInspectorInfo()
 {
+	ImGui::Text(this->name.c_str());
+	ImGui::Separator();
+	ImGui::Separator();
+
 	if (ImGui::CollapsingHeader("Transform"))
 	{
 		float pos[3] = { this->pos.x, this->pos.y, this->pos.z };
@@ -254,7 +226,7 @@ void GameObject::ShowInspectorInfo()
 		meshes = new ComponentMesh();
 		for (auto iter = this->children.begin(); iter != this->children.end(); ++iter)
 		{
-			ComponentMesh*auxmesh = (ComponentMesh*)this->GetComponent(MESH);
+			ComponentMesh* auxmesh = (ComponentMesh*)(*iter)->GetComponent(MESH);
 			meshes->num_vertices += auxmesh->num_vertices;
 		}
 	
@@ -268,27 +240,12 @@ void GameObject::ShowInspectorInfo()
 		ImGui::Text("Texture Height: %.01f", App->loader->TextureSize.y);
 		ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
 	}
-}
 
-void GameObject::SelectGO()
-{
-	/*if (ImGui::IsItemClicked(0))
+	if (ImGui::Checkbox("Active", &this->active))
 	{
-		if (App->modscene->object_selected != this)
-		{
-			if (App->modscene->object_selected != nullptr)
-			{
-				App->modscene->object_selected->is_selected = false;
-				for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(false); }
-			}
-			App->modscene->object_selected = this;
-			App->modscene->object_selected->is_selected = true;
-			for (int i = 0; i < App->modscene->object_selected->children.size(); ++i) { App->modscene->object_selected->children[i]->SelectChildren(true); }
-		}
-	}*/
-}
 
-void GameObject::DeselectGO()
-{
+	}
+	ImGui::SameLine();
 
+	ImGui::Checkbox("Draw AABB", &this->box);
 }
