@@ -38,7 +38,7 @@ public:
 	ModuleGui* modulegui;
 	ModuleScene* modscene;
 	ModuleLoader* loader;
-	ModuleOwnFileSystem* filesystem;
+	ModuleFileSystem* filesystem;
 	ModuleTimer* moduletimer;
 
 	GUI_Config* configuration = nullptr;
