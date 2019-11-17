@@ -82,15 +82,13 @@ void GameObject::Draw()
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			
-				this->BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);	
 
 				//obb = mesh->GetBoundingBox();
 				//obb.Transform(GetComponent<C_Transform>()->GetGlobalTransform());
 
-				if (!App->renderer3D->boundingbox) 
-				{
-					App->renderer3D->DrawBoundingBox(BoundingBox); 
-				}
+				
+				App->renderer3D->DrawBoundingBox(BoundingBox); 
+				
 			}
 		}
 
@@ -248,4 +246,5 @@ void GameObject::ShowInspectorInfo()
 	ImGui::SameLine();
 
 	ImGui::Checkbox("Draw AABB", &this->box);
+
 }

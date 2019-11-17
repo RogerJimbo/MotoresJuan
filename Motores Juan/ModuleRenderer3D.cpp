@@ -152,7 +152,7 @@ void ModuleRenderer3D::ActivateWireframe()
 
 void ModuleRenderer3D::DrawBoundingBox(const AABB& boundingbox)
 {
-	if (boundingbox.IsFinite())
+	if (boundingbox.IsFinite() && App->modscene->object_selected->box == true)
 	{
 		glLineWidth(2.f);
 		glColor3f(255, 255, 255);
