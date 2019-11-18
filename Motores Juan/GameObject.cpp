@@ -164,15 +164,19 @@ Component* GameObject::GetComponent(Component_Type comp_type)
 		if ((*item)->GetCompType() == comp_type) return (*item);	
 }
 
-void GameObject::RecalculateAABB()
+void GameObject::CalculateAABB()
 {
-	if (ComponentMesh* mesh = (ComponentMesh*)GetComponent(MESH))
+	if (ComponentMesh* mesh = (ComponentMesh*)this->GetComponent(MESH))
 	{
 		BoundingBox.Enclose((float3*)mesh->vertices, mesh->num_vertices);
 	}
-	for (auto item = children.begin(); item != children.end(); item++)
+	for (auto item = this->children.begin(); item != this->children.end(); item++)
 	{
 		BoundingBox.Enclose((*item)->BoundingBox);
+	}
+	if (this->parent)
+	{
+		this->parent->CalculateAABB();
 	}
 }
 

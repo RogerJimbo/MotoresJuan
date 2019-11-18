@@ -44,7 +44,7 @@ public:
 	void RecursiveHierarchy();
 	void ShowInspectorInfo();
 
-	void RecalculateAABB();
+	void CalculateAABB();
 
 public:
 	string name;

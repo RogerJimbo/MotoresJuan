@@ -154,7 +154,7 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 					LOG("%s", path_file.c_str());
 				}
 
-				newGO->BoundingBox.Enclose((float3*)new_mesh->vertices, new_mesh->num_vertices);
+				newGO->CalculateAABB();
 
 				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
