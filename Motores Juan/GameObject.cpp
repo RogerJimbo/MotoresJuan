@@ -87,7 +87,7 @@ void GameObject::Draw()
 				//obb.Transform(GetComponent<C_Transform>()->GetGlobalTransform());
 
 				
-				App->renderer3D->DrawBoundingBox(BoundingBox); 
+				App->renderer3D->DrawBoundingBox(App->modscene->object_selected->BoundingBox); 
 				
 			}
 		}
