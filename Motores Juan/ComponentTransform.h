@@ -14,6 +14,9 @@ public:
 	void SetLocalMatrix();
 	void SetGlobalMatrix(GameObject* GO);
 
+	float4x4 GetLocalMatrix();
+	float4x4 GetGlobalMatrix();
+
 public:
 	float3 position;
 	Quat rotation;

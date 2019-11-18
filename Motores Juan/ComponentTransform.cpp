@@ -45,3 +45,13 @@ void ComponentTransform::SetGlobalMatrix(GameObject* GO)
 		SetGlobalMatrix(*item);
 	}
 }
+
+float4x4 ComponentTransform::GetLocalMatrix()
+{
+	return local_matrix;
+}
+
+float4x4 ComponentTransform::GetGlobalMatrix()
+{
+	return global_matrix;
+}
