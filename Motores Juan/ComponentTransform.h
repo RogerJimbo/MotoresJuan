@@ -2,6 +2,7 @@
 #define __COMPONENT_TRANSFORM_H__
 
 #include "Component.h"
+#include "GameObject.h"
 #include "MathGeoLib/MathGeoLib.h"
 
 class ComponentTransform : public Component
@@ -11,7 +12,7 @@ public:
 	~ComponentTransform();
 
 	void SetLocalMatrix();
-	void SetGlobalMatrix();
+	void SetGlobalMatrix(GameObject* GO);
 
 public:
 	float3 position;

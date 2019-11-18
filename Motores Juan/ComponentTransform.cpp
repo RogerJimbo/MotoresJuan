@@ -23,10 +23,25 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::SetLocalMatrix()
 {
-
+	this->local_matrix.Set(float4x4::FromTRS(position, rotation, scale));
 }
 
-void ComponentTransform::SetGlobalMatrix()
+void ComponentTransform::SetGlobalMatrix(GameObject* GO)
 {
-
+	for (auto item = GO->children.begin(); item != GO->children.end(); ++item)
+	{
+		ComponentTransform* transform = (ComponentTransform*)GO->GetComponent(TRANSFORM);
+		if (transform != nullptr)
+		{
+			if (GO->parent == nullptr)
+			{
+				transform->global_matrix = transform->local_matrix;
+			}
+			else
+			{
+				transform->global_matrix = ((ComponentTransform*)GO->parent->GetComponent(TRANSFORM))->global_matrix*transform->local_matrix;
+			}
+		}
+		SetGlobalMatrix(*item);
+	}
 }
