@@ -20,3 +20,13 @@ ComponentTransform::~ComponentTransform()
 	local_matrix.SetIdentity();
 	global_matrix.SetIdentity();
 }
+
+void ComponentTransform::SetLocalMatrix()
+{
+
+}
+
+void ComponentTransform::SetGlobalMatrix()
+{
+
+}

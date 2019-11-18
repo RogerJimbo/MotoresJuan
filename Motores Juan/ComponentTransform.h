@@ -10,9 +10,12 @@ public:
 	ComponentTransform(GameObject* parent);
 	~ComponentTransform();
 
+	void SetLocalMatrix();
+	void SetGlobalMatrix();
+
 public:
 	float3 position;
-	float3 rotation;
+	Quat rotation;
 	float3 scale;
 
 	float4x4 local_matrix;

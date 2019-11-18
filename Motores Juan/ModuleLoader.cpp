@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "ComponentMesh.h"
+#include "ComponentTransform.h"
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -82,8 +83,8 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 
 		node->mTransformation.Decompose(size, rotation, position);
 
-		vec3 pos = { position.x, position.y, position.z };
-		vec3 scale = { size.x, size.y, size.z };
+		float3 pos = { position.x, position.y, position.z };
+		float3 scale = { size.x, size.y, size.z };
 		Quat rot = { rotation.x, rotation.y, rotation.z, rotation.w };
 
 		GO->name = node->mName.C_Str();
@@ -100,9 +101,11 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			newGO->parent = GO;
 			GO->children.push_back(newGO);
 
-			newGO->pos = pos;
-			newGO->scale = scale;
-			newGO->rot = rot;
+			ComponentTransform* transform = (ComponentTransform*)newGO->AddComponent(TRANSFORM);
+
+			transform->position = pos;
+			transform->scale = scale;
+			transform->rotation = rot;
 
 			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
 
