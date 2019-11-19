@@ -513,9 +513,6 @@
     <ClInclude Include="ModuleTimer.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="GUI_TimerManager.h">
-      <Filter>Sources\ImGui Elements</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -727,9 +724,6 @@
     </ClCompile>
     <ClCompile Include="ModuleTimer.cpp">
       <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_TimerManager.cpp">
-      <Filter>Sources\ImGui Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

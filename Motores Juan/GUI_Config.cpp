@@ -81,6 +81,19 @@ void GUI_Config::Draw(bool* open)
 			ImGui::SliderInt("Grid Size", &App->scene->grid_size, 0, 100);
 		}
 
+		if (ImGui::CollapsingHeader("Time Manager"))
+		{
+			if (ImGui::Begin(elem_name.c_str(), open))
+			{
+				ImGui::Text("Real Time %.2f", App->moduletimer->getRealTime() / 1000);
+				ImGui::Text("Frame Count: %i", App->moduletimer->getFrameCount());
+				ImGui::Text("Delta Time: %.2f", App->moduletimer->getGameDeltaTime());
+				ImGui::Text("Delta Time: %f", App->moduletimer->GetGameDeltaTime());
+
+				ImGui::End();
+			}
+		}
+
 		if (ImGui::CollapsingHeader("Global Camera"))
 		{
 			ImGuiIO& io = ImGui::GetIO();
