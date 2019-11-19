@@ -74,8 +74,6 @@ update_status ModuleGui::Update(float dt)
 	if (console_open)				App->console->Draw(&console_open);
 	if (config_open)				App->configuration->Draw(&config_open);
 	if (inspector_open)			App->inspector->Draw(&inspector_open);
-	if (timer_open)					App->timermanag->Draw(&timer_open);
-
 	if (about_open)					this->CreateAboutWindow(&about_open); 
 	if (hardware_open)			this->CreateHardwareWindow(&hardware_open);
 	if (controls_open)				this->CreateControlsWindow(&controls_open);

@@ -135,7 +135,6 @@
     <ClInclude Include="GUI_Hierarchy.h" />
     <ClInclude Include="GUI_Inspector.h" />
     <ClInclude Include="GUI_Scene.h" />
-    <ClInclude Include="GUI_TimerManager.h" />
     <ClInclude Include="ImGuizmos\ImCurveEdit.h" />
     <ClInclude Include="ImGuizmos\ImGradient.h" />
     <ClInclude Include="ImGuizmos\ImGuizmo.h" />
@@ -242,7 +241,6 @@
     <ClCompile Include="GUI_Hierarchy.cpp" />
     <ClCompile Include="GUI_Inspector.cpp" />
     <ClCompile Include="GUI_Scene.cpp" />
-    <ClCompile Include="GUI_TimerManager.cpp" />
     <ClCompile Include="ImGuizmos\ImCurveEdit.cpp" />
     <ClCompile Include="ImGuizmos\ImGradient.cpp" />
     <ClCompile Include="ImGuizmos\ImGuizmo.cpp" />
