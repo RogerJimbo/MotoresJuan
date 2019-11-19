@@ -85,7 +85,12 @@ void GameObject::Draw()
 
 				//obb = mesh->GetBoundingBox();
 				//obb.Transform(GetComponent<C_Transform>()->GetGlobalTransform());
+				/*ComponentTransform* transform = (ComponentTransform*)this->GetComponent(TRANSFORM);
+				obb = this->GetBoundingBox();
+				obb.Transform(transform->GetGlobalMatrix());
 
+				aabb.SetNegativeInfinity();
+				aabb.Enclose(obb);*/
 				
 				App->renderer3D->DrawBoundingBox(App->modscene->object_selected->BoundingBox); 
 				
@@ -173,10 +178,7 @@ void GameObject::CalculateAABB()
 	for (auto item = this->children.begin(); item != this->children.end(); item++)
 	{
 		BoundingBox.Enclose((*item)->BoundingBox);
-	}
-	if (this->parent)
-	{
-		this->parent->CalculateAABB();
+		(*item)->CalculateAABB();
 	}
 }
 

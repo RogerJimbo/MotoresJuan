@@ -40,10 +40,7 @@ void ModuleScene::Draw()
 		for (auto item = root->children.begin(); item != root->children.end(); ++item)
 		{
 			(*item)->Draw();
-			if ((*item)->box)
-			{
-				App->renderer3D->DrawBoundingBox((*item)->GetBoundingBox());
-			}
+			(*item)->CalculateAABB();
 		}
 	}
 
