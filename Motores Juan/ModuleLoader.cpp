@@ -77,65 +77,93 @@ bool ModuleLoader::ImportModel(string path, string fname)
 
 	if (scene && scene->HasMeshes())
 	{
-		GameObject* new_model = App->modscene->root->AddChildren(fname);
+		GameObject* gameobject = App->modscene->root->AddChildren(fname);
+		LoadNodes(scene->mRootNode, scene, gameobject, path);
 	}
 	else LOG("Error loading scene.")
 
-	return true;
-}
-
-bool ModuleLoader::Import(const string& pFile, GameObject* parent)
-{
-	string file_path = pFile;
-	path = pFile.c_str();
-
-	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
-	aiNode* node = scene->mRootNode;
-	node->mName = file_path;
-	LoadGameObject(scene, node, App->modscene->root, file_path);
 	aiReleaseImport(scene);
 
 	return true;
 }
 
-GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, GameObject* parent, string path_file)
+bool ModuleLoader::LoadNodes(aiNode* node, const aiScene* scene, GameObject* parent, std::string& path)
 {
-	GameObject* GO = new GameObject();
+	GameObject* gameobject;
+	gameobject = parent->AddChildren(node->mName.C_Str());
+
+	if(node->mNumMeshes > 0)
+	{
+		for (int iter = 0; iter < node->mNumMeshes; ++iter)
+		{
+			LoadGameObject(scene->mMeshes[node->mMeshes[iter]], scene, node, App->modscene->root, path);
+		}
+	}
+
+	if (node->mTransformation.IsIdentity() == false)
+	{
+		LoadTransformations(node, gameobject);
+	}
+
+	for (int iter = 0; iter < node->mNumChildren; ++iter)
+	{
+		LoadNodes(node->mChildren[iter], scene, gameobject, path);
+	}
+
+	return true;
+}
+
+bool ModuleLoader::Import(const string& pFile, GameObject* parent)	//TODO
+{
+	string file_path = pFile;
+	path = pFile.c_str();
+
+	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+
+	aiNode* node = scene->mRootNode;
+	node->mName = file_path;
+	//LoadGameObject(scene->mMeshes, scene, node, App->modscene->root, file_path);
+	aiReleaseImport(scene);
+
+	return true;
+}
+
+void ModuleLoader::LoadTransformations(aiNode* node, GameObject* gameobject)
+{
+	aiVector3D position;
+	aiVector3D size;
+	aiQuaternion rotation;
+
+	node->mTransformation.Decompose(size, rotation, position);
+
+	float3 Position = { position.x, position.y, position.z };
+	float3 Scalation = { size.x, size.y, size.z };
+	Quat Rotation = { rotation.x, rotation.y, rotation.z, rotation.w };
+
+	ComponentTransform* transform = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
+
+	transform->setPosition(Position);
+	transform->setQuaternion(Rotation);
+	transform->setScale(Scalation);
+}
+
+GameObject* ModuleLoader::LoadGameObject(aiMesh* mesh, const aiScene* scene, aiNode* node, GameObject* parent, string path_file)
+{
+	GameObject* gameobject = new GameObject();
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		aiVector3D position;
-		aiVector3D size;
-		aiQuaternion rotation;
+		gameobject->name = node->mName.C_Str();
+		gameobject->parent = parent;
 
-		node->mTransformation.Decompose(size, rotation, position);
-
-		float3 pos = { position.x, position.y, position.z };
-		float3 scale = { size.x, size.y, size.z };
-		Quat rot = { rotation.x, rotation.y, rotation.z, rotation.w };
-
-		GO->name = node->mName.C_Str();
-		GO->parent = parent;
-
-		if (parent != nullptr) { parent->children.push_back(GO); }
+		if (parent != nullptr) { parent->children.push_back(gameobject); }
 
 		for (int i = 0; i < node->mNumMeshes; ++i)
 		{
-			const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-
 			GameObject* newGO = new GameObject();
 			newGO->name = mesh->mName.C_Str();
-			newGO->parent = GO;
-			GO->children.push_back(newGO);
-
-			if (node->mTransformation.IsIdentity() == false)
-			{
-				ComponentTransform* transform = (ComponentTransform*)newGO->AddComponent(TRANSFORM);
-
-				transform->setPosition(pos);
-				transform->setQuaternion(rot);
-				transform->setScale(scale);
-			}
+			newGO->parent = gameobject;
+			gameobject->children.push_back(newGO);
 
 			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
 
@@ -143,7 +171,6 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			new_mesh->vertices = new float[new_mesh->num_vertices * 3];
 			memcpy(new_mesh->vertices, mesh->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
 			LOG("New mesh with %d vertices", new_mesh->num_vertices);
-
 
 			if (mesh->HasTextureCoords(0))
 			{
@@ -200,14 +227,14 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			{
 				if (node->mChildren[i] != nullptr)
 				{
-					GameObject* child = LoadGameObject(scene, node->mChildren[i], GO, node->mName.C_Str());
+					GameObject* child = LoadGameObject(mesh, scene, node->mChildren[i], gameobject, node->mName.C_Str());
 				}
 			}
 		}
 	}
 	else { LOG("Error loading scene %s", path_file.c_str()); }
 
-	return GO;
+	return gameobject;
 }
 
 uint ModuleLoader::Texturing(const char* file_name)
