@@ -14,8 +14,16 @@ public:
 	void SetLocalMatrix();
 	void SetGlobalMatrix(GameObject* GO);
 
-	float4x4 GetLocalMatrix();
-	float4x4 GetGlobalMatrix();
+	float4x4 GetLocalMatrix() { return local_matrix; }
+	float4x4 GetGlobalMatrix() { return global_matrix; }
+
+	float3 getPosition() { return position; }
+	float3 getRotation() { return rotation.ToEulerXYX(); }
+	float3 getScale() { return scale; }
+
+	void setPosition(float3 &position);
+	void setRotation(float3& rotation);
+	void setScale(float3& scale);
 
 public:
 	float3 position;

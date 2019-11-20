@@ -34,24 +34,25 @@ void ComponentTransform::SetGlobalMatrix(GameObject* GO)
 		if (transform != nullptr)
 		{
 			if (GO->parent == nullptr)
-			{
 				transform->global_matrix = transform->local_matrix;
-			}
 			else
-			{
 				transform->global_matrix = ((ComponentTransform*)GO->parent->GetComponent(TRANSFORM))->global_matrix*transform->local_matrix;
-			}
 		}
 		SetGlobalMatrix(*item);
 	}
 }
 
-float4x4 ComponentTransform::GetLocalMatrix()
+void ComponentTransform::setPosition(float3& position)
 {
-	return local_matrix;
+	this->position = position;
 }
 
-float4x4 ComponentTransform::GetGlobalMatrix()
+void ComponentTransform::setRotation(float3& rotation)
 {
-	return global_matrix;
+	this->rotation = Quat::FromEulerXYX(rotation.x, rotation.y, rotation.z);
+}
+
+void ComponentTransform::setScale(float3& scale)
+{
+	this->scale = scale;
 }

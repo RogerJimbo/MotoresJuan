@@ -21,13 +21,17 @@ void GUI_Inspector::Draw(bool* open)
 
 		if (App->modscene->object_selected)
 		{
-			App->modscene->object_selected->ShowInspectorInfo();
+
+				App->modscene->object_selected->ShowInspectorInfo();
+
 		}
+
+
+
 
 		ImGui::Text(name);
 		ImGui::Separator();
 		ImGui::Checkbox("Active", &foo);
-
 	}
 	ImGui::End();
 }
