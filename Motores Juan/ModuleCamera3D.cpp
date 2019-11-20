@@ -1,11 +1,14 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera3D.h"
+
+#include "ComponentCamera.h"
+
 #include <math.h>
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	CalculateViewMatrix();
+	/*CalculateViewMatrix();
 
 	X = vec3(1.0f, 0.0f, 0.0f);
 	Y = vec3(0.0f, 1.0f, 0.0f);
@@ -21,10 +24,19 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	cameraRight = normalize(cross(Y, cameraDirection));
 	cameraUp = cross(cameraDirection, cameraRight);
 
-	Camera_view = At(cameraRight, cameraUp, cameraDirection);
+	Camera_view = At(cameraRight, cameraUp, cameraDirection);*/
 }
 
+
 ModuleCamera3D::~ModuleCamera3D() {}
+
+bool ModuleCamera3D::Init(const JSON_Object& config)
+{
+	camera = new ComponentCamera(CAMERA, nullptr);
+
+	LOG("Starting camera");
+	return true;
+}
 
 bool ModuleCamera3D::CleanUp()
 {
@@ -34,64 +46,64 @@ bool ModuleCamera3D::CleanUp()
 
 update_status ModuleCamera3D::Update(float dt)
 {
-	SDL_Event event;
+	//SDL_Event event;
 
-	float Sensitivity = 0.4f;
-	float speed = 9.0f * dt; 
-	float wheel = 100.0f * dt;
+	//float Sensitivity = 0.4f;
+	//float speed = 9.0f * dt; 
+	//float wheel = 100.0f * dt;
 
-	int mouse_x = +App->input->GetMouseXMotion();
-	int mouse_y = -App->input->GetMouseYMotion();
+	//int mouse_x = +App->input->GetMouseXMotion();
+	//int mouse_y = -App->input->GetMouseYMotion();
 
-	float DeltaX = (float)mouse_x * Sensitivity;
-	float DeltaY = (float)mouse_y * Sensitivity;;
+	//float DeltaX = (float)mouse_x * Sensitivity;
+	//float DeltaY = (float)mouse_y * Sensitivity;;
 
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) { speed /= 16.0f * dt; }
-	if (App->input->GetMouseZ() != 0) { if (App->input->GetMouseZ() > 0) { cameraPos -= Z * wheel; } else cameraPos += Z * wheel; }
+	//if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) { speed /= 16.0f * dt; }
+	//if (App->input->GetMouseZ() != 0) { if (App->input->GetMouseZ() > 0) { cameraPos -= Z * wheel; } else cameraPos += Z * wheel; }
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
-	{
-		cameraPos.y = 6.0f;	cameraPos.z = 5.0f;
-		Look(cameraPos, Camera_view.translation());
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) 
+	//{
+	//	cameraPos.y = 6.0f;	cameraPos.z = 5.0f;
+	//	Look(cameraPos, Camera_view.translation());
+	//}
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)	//Normal movement 
-	{
-		if (mouse_x != 0) { X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f)); }		//Mouse X Right
-		if (mouse_y != 0) { Y = rotate(Y, DeltaY, X); Z = rotate(Z, DeltaY, X); if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); } }				//Mouse Y Left
+	//if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)	//Normal movement 
+	//{
+	//	if (mouse_x != 0) { X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f)); }		//Mouse X Right
+	//	if (mouse_y != 0) { Y = rotate(Y, DeltaY, X); Z = rotate(Z, DeltaY, X); if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); } }				//Mouse Y Left
 
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) cameraPos.y += speed;
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) cameraPos.y -= speed;
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) cameraPos -= speed * rotate(Z, DeltaX, vec3(0.0f, 0.0f, 1.0f));
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)  cameraPos += speed * rotate(Z, DeltaX, vec3(0.0f, 0.0f, 1.0f));
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)  cameraPos += speed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)  cameraPos -= speed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
-	}
+	//	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) cameraPos.y += speed;
+	//	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) cameraPos.y -= speed;
+	//	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) cameraPos -= speed * rotate(Z, DeltaX, vec3(0.0f, 0.0f, 1.0f));
+	//	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)  cameraPos += speed * rotate(Z, DeltaX, vec3(0.0f, 0.0f, 1.0f));
+	//	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)  cameraPos += speed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
+	//	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)  cameraPos -= speed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
+	//}
 
-	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)	//Orbit movement
-	{
-		if (mouse_x != 0) { X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f)); }		//Mouse X Right
-		if (mouse_y != 0) { Y = rotate(Y, DeltaY, X); Z = rotate(Z, DeltaY, X); if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); } }				//Mouse Y Left
-		cameraPos = Z * length(cameraPos);
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)	//Orbit movement
+	//{
+	//	if (mouse_x != 0) { X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f)); Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f)); }		//Mouse X Right
+	//	if (mouse_y != 0) { Y = rotate(Y, DeltaY, X); Z = rotate(Z, DeltaY, X); if (Y.y < 0.0f) { Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);	Y = cross(Z, X); } }				//Mouse Y Left
+	//	cameraPos = Z * length(cameraPos);
+	//}
 
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)	//Move camera
-	{
-		float mspeed = 9.0f * dt;
+	//if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)	//Move camera
+	//{
+	//	float mspeed = 9.0f * dt;
 
-		if (mouse_x < 0) cameraPos -= mspeed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
-		if (mouse_x > 0)   cameraPos += mspeed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
-		if (mouse_y < 0)   cameraPos += mspeed * rotate(Y, DeltaX, vec3(1.0f, 0.0f, 0.0f));
-		if (mouse_y > 0)   cameraPos -= mspeed * rotate(Y, DeltaX, vec3(1.0f, 0.0f, 0.0f));
-	}
+	//	if (mouse_x < 0) cameraPos -= mspeed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
+	//	if (mouse_x > 0)   cameraPos += mspeed * rotate(X, DeltaX, vec3(1.0f, 0.0f, 0.0f));
+	//	if (mouse_y < 0)   cameraPos += mspeed * rotate(Y, DeltaX, vec3(1.0f, 0.0f, 0.0f));
+	//	if (mouse_y > 0)   cameraPos -= mspeed * rotate(Y, DeltaX, vec3(1.0f, 0.0f, 0.0f));
+	//}
 
-	/*if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
-	{
-		if (ImGuizmo::IsOver() == false) { App->modscene->SelectGameObject(App->modscene->MousePicking()); }
-	}*/
+	///*if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LALT) != KEY_REPEAT)
+	//{
+	//	if (ImGuizmo::IsOver() == false) { App->modscene->SelectGameObject(App->modscene->MousePicking()); }
+	//}*/
 
-	Move(newPos);
-	Camera_view = At(cameraPos, cameraPos + cameraFront, cameraUp);
+	//Move(newPos);
+	//Camera_view = At(cameraPos, cameraPos + cameraFront, cameraUp);
 
 
 

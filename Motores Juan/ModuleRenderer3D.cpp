@@ -2,9 +2,11 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleScene.h"
+#include "ModuleCamera3D.h"
 
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -117,7 +119,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	//glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(App->camera->camera->GetViewMatrix());
 
 	lights[0].SetPos(App->camera->cameraPos.x, App->camera->cameraPos.y, App->camera->cameraPos.z);
 	for(uint i = 0; i < MAX_LIGHTS; ++i) lights[i].Render();
