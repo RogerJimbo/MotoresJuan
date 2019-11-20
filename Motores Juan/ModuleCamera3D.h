@@ -18,11 +18,11 @@ public:
 	bool CleanUp();
 
 	void Look(const vec3 &Position, const vec3 &Reference);
-	void LookAt(const vec3 &Spot);
+	void LookAt(const vec &Spot);
 
 	mat4x4 At(const vec3 &right, const vec3 &up, const vec3 &direction);
 
-	void Move(const vec3 &Movement);
+	void Move(const vec &Movement);
 	float* GetViewMatrix();
 
 	void CameraGuizmos();
@@ -32,11 +32,13 @@ private:
 	void CalculateViewMatrix();
 
 public:
-	vec3 X, Y, Z;
+	vec X = { 1.0f, 0.0f, 0.0f };
+	vec Y = { 0.0f, 1.0f, 0.0f };
+	vec Z = { 0.0f, 0.0f, 1.0f };
 	mat4x4 Camera_view;
 
-	vec3 cameraRef;
-	vec3 cameraPos;
+	vec cameraRef;
+	vec cameraPos;
 	vec3 cameraTarget;
 	vec3 cameraFront;
 
