@@ -52,6 +52,11 @@ void ComponentTransform::setRotation(float3& rotation)
 	this->rotation = Quat::FromEulerXYX(rotation.x, rotation.y, rotation.z);
 }
 
+void ComponentTransform::setQuaternion(Quat& quaternion)
+{
+	this->rotation = quaternion;
+}
+
 void ComponentTransform::setScale(float3& scale)
 {
 	this->scale = scale;

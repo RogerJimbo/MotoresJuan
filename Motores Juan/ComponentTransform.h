@@ -24,6 +24,7 @@ public:
 	void setPosition(float3 &position);
 	void setRotation(float3& rotation);
 	void setScale(float3& scale);
+	void setQuaternion(Quat& quaternion);
 
 public:
 	float3 position;
