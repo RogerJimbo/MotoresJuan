@@ -137,6 +137,8 @@ update_status ModuleInput::PreUpdate(float dt)
 			else if (dropped_file == "png" || dropped_file == "dds") {App->loader->Texturing(event.drop.file); }
 			else { LOG("Unsupported file format"); }
 
+			App->loader->ReadFile(event.drop.file);
+
 			break;
 		}
 	}

@@ -27,11 +27,13 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 
+	void ReadFile(string path);
+	bool ImportModel(string path, string fname);
+
 	bool CleanUp();
 	bool Import(const string& pFile, GameObject* parent);
 
 	GameObject* LoadGameObject(const aiScene* scene, aiNode* node, GameObject* parent, string path_file);
-
 	uint Texturing(const char* file_name);
 
 	string module_name;

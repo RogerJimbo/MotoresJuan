@@ -13,6 +13,8 @@
 
 #include "MathGeoLib/MathGeoLib.h"
 
+#include "ModuleOwnFileSystem.h"
+
 #include <vector>
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -56,6 +58,31 @@ bool ModuleLoader::Start() { return true; }
 update_status ModuleLoader::PreUpdate(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::Update(float dt) { return UPDATE_CONTINUE; }
 update_status ModuleLoader::PostUpdate(float dt) { return UPDATE_CONTINUE; }
+
+void ModuleLoader::ReadFile(string path)
+{
+	ModuleFileSystem* filesystem;
+	string fextension;
+	string fname;
+
+	filesystem->SplitFilePath(path.c_str(), NULL, &fname, &fextension);
+
+	if (fextension == "fbx" || fextension == "FBX") { ImportModel(path, fname); }
+	if (fextension == "png" || fextension == "PNG" || fextension == "dds" || fextension == "DDS") {/*IMPORT TEXTURE*/ }
+}
+
+bool ModuleLoader::ImportModel(string path, string fname)
+{
+	const aiScene* scene = aiImportFile(path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+
+	if (scene && scene->HasMeshes())
+	{
+		GameObject* new_model = App->modscene->root->AddChildren(fname);
+	}
+	else LOG("Error loading scene.")
+
+	return true;
+}
 
 bool ModuleLoader::Import(const string& pFile, GameObject* parent)
 {
@@ -101,11 +128,14 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 			newGO->parent = GO;
 			GO->children.push_back(newGO);
 
-			ComponentTransform* transform = (ComponentTransform*)newGO->AddComponent(TRANSFORM);
+			if (node->mTransformation.IsIdentity() == false)
+			{
+				ComponentTransform* transform = (ComponentTransform*)newGO->AddComponent(TRANSFORM);
 
-			transform->position = pos;
-			transform->scale = scale;
-			transform->rotation = rot;
+				transform->setPosition(pos);
+				transform->setQuaternion(rot);
+				transform->setScale(scale);
+			}
 
 			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
 
