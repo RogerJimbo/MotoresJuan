@@ -13,7 +13,10 @@ public:
 
 	void DrawFrustrum();
 	void DrawRay();
-	void SetAspectRatio();
+	void SetAspectRatio(float aspect_ratio);
+
+	float* GetViewMatrix();
+	float* GetProjectionMatrix();
 
 public:
 

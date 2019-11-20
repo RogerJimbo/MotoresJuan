@@ -1,10 +1,11 @@
 #include "ComponentCamera.h"
+#include "ComponentTransform.h"
 #include "Glew/include/glew.h"
 #include "Application.h"
 
 ComponentCamera::ComponentCamera(Component_Type type, GameObject* parent) : Component(type, parent)
 {
-	camera_frustum.type = math::FrustumType::PerspectiveFrustum;
+	/*camera_frustum.type = math::FrustumType::PerspectiveFrustum;
 
 	float3 frustumpos = float3(App->camera->cameraPos.x, App->camera->cameraPos.y, App->camera->cameraPos.z);
 	float3 frustumdir = float3(App->camera->cameraDirection.x, App->camera->cameraDirection.y, App->camera->cameraDirection.z);
@@ -21,8 +22,22 @@ ComponentCamera::ComponentCamera(Component_Type type, GameObject* parent) : Comp
 
 	camera_frustum.nearPlaneDistance = .1f;
 	camera_frustum.farPlaneDistance = 1000.f;
+*/
+	camera_frustum.type = math::FrustumType::PerspectiveFrustum;
 
+	camera_frustum.pos = { 0.0f, 4.0f, 10.0f };
+	camera_frustum.front = { 0.0f,0.0f,-1.0f };
+	camera_frustum.up = { 0.0f,1.0f,0.0f };
 
+	camera_frustum.nearPlaneDistance = 0.1f;
+	camera_frustum.farPlaneDistance = 1000.0f;
+
+	camera_frustum.verticalFov = DEGTORAD * 90.0f;
+	SetAspectRatio(16.0f / 9.0f);
+
+	//RecalculateBB();
+
+	//IsActive = false;
 }
 
 ComponentCamera::~ComponentCamera()
@@ -30,9 +45,36 @@ ComponentCamera::~ComponentCamera()
 
 bool ComponentCamera::Update()
 {
-
+	/*if (parent != nullptr)
+	{
+		camera_frustum.SetWorldMatrix(parent->GetComponent(TRANSFORM)->);
+	}*/
 
 	return true;
+}
+
+
+void ComponentCamera::SetAspectRatio(float aspect_ratio)
+{
+	camera_frustum.horizontalFov = 2.f * atanf(tanf(camera_frustum.verticalFov*0.5f)*aspect_ratio);
+}
+
+float* ComponentCamera::GetViewMatrix()
+{
+	static float4x4 matrix;
+	matrix = camera_frustum.ViewMatrix();
+	matrix.Transpose();
+
+	return (float*)matrix.v;
+}
+
+float * ComponentCamera::GetProjectionMatrix()
+{
+	static float4x4 matrix;
+	matrix = camera_frustum.ProjectionMatrix();
+	matrix.Transpose();
+
+	return (float*)matrix.v;
 }
 
 void ComponentCamera::DrawRay()
@@ -101,9 +143,4 @@ void ComponentCamera::DrawFrustrum()
 
 	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
-}
-
-void ComponentCamera::SetAspectRatio()
-{
-
 }

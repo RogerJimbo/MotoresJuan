@@ -5,13 +5,13 @@ Application::Application()
 {
 	// Main Modules
 	AddModule(window = new ModuleWindow(this));
-	AddModule(camera = new ModuleCamera3D(this));
 	AddModule(input = new ModuleInput(this));
 	AddModule(modulegui = new ModuleGui(this));
 	AddModule(modscene = new ModuleScene(this));
 	AddModule(loader = new ModuleLoader(this));
 	AddModule(filesystem = new ModuleFileSystem(this));
 	AddModule(moduletimer = new ModuleTimer(this));
+	AddModule(camera = new ModuleCamera3D(this));
 	AddModule(renderer3D = new ModuleRenderer3D(this)); // Renderer last!
 
 	//Main Gui Elements
