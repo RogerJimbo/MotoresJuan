@@ -207,19 +207,20 @@ void GameObject::RecursiveHierarchy()
 
 void GameObject::ShowInspectorInfo()
 {
+	ComponentTransform* transform = (ComponentTransform*)App->modscene->object_selected->GetComponent(TRANSFORM);
+
 	ImGui::Text(this->name.c_str());
-	ImGui::Separator();
-	ImGui::Separator();
+	ImGui::Separator();	ImGui::Separator();
 
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		float pos[3] = { this->pos.x, this->pos.y, this->pos.z };
-		float rot[3] = { this->rot.x, this->rot.y, this->rot.z };
-		float scale[3] = { this->scale.x, this->scale.y, this->scale.z };
+		float3 position = transform->getPosition();
+		float3 rotation = transform->getRotation();
+		float3 scalation = transform->getScale();
 	
-		ImGui::DragFloat3("Position", pos, 0.25f);
-		ImGui::SliderFloat3("Rotation", rot, 0.0f, 360.0f);
-		ImGui::DragFloat3("Scale", scale, 0.25f, 1.0f, 1000.0f);
+		if (ImGui::DragFloat3("Position", (float*)&position, 0.25f)) { transform->setPosition(position); }
+		if (ImGui::SliderFloat3("Rotation", (float*)&rotation, 0.0f, 360.0f)) { transform->setRotation(position); }
+		if (ImGui::DragFloat3("Scale", (float*)&scalation, 0.25f, 1.0f, 1000.0f)) { transform->setScale(scalation); }
 	
 		ImGuiIO& io = ImGui::GetIO();
 		io.WantCaptureKeyboard;
@@ -245,12 +246,7 @@ void GameObject::ShowInspectorInfo()
 		ImGui::Text("Path: MotoresJuan/Game/%s", App->loader->path.c_str());
 	}
 
-	if (ImGui::Checkbox("Active", &this->active))
-	{
-
-	}
+	if (ImGui::Checkbox("Active", &this->active)) {}
 	ImGui::SameLine();
-
 	ImGui::Checkbox("Draw AABB", &this->box);
-
 }
