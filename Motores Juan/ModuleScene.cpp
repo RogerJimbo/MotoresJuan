@@ -27,7 +27,7 @@ bool ModuleScene::Init(const JSON_Object& config) { return true; }
 bool ModuleScene::Start()
 { 
 	root = new GameObject(nullptr, "Root");
-	camera = new ComponentCamera(nullptr);
+	camera = new ComponentCamera(CAMERA, nullptr);
 	App->loader->Import("BakerHouse.fbx", nullptr);
 
 	return true;

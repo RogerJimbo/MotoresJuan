@@ -27,7 +27,7 @@
 #include "float2.h"
 #include "float3.h"
 #include "../Geometry/Sphere.h"
-#include "../Algorithm/LCG/LCG.h"
+#include "../Algorithm/Random/LCG.h"
 #include "float4x4.h"
 #include "MathFunc.h"
 #include "SSEMath.h"

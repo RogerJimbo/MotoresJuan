@@ -34,7 +34,7 @@
 #include "Sphere.h"
 #include "AABB.h"
 #include "OBB.h"
-#include "../Algorithm/LCG/LCG.h"
+#include "../Algorithm/Random/LCG.h"
 
 #ifdef MATH_ENABLE_STL_SUPPORT
 #include <iostream>

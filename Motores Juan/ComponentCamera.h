@@ -6,7 +6,7 @@ class ComponentCamera : public Component
 {
 
 public:
-	ComponentCamera(GameObject* gameobject);
+	ComponentCamera(Component_Type type, GameObject* parent);
 	~ComponentCamera();
 
 	bool Update();

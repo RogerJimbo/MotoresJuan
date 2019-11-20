@@ -30,7 +30,7 @@
 #endif
 
 #ifdef MATH_BULLET_INTEROP
-#include "../btVector3/btQuaternion.h"
+#include "../../../Bullet/include/LinearMath/btQuaternion.h"
 #endif
 /*
 #ifdef MATH_IRRLICHT_INTEROP

@@ -150,12 +150,12 @@ Component* GameObject::AddComponent(Component_Type comp_type)
 		break;
 
 	case TRANSFORM:
-		ret = new ComponentTransform(this);
+		ret = new ComponentTransform(comp_type, this);
 		components.push_back(ret);
 		break;
 
 	case CAMERA:
-		ret = new ComponentCamera(this);
+		ret = new ComponentCamera(comp_type, this);
 		components.push_back(ret);
 		break;
 	}

@@ -25,7 +25,7 @@
 #include "OBB.h"
 #include "LineSegment.h"
 #include "Line.h"
-#include "../Algorithm/LCG/LCG.h"
+#include "../Algorithm/Random/LCG.h"
 
 #ifdef MATH_ENABLE_STL_SUPPORT
 #include <iostream>

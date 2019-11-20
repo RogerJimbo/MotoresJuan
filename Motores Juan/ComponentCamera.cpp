@@ -2,7 +2,7 @@
 #include "Glew/include/glew.h"
 #include "Application.h"
 
-ComponentCamera::ComponentCamera(GameObject* gameobject) 
+ComponentCamera::ComponentCamera(Component_Type type, GameObject* parent) : Component(type, parent)
 {
 	camera_frustum.type = math::FrustumType::PerspectiveFrustum;
 

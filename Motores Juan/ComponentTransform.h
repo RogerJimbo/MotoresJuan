@@ -8,7 +8,7 @@
 class ComponentTransform : public Component
 {
 public:
-	ComponentTransform(GameObject* parent);
+	ComponentTransform(Component_Type type, GameObject* parent);
 	~ComponentTransform();
 
 	void SetLocalMatrix();

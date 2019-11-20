@@ -12,13 +12,20 @@
    See the License for the specific language governing permissions and
    limitations under the License. */
 
-/** @file MathGeoLib.h
+/** @file float4d.cpp
 	@author Jukka Jylänki
-	@brief A conveniency file to include all header files in MathGeoLib. */
+	@brief A double-precision 4-wide vector. */
+#include "float4d.h"
 
-#pragma once
+MATH_BEGIN_NAMESPACE
 
-#include "Geometry/GeometryAll.h"
-#include "Math/MathAll.h"
-#include "Algorithm/Random/LCG.h"
-#include "Time/Clock.h"
+const float4d float4d::zero = float4d(0,0,0,0);
+const float4d float4d::one = float4d(1,1,1,1);
+const float4d float4d::unitX = float4d(1,0,0,0);
+const float4d float4d::unitY = float4d(0,1,0,0);
+const float4d float4d::unitZ = float4d(0,0,1,0);
+const float4d float4d::unitW = float4d(0,0,0,1);
+const float4d float4d::nan = float4d(FLOAT_NAN, FLOAT_NAN, FLOAT_NAN, FLOAT_NAN);
+const float4d float4d::inf = float4d(FLOAT_INF, FLOAT_INF, FLOAT_INF, FLOAT_INF);
+
+MATH_END_NAMESPACE

@@ -34,7 +34,7 @@
 #include "Sphere.h"
 #include "Circle.h"
 #include "Triangle.h"
-#include "../Algorithm/LCG/LCG.h"
+#include "../Algorithm/Random/LCG.h"
 #include "../Math/assume.h"
 
 #ifdef MATH_ENABLE_STL_SUPPORT

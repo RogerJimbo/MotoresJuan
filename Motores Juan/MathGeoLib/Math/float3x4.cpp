@@ -25,7 +25,7 @@
 #include "float4x4.h"
 #include "Matrix.inl"
 #include "Quat.h"
-#include "../Algorithm/LCG/LCG.h"
+#include "../Algorithm/Random/LCG.h"
 #include "../Geometry/Plane.h"
 #include "TransformOps.h"
 #include "SSEMath.h"

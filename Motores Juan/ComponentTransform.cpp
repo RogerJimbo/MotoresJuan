@@ -1,10 +1,10 @@
 #include "ComponentTransform.h"
 
 
-ComponentTransform::ComponentTransform(GameObject* parent) 
+ComponentTransform::ComponentTransform(Component_Type type, GameObject* parent) : Component(type, parent)
 {
 	position = { 0.0f, 0.0f, 0.0f };
-	rotation = { 0.0f, 0.0f, 0.0f };
+	rotation = Quat::identity;
 	scale = { 1.0f, 1.0f, 1.0f };
 
 	local_matrix.SetIdentity();
@@ -14,7 +14,7 @@ ComponentTransform::ComponentTransform(GameObject* parent)
 ComponentTransform::~ComponentTransform() 
 {
 	position = { 0.0f, 0.0f, 0.0f };
-	rotation = { 0.0f, 0.0f, 0.0f };
+	rotation = Quat::identity;
 	scale = { 1.0f, 1.0f, 1.0f };
 
 	local_matrix.SetIdentity();
