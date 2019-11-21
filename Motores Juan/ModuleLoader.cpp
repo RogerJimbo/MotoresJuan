@@ -65,6 +65,8 @@ void ModuleLoader::ReadFile(string path)
 	string fextension;
 	string fname;
 
+	ModuleFileSystem::SplitFilePath(path.c_str(), NULL, &fname, &fextension);
+
 	filesystem->SplitFilePath(path.c_str(), NULL, &fname, &fextension);
 
 	if (fextension == "fbx" || fextension == "FBX") { ImportModel(path, fname); }

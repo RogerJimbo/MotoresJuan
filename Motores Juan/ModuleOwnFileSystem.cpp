@@ -16,7 +16,7 @@
 
 using namespace std;
 
-ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) 
 {
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(base_path);
@@ -47,23 +47,6 @@ ModuleFileSystem::~ModuleFileSystem()
 	PHYSFS_deinit();
 }
 
-bool ModuleFileSystem::Init(const JSON_Object& config)
-{
-	LOG("Loading File System");
-	bool ret = true;
-	char* write_path = SDL_GetPrefPath(App->configuration->org, App->configuration->app_name);
-
-	SDL_free(write_path);
-
-	return ret;
-}
-
-bool ModuleFileSystem::CleanUp()
-{
-	return true;
-}
-
-
 bool ModuleFileSystem::AddPath(const char* path_or_zip)
 {
 	bool ret = false;
@@ -78,12 +61,12 @@ bool ModuleFileSystem::AddPath(const char* path_or_zip)
 	return ret;
 }
 
-bool ModuleFileSystem::Exists(const char* file) const
+bool ModuleFileSystem::Exists(const char* file) 
 {
 	return PHYSFS_exists(file) != 0;
 }
 
-bool ModuleFileSystem::IsDirectory(const char* file) const
+bool ModuleFileSystem::IsDirectory(const char* file) 
 {
 	return PHYSFS_isDirectory(file) != 0;
 }
@@ -93,7 +76,7 @@ void ModuleFileSystem::CreateDirectory(const char* directory)
 	PHYSFS_mkdir(directory);
 }
 
-void ModuleFileSystem::DiscoverFiles(const char* directory, vector<string>& file_list, vector<string>& dir_list) const
+void ModuleFileSystem::DiscoverFiles(const char* directory, vector<string>& file_list, vector<string>& dir_list) 
 {
 	char** rc = PHYSFS_enumerateFiles(directory);
 	char** i;
@@ -166,7 +149,7 @@ bool ModuleFileSystem::Copy(const char* source, const char* destination)
 	return ret;
 }
 
-void ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const
+void ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension)
 {
 	if (full_path != nullptr)
 	{
@@ -208,7 +191,7 @@ char normalize_char(char c)
 	return tolower(c);
 }
 
-void ModuleFileSystem::NormalizePath(char* full_path) const
+void ModuleFileSystem::NormalizePath(char* full_path)
 {
 	int len = strlen(full_path);
 	for (int i = 0; i < len; ++i)
@@ -220,7 +203,7 @@ void ModuleFileSystem::NormalizePath(char* full_path) const
 	}
 }
 
-void ModuleFileSystem::NormalizePath(std::string& full_path) const
+void ModuleFileSystem::NormalizePath(std::string& full_path)
 {
 	for (string::iterator it = full_path.begin(); it != full_path.end(); ++it)
 	{

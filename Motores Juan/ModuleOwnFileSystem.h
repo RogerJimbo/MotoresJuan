@@ -7,9 +7,10 @@
 struct SDL_RWops;
 int close_sdl_rwops(SDL_RWops* rw);
 
+typedef unsigned int uint;
 struct aiFileIO;
 
-class ModuleFileSystem : public Module
+class ModuleFileSystem 
 {
 public:
 
@@ -17,23 +18,19 @@ public:
 
 	~ModuleFileSystem();
 
-	bool Init(const JSON_Object& config) override;
+	static bool AddPath(const char* path_or_zip);
+	static bool Exists(const char* file);
+	static bool IsDirectory(const char* file);
+	static void CreateDirectory(const char* directory);
+	static void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list);
+	static bool CopyFromOutsideFS(const char* full_path, const char* destination);
+	static bool Copy(const char* source, const char* destination);
+	static void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr);
+	static void NormalizePath(char* full_path);
+	static void NormalizePath(std::string& full_path);
 
-	bool CleanUp() override;
-
-	bool AddPath(const char* path_or_zip);
-	bool Exists(const char* file) const;
-	bool IsDirectory(const char* file) const;
-	void CreateDirectory(const char* directory);
-	void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const;
-	bool CopyFromOutsideFS(const char* full_path, const char* destination);
-	bool Copy(const char* source, const char* destination);
-	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) const;
-	void NormalizePath(char* full_path) const;
-	void NormalizePath(std::string& full_path) const;
-
-	unsigned int Load(const char* path, const char* file, char** buffer) const;
-	unsigned int Load(const char* file, char** buffer) const;
+	uint Load(const char* path, const char* file, char** buffer) const;
+	uint Load(const char* file, char** buffer) const;
 	SDL_RWops* Load(const char* file) const;
 	void* BassLoad(const char* file) const;
 
