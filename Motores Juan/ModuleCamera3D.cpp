@@ -52,7 +52,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	vec newPos(0, 0, 0);
 
-	float Sensitivity = 0.4f;
+	float Sensitivity = 0.1f;
 	float speed = 9.0f * dt; 
 	float wheel = 100.0f * dt;
 
@@ -86,6 +86,24 @@ update_status ModuleCamera3D::Update(float dt)
 		cameraRef += newPos;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)	//Orbit movement
+	{
+		//Mouse X Right
+		if (mouse_x != 0) 
+		{ 
+			Quat rotation = Quat::RotateY(DeltaX);
+			camera->camera_frustum.front = rotation.Mul(camera->camera_frustum.front).Normalized();
+			camera->camera_frustum.up = rotation.Mul(camera->camera_frustum.up).Normalized();
+		}		
+		//Mouse Y Left
+		if (mouse_y != 0) 
+		{ 
+			Quat rotation = Quat::RotateAxisAngle(camera->camera_frustum.WorldRight(), DeltaY);
+			camera->camera_frustum.front = rotation.Mul(camera->camera_frustum.front).Normalized();
+			camera->camera_frustum.up = rotation.Mul(camera->camera_frustum.up).Normalized();
+		}				
+	}
+
 	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)	//Normal movement 
 	{
 		//Mouse X Right
@@ -113,32 +131,6 @@ update_status ModuleCamera3D::Update(float dt)
 		else 
 			cameraPos += Z * wheel; 
 	}
-
-	//if (App->input->GetMouseZ() != 0)
-	//{
-	//	vec newPos(0, 0, 0);
-	//	float Sensitivity = wheel;
-	//	vec vec_distance = cameraRef - cameraPos;
-
-	//	if (vec_distance.Length()< 10 )
-	//	{
-	//		Sensitivity = vec_distance.Length() / 10;
-	//	}
-
-	//	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-	//		Sensitivity = 2;
-
-	//	if (App->input->GetMouseZ() > 0)
-	//	{
-	//		newPos -= Z * Sensitivity;
-	//	}
-	//	else
-	//	{
-	//		newPos += Z * Sensitivity;
-	//	}
-
-	//	cameraPos += newPos;
-	//}
 
 	camera->camera_frustum.pos = cameraPos;
 
