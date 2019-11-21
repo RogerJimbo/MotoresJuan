@@ -35,7 +35,7 @@ ComponentCamera::ComponentCamera(Component_Type type, GameObject* parent) : Comp
 	camera_frustum.verticalFov = DEGTORAD * 90.0f;
 	SetAspectRatio(16.0f / 9.0f);
 
-	//RecalculateBB();
+	CalculateAABB();
 
 	//IsActive = false;
 }
@@ -77,6 +77,48 @@ float * ComponentCamera::GetProjectionMatrix()
 	return (float*)matrix.v;
 }
 
+void ComponentCamera::CalculateAABB()
+{
+	float3 corner_points[8];
+	camera_frustum.GetCornerPoints(corner_points);
+
+	camera_BB.SetNegativeInfinity();
+	camera_BB.Enclose(corner_points, 8);
+}
+
+bool ComponentCamera::ContainsAABB(const AABB& ref_box)
+{
+	float3 corners[8];
+	Plane planes[6];
+	int iTotalIn = 0;
+
+	ref_box.GetCornerPoints(corners); 
+	camera_frustum.GetPlanes(planes);
+
+	for (int p = 0; p < 6; ++p) 
+	{
+		for (int i = 0; i < 8; ++i) 
+		{
+			if (!planes[p].IsOnPositiveSide(corners[i]))
+			{
+				++iTotalIn;
+				break;
+			}
+		}
+		if (iTotalIn == 0)
+		{
+			return false;
+		}
+	}
+
+	if (iTotalIn == 6)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void ComponentCamera::DrawRay()
 {
 	float3 raystart = App->modscene->ray.a;
@@ -92,6 +134,54 @@ void ComponentCamera::DrawRay()
 
 	glEnd();
 
+	glLineWidth(1.0f);
+}
+
+void ComponentCamera::DrawCameraBoundingBox(const AABB& boundingbox)
+{
+	glLineWidth(2.f);
+	glColor3f(255, 255, 255);
+
+	glBegin(GL_LINES);
+
+	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
+	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
+
+	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
+	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
+
+	glVertex3f(boundingbox.CornerPoint(0).x, boundingbox.CornerPoint(0).y, boundingbox.CornerPoint(0).z);
+	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
+
+	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
+	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
+
+	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
+	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
+
+	glVertex3f(boundingbox.CornerPoint(3).x, boundingbox.CornerPoint(3).y, boundingbox.CornerPoint(3).z);
+	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
+
+	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
+	glVertex3f(boundingbox.CornerPoint(2).x, boundingbox.CornerPoint(2).y, boundingbox.CornerPoint(2).z);
+
+	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
+	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
+
+	glVertex3f(boundingbox.CornerPoint(6).x, boundingbox.CornerPoint(6).y, boundingbox.CornerPoint(6).z);
+	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
+
+	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
+	glVertex3f(boundingbox.CornerPoint(1).x, boundingbox.CornerPoint(1).y, boundingbox.CornerPoint(1).z);
+
+	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
+	glVertex3f(boundingbox.CornerPoint(4).x, boundingbox.CornerPoint(4).y, boundingbox.CornerPoint(4).z);
+
+	glVertex3f(boundingbox.CornerPoint(5).x, boundingbox.CornerPoint(5).y, boundingbox.CornerPoint(5).z);
+	glVertex3f(boundingbox.CornerPoint(7).x, boundingbox.CornerPoint(7).y, boundingbox.CornerPoint(7).z);
+
+	glEnd();
+	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
 }
 

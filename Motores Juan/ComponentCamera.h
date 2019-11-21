@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "MathGeoLib/MathGeoLib.h"
 #include "MathGeoLib/Geometry/Frustum.h"
 
 class ComponentCamera : public Component
@@ -13,6 +14,10 @@ public:
 
 	void DrawFrustrum();
 	void DrawRay();
+	void CalculateAABB();
+
+	bool ContainsAABB(const AABB& ref_box);
+	void DrawCameraBoundingBox(const AABB& boundingbox);
 	void SetAspectRatio(float aspect_ratio);
 
 	float* GetViewMatrix();
@@ -21,7 +26,7 @@ public:
 public:
 
 	Frustum camera_frustum;
-	float3 frustumpos;
+	AABB camera_BB;
 
 };
 

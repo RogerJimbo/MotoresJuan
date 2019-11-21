@@ -35,6 +35,7 @@ ModuleCamera3D::~ModuleCamera3D() {}
 bool ModuleCamera3D::Init(const JSON_Object& config)
 {
 	camera = new ComponentCamera(CAMERA, nullptr);
+	//camera->DrawCameraBoundingBox(camera->camera_BB);
 
 	LOG("Starting camera");
 	return true;
@@ -52,7 +53,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	vec newPos(0, 0, 0);
 
-	float Sensitivity = 0.1f;
+	float Sensitivity = 0.4f * dt;
 	float speed = 9.0f * dt; 
 	float wheel = 100.0f * dt;
 
@@ -109,12 +110,12 @@ update_status ModuleCamera3D::Update(float dt)
 		//Mouse X Right
 		if (mouse_x != 0) 
 		{ 
-			newPos += X * DeltaX;
+			newPos += X * DeltaX*2;
 		}		
 		//Mouse Y Left
 		if (mouse_y != 0) 
 		{ 
-			newPos -= Y * DeltaY;
+			newPos -= Y * DeltaY*2;
 		}	
 
 		cameraPos += newPos;
