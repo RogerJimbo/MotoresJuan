@@ -32,6 +32,8 @@ public:
 	void CreateCamera();
 	void CreateEmpty();
 
+	void GameObjectsToDraw();
+
 	GameObject* MousePicking();
 
 	void Guizmos(ImGuizmo::OPERATION operation);

@@ -44,6 +44,9 @@ void ModuleScene::Draw()
 		}
 	}
 
+	camera->DrawFrustrum();
+	GameObjectsToDraw();
+
 	root->selectedGO = MousePicking();	//TO UPDATE
 
 	if (App->modscene->object_selected != nullptr)
@@ -56,12 +59,23 @@ void ModuleScene::Draw()
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) operation = ImGuizmo::SCALE;
 		}
 	}
+}
 
-	for (auto item = gameobjects.begin(); item != gameobjects.end(); ++item)
+void ModuleScene::GameObjectsToDraw()
+{
+	ComponentCamera* aux_cam = App->camera->camera;
+	for (auto item = root->children.begin(); item != root->children.end(); ++item)
 	{
-		(*item)->Update();
-	}
+		if (aux_cam->ContainsAABB((*item)->BoundingBox))
+		{
+			LOG("COLISAO");
+		}
 
+		else
+		{
+			LOG("SE MARXO");
+		}
+	}
 }
 
 void ModuleScene::CreateCamera()
@@ -150,8 +164,8 @@ GameObject* ModuleScene::MousePicking()
 
 	float3 direction;	//Direction has to go acording to the camera
 
-	LOG("%f %f %f", MouseRay.x, MouseRay.y, MouseRay.z);
-	LOG("%f %f %f", mouseray.x, mouseray.y, mouseray.z);
+	//LOG("%f %f %f", MouseRay.x, MouseRay.y, MouseRay.z);
+	//LOG("%f %f %f", mouseray.x, mouseray.y, mouseray.z);
 
 	ray = camera->camera_frustum.UnProjectLineSegment(-MouseRay.x, -MouseRay.y);
 
@@ -160,11 +174,11 @@ GameObject* ModuleScene::MousePicking()
 
 	if (ray.Intersects(root->BoundingBox))
 	{
-		LOG("victory");
+		/*LOG("victory");*/
 	}
 
-	camera->DrawFrustrum();
-	camera->DrawRay();
+	/*camera->DrawFrustrum();
+	camera->DrawRay();*/
 
 
 	Frustum* frustum;

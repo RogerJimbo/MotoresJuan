@@ -30,10 +30,10 @@ ComponentCamera::ComponentCamera(Component_Type type, GameObject* parent) : Comp
 	camera_frustum.up = { 0.0f,1.0f,0.0f };
 
 	camera_frustum.nearPlaneDistance = 0.1f;
-	camera_frustum.farPlaneDistance = 1000.0f;
+	camera_frustum.farPlaneDistance = 500.0f;
 
 	camera_frustum.verticalFov = DEGTORAD * 90.0f;
-	SetAspectRatio(16.0f / 9.0f);
+	SetAspectRatio(App->window->window_width / App->window->window_height);
 
 	CalculateAABB();
 
@@ -45,10 +45,6 @@ ComponentCamera::~ComponentCamera()
 
 bool ComponentCamera::Update()
 {
-	/*if (parent != nullptr)
-	{
-		camera_frustum.SetWorldMatrix(parent->GetComponent(TRANSFORM)->);
-	}*/
 
 	return true;
 }
