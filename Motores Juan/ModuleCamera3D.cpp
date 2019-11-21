@@ -103,6 +103,17 @@ update_status ModuleCamera3D::Update(float dt)
 		cameraRef += newPos;
 	}
 
+	if (App->input->GetMouseZ() != 0) 
+	{ 
+		if (App->input->GetMouseZ() > 0) 
+		{ 
+			cameraPos -= Z * wheel; 
+		} 
+
+		else 
+			cameraPos += Z * wheel; 
+	}
+
 	//if (App->input->GetMouseZ() != 0)
 	//{
 	//	vec newPos(0, 0, 0);
