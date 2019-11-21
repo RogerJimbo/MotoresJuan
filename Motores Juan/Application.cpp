@@ -9,7 +9,6 @@ Application::Application()
 	AddModule(modulegui = new ModuleGui(this));
 	AddModule(modscene = new ModuleScene(this));
 	AddModule(loader = new ModuleLoader(this));
-	AddModule(filesystem = new ModuleFileSystem(this));
 	AddModule(moduletimer = new ModuleTimer(this));
 	AddModule(camera = new ModuleCamera3D(this));
 	AddModule(renderer3D = new ModuleRenderer3D(this)); // Renderer last!

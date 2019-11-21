@@ -10,7 +10,6 @@
 #include "ModuleGui.h"
 #include "ModuleScene.h"
 #include "ModuleLoader.h"
-#include "ModuleOwnFileSystem.h"
 #include "ModuleTimer.h"
 
 #include "GUI_Element.h"
@@ -25,6 +24,8 @@
 #include <list>
 #include <vector>
 
+
+
 using namespace std;
 
 class Application
@@ -37,7 +38,6 @@ public:
 	ModuleGui* modulegui;
 	ModuleScene* modscene;
 	ModuleLoader* loader;
-	ModuleFileSystem* filesystem;
 	ModuleTimer* moduletimer;
 
 	GUI_Config* configuration = nullptr;
