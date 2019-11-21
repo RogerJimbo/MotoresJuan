@@ -35,17 +35,17 @@ bool ModuleScene::Start()
 
 void ModuleScene::Draw()
 {
-	if (root) 
+	camera->DrawFrustrum();
+	GameObjectsToDraw();
+
+	if (root && drawable_GOs.size() > 0) 
 	{ 
-		for (auto item = root->children.begin(); item != root->children.end(); ++item)
+		for (auto item = drawable_GOs.begin(); item != drawable_GOs.end(); ++item)
 		{
 			(*item)->Draw();
 			(*item)->CalculateAABB();
 		}
 	}
-
-	camera->DrawFrustrum();
-	GameObjectsToDraw();
 
 	root->selectedGO = MousePicking();	//TO UPDATE
 
@@ -68,11 +68,19 @@ void ModuleScene::GameObjectsToDraw()
 	{
 		if (aux_cam->ContainsAABB((*item)->BoundingBox))
 		{
+			drawable_GOs.push_back(*item);
 			LOG("COLISAO");
 		}
 
 		else
 		{
+			/*for (auto iter = drawable_GOs.begin(); iter != drawable_GOs.end(); ++iter)
+			{
+				if ((*iter)->name == (*item)->name);
+				{
+					drawable_GOs.pop_back();
+				}
+			}*/
 			LOG("SE MARXO");
 		}
 	}
@@ -81,8 +89,8 @@ void ModuleScene::GameObjectsToDraw()
 void ModuleScene::CreateCamera()
 {
 	GameObject* gameobject = App->modscene->root->AddChildren("Camera");
-	App->modscene->gameobjects.push_back(gameobject);
-	gameobject->name = "Camera";
+	/*App->modscene->gameobjects.push_back(gameobject);
+	gameobject->name = "Camera";*/
 
 	ComponentCamera* camera = (ComponentCamera*)gameobject->AddComponent(CAMERA);
 	ComponentTransform* transformations = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
@@ -93,8 +101,8 @@ void ModuleScene::CreateCamera()
 void ModuleScene::CreateEmpty()
 {
 	GameObject* gameobject = App->modscene->root->AddChildren("Game Object");
-	App->modscene->gameobjects.push_back(gameobject);
-	gameobject->name = "Game Object";
+	/*App->modscene->gameobjects.push_back(gameobject);
+	gameobject->name = "Game Object";*/
 
 	ComponentTransform* empty = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
 	LOG("New Empty Game Object.")
@@ -103,8 +111,8 @@ void ModuleScene::CreateEmpty()
 void ModuleScene::CreatePrimitives(par_shapes_mesh_s* data, char* type)
 {
 	GameObject* gameobject = App->modscene->root->AddChildren(type);
-	App->modscene->gameobjects.push_back(gameobject);
-	gameobject->name = type;
+	/*App->modscene->gameobjects.push_back(gameobject);
+	gameobject->name = type;*/
 
 	ComponentMesh* primitive = (ComponentMesh*)gameobject->AddComponent(MESH);
 	primitive->num_vertices = data->npoints * 3;

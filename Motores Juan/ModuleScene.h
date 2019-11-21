@@ -53,7 +53,7 @@ public:
 	ImGuizmo::OPERATION operation = ImGuizmo::STATIC;
 	ImGuizmo::MODE mode = ImGuizmo::LOCAL;
 
-	vector<GameObject*> gameobjects;
+	vector<GameObject*> drawable_GOs;
 
 	LineSegment ray;
 	float3 mouseray;
