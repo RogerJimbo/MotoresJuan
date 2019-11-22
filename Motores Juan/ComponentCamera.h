@@ -3,9 +3,11 @@
 #include "MathGeoLib/MathGeoLib.h"
 #include "MathGeoLib/Geometry/Frustum.h"
 
+class Module;
+class Application;
+
 class ComponentCamera : public Component
 {
-
 public:
 	ComponentCamera(Component_Type type, GameObject* parent);
 	~ComponentCamera();

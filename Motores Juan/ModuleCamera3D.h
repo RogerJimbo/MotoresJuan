@@ -47,7 +47,7 @@ public:
 	vec3 cameraUp;
 	vec3 newPos;
 
-	ComponentCamera* camera;
+	ComponentCamera* camera = nullptr;
 
 	bool Clicked = false;
 private:

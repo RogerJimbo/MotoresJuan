@@ -5,6 +5,9 @@
 #include "ModuleGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ComponentCamera.h"
+#include "GUI_Config.h"
 
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/MathGeoLib.h"
@@ -99,11 +102,21 @@ void GUI_Config::Draw(bool* open)
 			ImGuiIO& io = ImGui::GetIO();
 			float aspect_ratio = io.DisplaySize.x / io.DisplaySize.y;
 
-			static int fov_slider = 0;
 			static int near_plane = 0.1f;
 			static int far_plane = 1000.0f;
 
-			if (ImGui::SliderInt("FOV", &fov_slider, 1, 100)) { /* Insert function to handle FOV*/ }
+			float AR = App->camera->camera->camera_frustum.AspectRatio();
+			float FOV = App->camera->camera->camera_frustum.verticalFov * RADTODEG;
+
+
+			if (ImGui::SliderFloat("FOV", &FOV, 30, 100))
+			{
+				App->camera->camera->camera_frustum.verticalFov = FOV * DEGTORAD;
+				App->camera->camera->SetAspectRatio(AR);
+				App->renderer3D->fieldofview = true;
+			}
+
+
 			ImGui::SliderInt("Near Plane", &near_plane, 1, 100);
 			ImGui::SliderInt("Far Plane", &far_plane, 1, 1000);
 

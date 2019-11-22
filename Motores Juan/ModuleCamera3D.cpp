@@ -27,6 +27,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Camera_view = At(cameraRight, cameraUp, cameraDirection);*/
 	cameraPos = vec(0.0f, 4.0f, 10.0f);
 	cameraRef = vec(0.0f, 0.0f, 0.0f);
+
 }
 
 

@@ -52,6 +52,8 @@ void GUI_Scene::Draw(bool* open)
 		if (active_grid) DrawGrid(grid_size);
 		if (active_axis) DrawAxis(&active_axis);
 
+		ImGuizmo::SetDrawlist();
+
 		if (App->modscene->object_selected) { App->modscene->Guizmos(App->modscene->operation); }
 	
 		ImGui::SetCursorPos({ 0,0 });

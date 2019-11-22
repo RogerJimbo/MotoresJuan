@@ -39,6 +39,9 @@ public:
 	uint rbo;
 	uint buffer_tex = 0;
 
+	bool fieldofview = false;
+
+
 	bool vsync = false;
 	bool lightning = true;
 	bool backface = true;
