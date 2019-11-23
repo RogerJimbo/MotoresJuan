@@ -27,7 +27,7 @@ public:
 
 public:
 
-	Frustum camera_frustum;
+	Frustum* camera_frustum;
 	AABB camera_BB;
 
 };

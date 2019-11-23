@@ -147,7 +147,7 @@ void ModuleScene::SelectGameObject(GameObject* gameobject)
 
 GameObject* ModuleScene::MousePicking()
 {
-	GameObject* ret = nullptr;
+	GameObject* gameobject = nullptr;
 
 	//1st Calculate Mouse Position
 	float mouseX = App->input->GetMouseX();
@@ -173,40 +173,29 @@ GameObject* ModuleScene::MousePicking()
 	//LOG("%f %f %f", MouseRay.x, MouseRay.y, MouseRay.z);
 	//LOG("%f %f %f", mouseray.x, mouseray.y, mouseray.z);
 
-	ray = camera->camera_frustum.UnProjectLineSegment(-MouseRay.x, -MouseRay.y);
+	//ray = camera->camera_frustum.UnProjectLineSegment(-MouseRay.x, MouseRay.y);
 
+	Frustum* frustum = App->camera->camera->camera_frustum;
+	Ray ray = frustum->UnProjectLineSegment(-MouseRay.x, MouseRay.y).ToRay();
 
+	list<GameObject*> intersections;
 
-
-	if (ray.Intersects(root->BoundingBox))
+	for (auto iter = gameobjects.begin(); iter != gameobjects.end(); ++iter)
 	{
-		/*LOG("victory");*/
+		if ((*iter)->GetComponent(MESH))
+		{
+			if (ray.Intersects(root->aabb))
+				intersections.push_back(*iter);
+		}
 	}
 
-	/*camera->DrawFrustrum();
-	camera->DrawRay();*/
+	if (intersections.empty()) return gameobject;
+
+	list<RayHit> ray_hits;
 
 
-	Frustum* frustum;
 
-	list<GameObject*> IntersectedGO;
-
-	//for (auto iter = gameobjects.begin(); iter != gameobjects.end(); iter++)
-	//{
-
-	//	// if (ray.Intersects(App->modscene->root->BoundingBox)) {}
-	//	//Make a recursive function to call all the children and check their AABB
-
-
-	//}
-
-	if (IntersectedGO.empty()) { return ret; }
-
-	//Check closer game objects 
-	//Check if it hits the mesh triangles
-
-
-	return ret;
+	return gameobject;
 }
 
 void ModuleScene::Guizmos(ImGuizmo::OPERATION operation)

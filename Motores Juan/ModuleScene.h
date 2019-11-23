@@ -15,6 +15,13 @@ struct par_shapes_mesh_s;
 
 using namespace std;
 
+struct RayHit
+{
+	RayHit(float distance, GameObject* obj) : distance(distance), obj(obj) {};
+	float distance = 0.0f;
+	GameObject* obj = nullptr;
+};
+
 class ModuleScene : public Module
 {
 public:
@@ -54,6 +61,7 @@ public:
 	ImGuizmo::MODE mode = ImGuizmo::LOCAL;
 
 	vector<GameObject*> drawable_GOs;
+	list<GameObject*>	gameobjects;
 
 	LineSegment ray;
 	float3 mouseray;

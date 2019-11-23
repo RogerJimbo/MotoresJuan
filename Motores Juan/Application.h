@@ -1,30 +1,26 @@
 #pragma once
 #include "Globals.h"
 #include "Timer.h"
-
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModuleGui.h"
-#include "ModuleScene.h"
-#include "ModuleLoader.h"
-#include "ModuleTimer.h"
-
-#include "GUI_Element.h"
-#include "GUI_Config.h"
-#include "GUI_Console.h"
-#include "GUI_Hierarchy.h"
-#include "GUI_Scene.h"
-#include "GUI_Inspector.h"
-
 #include "Parson\parson.h"
-
 #include <list>
 #include <vector>
 
+class ModuleWindow;
+class ModuleInput;
+class ModuleScene;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class ModuleGui;
+class ModuleLoader;
+class ModuleTimer;
 
+class GUI_Element;
+class GUI_Config;
+class GUI_Console;
+class GUI_Hierarchy;
+class GUI_Scene;
+class GUI_Inspector;
 
 using namespace std;
 
