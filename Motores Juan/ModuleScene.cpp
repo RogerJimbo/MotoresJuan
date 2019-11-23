@@ -29,7 +29,7 @@ bool ModuleScene::Start()
 	string filename;
 	root = new GameObject(nullptr, "Root");
 	camera = new ComponentCamera(CAMERA, nullptr);
-	App->loader->ImportModel("BakerHouse.fbx", filename);
+	App->loader->Import("Street environment_V01.fbx", nullptr);
 
 	return true;
 }
@@ -39,12 +39,15 @@ void ModuleScene::Draw()
 	camera->DrawFrustrum();
 	GameObjectsToDraw();
 
-	if (root && drawable_GOs.size() > 0) 
+	if (root) 
 	{ 
-		for (auto item = drawable_GOs.begin(); item != drawable_GOs.end(); ++item)
+		for (auto item = root->children.begin(); item != root->children.end(); ++item)
 		{
-			(*item)->Draw();
-			(*item)->CalculateAABB();
+			if ((*item)->drawable)
+			{
+				(*item)->Draw();
+				(*item)->CalculateAABB();
+			}
 		}
 	}
 
@@ -69,19 +72,13 @@ void ModuleScene::GameObjectsToDraw()
 	{
 		if (aux_cam->ContainsAABB((*item)->BoundingBox))
 		{
-			drawable_GOs.push_back(*item);
+			(*item)->drawable = true;
 			LOG("COLISAO");
 		}
 
 		else
 		{
-			/*for (auto iter = drawable_GOs.begin(); iter != drawable_GOs.end(); ++iter)
-			{
-				if ((*iter)->name == (*item)->name);
-				{
-					drawable_GOs.pop_back();
-				}
-			}*/
+			(*item)->drawable = false;
 			LOG("SE MARXO");
 		}
 	}

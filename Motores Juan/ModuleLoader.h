@@ -37,7 +37,8 @@ public:
 	bool CleanUp();
 	bool Import(const string& pFile, GameObject* parent);
 
-	GameObject* LoadGameObject(aiMesh* mesh, const aiScene* scene, aiNode* node, GameObject* parent, string path_file);
+	bool loadFBXScene(const string& pFile);
+	GameObject* LoadGameObject(const aiScene* scene, aiNode* node, GameObject* parent, string path_file);
 	uint Texturing(const char* file_name);
 
 	string module_name;

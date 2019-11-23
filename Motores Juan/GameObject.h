@@ -70,6 +70,7 @@ public:
 	bool is_selected = false;
 	bool active = true;
 	bool box = false;
+	bool drawable = false;
 };
 
 #endif 
