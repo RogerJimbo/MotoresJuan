@@ -1,20 +1,5 @@
 #include "Application.h"
 #include <Windows.h>
-#include "ModuleCamera3D.h"
-#include "ModuleLoader.h"
-#include "ModuleGui.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleWindow.h"
-#include "ModuleTimer.h"
-#include "ModuleScene.h"
-
-#include "GUI_Element.h"
-#include "GUI_Config.h"
-#include "GUI_Console.h"
-#include "GUI_Hierarchy.h"
-#include "GUI_Scene.h"
-#include "GUI_Inspector.h"
 
 Application::Application()
 {

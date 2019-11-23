@@ -175,8 +175,8 @@ GameObject* ModuleScene::MousePicking()
 
 	//ray = camera->camera_frustum.UnProjectLineSegment(-MouseRay.x, MouseRay.y);
 
-	Frustum* frustum = App->camera->camera->camera_frustum;
-	Ray ray = frustum->UnProjectLineSegment(-MouseRay.x, MouseRay.y).ToRay();
+	Frustum frustum = App->camera->camera->camera_frustum;
+	//Ray ray = frustum->UnProjectLineSegment(-MouseRay.x, MouseRay.y).ToRay();
 
 	list<GameObject*> intersections;
 
