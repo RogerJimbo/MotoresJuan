@@ -28,7 +28,13 @@ In the scene window, the movement controls is as follows:
 - Use 'F' to focus the camera on the object.
 - Use 'Shift' to duplicate movement speed.
 
-The Hierarchy window is still in progress, so far it suports creating basic primitives, plane and cube and modify its size and position. 
+##  Implementations
+
+The hierarchy works and loads parents and children properly. 
+Bounding boxes of parents and children work fine.
+We also implemented frustum that detects if meshes are within its FOV.
+We started mouse picking and guizmo, file system, mesh transformations, Quadtree structure and Timer but failed to finish them.
+We modified the loader function so that it only loads objects with meshes.
 The Console window shows info about the actions done by the application.
 The Configuration window has the following submenus:
 
