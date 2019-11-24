@@ -39,7 +39,9 @@ void ModuleScene::Draw()
 	camera->DrawFrustrum();
 	GameObjectsToDraw();
 
-	if (root) 
+	// Draw comented because it crashes 
+
+	/*if (root) 
 	{ 
 		for (auto item = root->children.begin(); item != root->children.end(); ++item)
 		{
@@ -49,7 +51,7 @@ void ModuleScene::Draw()
 				(*item)->CalculateAABB();
 			}
 		}
-	}
+	}*/
 
 	root->selectedGO = MousePicking();	//TO UPDATE
 
@@ -73,13 +75,13 @@ void ModuleScene::GameObjectsToDraw()
 		if (aux_cam->ContainsAABB((*item)->BoundingBox))
 		{
 			(*item)->drawable = true;
-			LOG("COLISAO");
+			//LOG("COLISAO");
 		}
 
 		else
 		{
 			(*item)->drawable = false;
-			LOG("SE MARXO");
+			//LOG("SE MARXO");
 		}
 	}
 }

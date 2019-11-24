@@ -38,7 +38,8 @@ public:
 	bool Import(const string& pFile, GameObject* parent);
 
 	bool loadFBXScene(const string& pFile);
-	GameObject* LoadGameObject(const aiScene* scene, aiNode* node, GameObject* parent, string path_file);
+	bool loadNodes(const aiScene* scene, aiNode* node, GameObject* parent, string path_file);
+	GameObject* LoadGameObject(const aiScene* scene, aiMesh* node, GameObject* parent, string path_file);
 	uint Texturing(const char* file_name);
 
 	string module_name;

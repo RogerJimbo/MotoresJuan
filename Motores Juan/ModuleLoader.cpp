@@ -117,15 +117,17 @@ bool ModuleLoader::LoadNodes(aiNode* node, const aiScene* scene, GameObject* par
 
 bool ModuleLoader::Import(const string& pFile, GameObject* parent)	//TODO
 {
-	string file_path = pFile;
-	path = pFile.c_str();
+	const aiScene* scene = aiImportFile(pFile.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 
-	const aiScene* scene = aiImportFile(file_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		aiNode* node = scene->mRootNode;
+		node->mName = pFile;
+		loadNodes(scene, node, App->modscene->root, pFile);
+		aiReleaseImport(scene); 
+	}
 
-	aiNode* node = scene->mRootNode;
-	node->mName = file_path;
-	LoadGameObject(scene, node, App->modscene->root, file_path);
-	aiReleaseImport(scene);
+	else { LOG("Error loading scene %s", pFile.c_str()); }
 
 	return true;
 }
@@ -149,7 +151,7 @@ void ModuleLoader::LoadTransformations(aiNode* node, GameObject* gameobject)
 	transform->setScale(Scalation);*/
 }
 
-GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, GameObject* parent, string path_file)
+bool ModuleLoader::loadNodes(const aiScene* scene, aiNode* node, GameObject* parent, string path_file)
 {
 	aiVector3D position;
 	aiVector3D size;
@@ -161,108 +163,135 @@ GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiNode* node, Gam
 	float3 Scale = { size.x, size.y, size.z };
 	Quat Rotation = { rotation.x, rotation.y, rotation.z, rotation.w };
 
-	GameObject* gameobject = new GameObject();
+	GameObject* GO = new GameObject();
+	GO->name = path_file;
 
-	ComponentTransform* transform = (ComponentTransform*)gameobject->AddComponent(TRANSFORM);
+	if (parent != nullptr)
+	{
+		GO->parent = parent;
+		parent->children.push_back(GO);
+	}
+
+	if (node->mNumMeshes > 0)
+	{
+		for (int i = 0; i < node->mNumMeshes; ++i)
+		{
+			GO = LoadGameObject(scene, scene->mMeshes[node->mMeshes[i]], parent, path_file);
+		}
+	}
+
+	for (uint i = 0; i < node->mNumChildren; i++)
+	{
+		if (GO)
+		{
+			loadNodes(scene, node->mChildren[i], GO, node->mName.C_Str());
+		}
+		else
+		{
+			loadNodes(scene, node->mChildren[i], parent, node->mName.C_Str());
+		}
+	}
+	
+	return true;
+}
+
+GameObject* ModuleLoader::LoadGameObject(const aiScene* scene, aiMesh* node, GameObject* parent, string path_file)
+{
+	
+		/*ComponentTransform* transform = (ComponentTransform*)parent->AddComponent(TRANSFORM);
+
+		transform->setPosition(Position);
+		transform->setQuaternion(Rotation);
+		transform->setScale(Scale);
+		transform->local_matrix.Set(float4x4::FromTRS(Position, Rotation, Scale));*/
+
+		/*GO->name = node->mName.C_Str();
+		GO->parent = parent;
+
+		if (parent != nullptr) 
+		{ 
+			parent->children.push_back(GO); 
+		}*/
+
+		
+	const aiMesh* mesh = node;
+	GameObject* newGO = new GameObject();
+	newGO->name = mesh->mName.C_Str();
+	newGO = parent->AddChildren(node->mName.C_Str());
+
+	/*ComponentTransform* transform = (ComponentTransform*)newGO->AddComponent(TRANSFORM);
 
 	transform->setPosition(Position);
 	transform->setQuaternion(Rotation);
 	transform->setScale(Scale);
-	transform->local_matrix.Set(float4x4::FromTRS(Position, Rotation, Scale));
+	transform->local_matrix.Set(float4x4::FromTRS(Position, Rotation, Scale));*/
 
-	if (scene != nullptr && scene->HasMeshes())
+	ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
+
+	new_mesh->num_vertices = mesh->mNumVertices;
+	new_mesh->vertices = new float[new_mesh->num_vertices * 3];
+	memcpy(new_mesh->vertices, mesh->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
+	LOG("New mesh with %d vertices", new_mesh->num_vertices);
+
+	if (mesh->HasTextureCoords(0))
 	{
-		gameobject->name = node->mName.C_Str();
-		gameobject->parent = parent;
+		new_mesh->texture_coords = new float[mesh->mNumVertices * 2];
 
-		if (parent != nullptr) { parent->children.push_back(gameobject); }
-
-		for (int i = 0; i < node->mNumMeshes; ++i)
+		for (uint j = 0; j < mesh->mNumVertices * 2; j += 2)
 		{
-			const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			GameObject* newGO = new GameObject();
-			newGO->name = mesh->mName.C_Str();
-			newGO->parent = gameobject;
-			gameobject->children.push_back(newGO);
-
-			ComponentTransform* transform = (ComponentTransform*)newGO->AddComponent(TRANSFORM);
-
-			transform->setPosition(Position);
-			transform->setQuaternion(Rotation);
-			transform->setScale(Scale);
-			transform->local_matrix.Set(float4x4::FromTRS(Position, Rotation, Scale));
-
-			ComponentMesh* new_mesh = (ComponentMesh*)newGO->AddComponent(MESH);
-
-			new_mesh->num_vertices = mesh->mNumVertices;
-			new_mesh->vertices = new float[new_mesh->num_vertices * 3];
-			memcpy(new_mesh->vertices, mesh->mVertices, sizeof(float) * new_mesh->num_vertices * 3);
-			LOG("New mesh with %d vertices", new_mesh->num_vertices);
-
-			if (mesh->HasTextureCoords(0))
-			{
-				new_mesh->texture_coords = new float[mesh->mNumVertices * 2];
-
-				for (uint j = 0; j < mesh->mNumVertices * 2; j += 2)
-				{
-					new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
-					new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
-				}
-			}
-
-			if (mesh->HasFaces())
-			{
-				new_mesh->num_indices = mesh->mNumFaces * 3;
-				new_mesh->indices = new uint[new_mesh->num_indices]; // assume each face is a triangle
-				for (uint i = 0; i < mesh->mNumFaces; ++i)
-				{
-					if (mesh->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
-					else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
-				}
-
-				aiString material_path;
-				aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-				material->GetTexture(aiTextureType_DIFFUSE, 0, &material_path);
-				string material_name = material_path.C_Str();
-
-				for (int i = path_file.size() - 1; i >= 0; i--)
-				{
-					if (path_file[i] == '/' || path_file[i] == '\\') break;
-					else path_file.pop_back();
-				}
-
-				path_file += material_name;
-				new_mesh->texture = Texturing(path_file.c_str());
-
-				if (new_mesh->texture == 0)
-				{
-					path_file = "Assets/Textures/" + material_name;
-					new_mesh->texture = Texturing(path_file.c_str());
-					LOG("%s", path_file.c_str());
-				}
-
-				glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);				glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
-				glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
-				glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);				glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);		
-			}
-		}
-		
-		if (node->mNumChildren > 1)
-		{
-			for (uint i = 0; i < node->mNumChildren; i++)
-			{
-				if (node->mChildren[i] != nullptr)
-				{
-					GameObject* child = LoadGameObject(scene, node->mChildren[i], gameobject, node->mName.C_Str());
-				}
-			}
+			new_mesh->texture_coords[j] = mesh->mTextureCoords[0][j / 2].x;
+			new_mesh->texture_coords[j + 1] = mesh->mTextureCoords[0][j / 2].y;
 		}
 	}
-	else { LOG("Error loading scene %s", path_file.c_str()); }
 
-	return gameobject;
+	if (mesh->HasFaces())
+	{
+		new_mesh->num_indices = mesh->mNumFaces * 3;
+		new_mesh->indices = new uint[new_mesh->num_indices]; // assume each face is a triangle
+		for (uint i = 0; i < mesh->mNumFaces; ++i)
+		{
+			if (mesh->mFaces[i].mNumIndices != 3) { LOG("WARNING, geometry face with != 3 indices!"); }
+			else { memcpy(&new_mesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint)); }
+		}
+
+		aiString material_path;
+		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		material->GetTexture(aiTextureType_DIFFUSE, 0, &material_path);
+		string material_name = material_path.C_Str();
+
+		for (int i = path_file.size() - 1; i >= 0; i--)
+		{
+			if (path_file[i] == '/' || path_file[i] == '\\') break;
+			else path_file.pop_back();
+		}
+
+		path_file += material_name;
+		new_mesh->texture = Texturing(path_file.c_str());
+
+		if (new_mesh->texture == 0)
+		{
+			path_file = "Assets/Textures/" + material_name;
+			new_mesh->texture = Texturing(path_file.c_str());
+			LOG("%s", path_file.c_str());
+		}
+
+		glGenBuffers(1, (GLuint*)&(new_mesh->id_indices));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh->id_indices);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*new_mesh->num_indices, new_mesh->indices, GL_STATIC_DRAW);		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);		glGenBuffers(1, (GLuint*) & (new_mesh->id_texcoords));
+		glBindBuffer(GL_TEXTURE_COORD_ARRAY, new_mesh->id_texcoords);
+		glBufferData(GL_TEXTURE_COORD_ARRAY, sizeof(uint) * new_mesh->num_vertices * 2, new_mesh->texture_coords, GL_STATIC_DRAW);		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	}
+		
+	
+	/*if (node->mNumMeshes > 0)
+	{
+		LOG("There are %i meshes", node->mNumMeshes);
+	}
+	else
+	{
+		LOG("No meshes were found");
+	}*/
+	return newGO;
 }
 
 bool ModuleLoader::loadFBXScene(const string& pFile)
