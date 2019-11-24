@@ -86,13 +86,6 @@ update_status ModuleGui::Update(float dt)
 		{ 
 			ImGui::MenuItem("New Scene", false, true);	//Todo Create new scene
 
-			if (ImGui::BeginMenu("Load Model")) 
-			{
-				if (ImGui::MenuItem("BakerHouse.fbx")) App->loader->Import("BakerHouse.fbx", nullptr);
-				if (ImGui::MenuItem("House.fbx")) App->loader->Import("House.fbx", nullptr);
-				if (ImGui::MenuItem("Medieval House.fbx")) App->loader->Import("medieval_house.fbx", nullptr);
-				ImGui::EndMenu();
-			}
 			if (ImGui::MenuItem("Save Config", false, true)) { App->Save_Config(); }		//Save data JSON
 			if (ImGui::MenuItem("Load Config", false,true)) { App->Load_Config(); }		//Load data JSON
 
